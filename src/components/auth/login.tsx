@@ -1,23 +1,23 @@
+'use client';
+
 import React from 'react';
-import {
-  Grid,
-  Typography,
-  Box,
-  Button,
-  Divider,
-  TextField
-} from '@mui/material';
+import { Grid, Typography, Button, FormHelperText } from '@mui/material';
 import {
   DividerWithText,
   FormInput,
   ThirdPartyBtns,
   FormLabel
 } from './styles';
+import { useForm } from 'react-hook-form';
 import { Poppins } from 'next/font/google';
 import Image from 'next/image';
 
 import GoogleIcon from '@/assets/icons/google-icon.svg';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import { RootState, useDispatch } from '@/redux/store';
+import { loginUser } from '@/actions/user';
+import { useSelector } from 'react-redux';
+import { resetError } from '@/redux/slice/auth';
 
 const poppins = Poppins({
   weight: ['300', '400', '500'],
@@ -25,7 +25,25 @@ const poppins = Poppins({
   style: 'normal'
 });
 
+type FormValues = {
+  email: string;
+  password: string;
+};
+
 const Login = () => {
+  const dispatch = useDispatch();
+  const {
+    register,
+    formState: { errors },
+    handleSubmit
+  } = useForm<FormValues>();
+  const { error } = useSelector((state: RootState) => state.auth);
+
+  const onSubmit = (data: FormValues) => {
+    dispatch(resetError());
+    dispatch(loginUser(data));
+  };
+
   return (
     <Grid
       sx={{
@@ -44,7 +62,7 @@ const Login = () => {
         You Must Sign in to join
       </Typography>
       <Typography fontWeight={'300'} fontSize={'14px'}>
-        We're a team that guides each other
+        We&apos;re a team that guides each other
       </Typography>
       <Grid
         sx={{
@@ -59,7 +77,15 @@ const Login = () => {
             <Image src={GoogleIcon} alt='icon' width={'25'} height={'25'} />
           }
         >
-          Sign in with Google
+          <Typography
+            fontWeight={'500'}
+            fontSize={'14px'}
+            sx={{
+              textTransform: 'none'
+            }}
+          >
+            Sign in with Google
+          </Typography>
         </ThirdPartyBtns>
         <ThirdPartyBtns
           startIcon={
@@ -68,7 +94,15 @@ const Login = () => {
             />
           }
         >
-          Sign in with LinkedIn
+          <Typography
+            fontWeight={'500'}
+            fontSize={'14px'}
+            sx={{
+              textTransform: 'none'
+            }}
+          >
+            Sign in with LinkedIn
+          </Typography>
         </ThirdPartyBtns>
       </Grid>
       <DividerWithText>or</DividerWithText>
@@ -81,11 +115,25 @@ const Login = () => {
       >
         <Grid>
           <FormLabel>Email or Username</FormLabel>
-          <FormInput fullWidth placeholder='janedoe@email.com' />
+          <FormInput
+            {...register('email', { required: 'Please enter your email' })}
+            fullWidth
+            placeholder='janedoe@email.com'
+            helperText={errors?.email?.message as string}
+            error={!!errors?.email}
+          />
         </Grid>
         <Grid>
           <FormLabel>Password</FormLabel>
-          <FormInput fullWidth placeholder='Password' />
+          <FormInput
+            {...register('password', {
+              required: 'Please enter your password'
+            })}
+            helperText={errors?.email?.message as string}
+            error={!!errors?.email}
+            fullWidth
+            placeholder='Password'
+          />
         </Grid>
         <Grid>
           <Typography
@@ -98,30 +146,34 @@ const Login = () => {
             Forgot Password?
           </Typography>
         </Grid>
-        <Button
-          sx={{
-            borderRadius: '10px',
-            border: '1px solid #FFF',
-            background: '#FFF',
-            padding: '10px'
-          }}
-        >
-          <Typography
+        <FormHelperText error>{error}</FormHelperText>
+        <Grid>
+          <Button
             sx={{
-              background:
-                'linear-gradient(90deg, #4ADFD5 0.42%, #7479FA 41.67%, #E92EC3 106.58%)',
-              backgroundClip: 'text',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              fontSize: '16px',
-              fontWeight: '600',
-              width: '135px',
-              letterSpacing: '1px'
+              borderRadius: '10px',
+              border: '1px solid #FFF',
+              background: '#FFF',
+              padding: '10px'
             }}
+            onClick={handleSubmit(onSubmit)}
           >
-            Sign In
-          </Typography>
-        </Button>
+            <Typography
+              sx={{
+                background:
+                  'linear-gradient(90deg, #4ADFD5 0.42%, #7479FA 41.67%, #E92EC3 106.58%)',
+                backgroundClip: 'text',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                fontSize: '16px',
+                fontWeight: '600',
+                width: '135px',
+                letterSpacing: '1px'
+              }}
+            >
+              Sign In
+            </Typography>
+          </Button>
+        </Grid>
       </Grid>
       <Grid
         sx={{

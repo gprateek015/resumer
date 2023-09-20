@@ -1,9 +1,10 @@
 import Navbar from '@/components/navbar';
 import './globals.css';
-import { Grid, ThemeProvider, createTheme } from '@mui/material';
+import { Grid, ThemeProvider } from '@mui/material';
 import theme from '@/theme';
 import Image from 'next/image';
 import BackgroundImg from '@/assets/home-background.png';
+import Prodiver from '@/components/redux-provider';
 
 export const metadata = {
   title: 'Create Next App',
@@ -18,15 +19,17 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body>
-        <ThemeProvider theme={theme}>
-          <Grid minHeight='100vh' display={'flex'} flexDirection={'column'}>
-            <Navbar />
-            <Image src={BackgroundImg} alt='' className='home-background' />
-            <Grid flexGrow={1} display={'flex'} flexDirection={'column'}>
-              {children}
+        <Prodiver>
+          <ThemeProvider theme={theme}>
+            <Grid minHeight='100vh' display={'flex'} flexDirection={'column'}>
+              <Navbar />
+              <Image src={BackgroundImg} alt='' className='home-background' />
+              <Grid flexGrow={1} display={'flex'} flexDirection={'column'}>
+                {children}
+              </Grid>
             </Grid>
-          </Grid>
-        </ThemeProvider>
+          </ThemeProvider>
+        </Prodiver>
       </body>
     </html>
   );
