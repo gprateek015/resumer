@@ -2,6 +2,8 @@ import Navbar from '@/components/navbar';
 import './globals.css';
 import { Grid, ThemeProvider, createTheme } from '@mui/material';
 import theme from '@/theme';
+import Image from 'next/image';
+import BackgroundImg from '@/assets/home-background.png';
 
 export const metadata = {
   title: 'Create Next App',
@@ -19,6 +21,7 @@ export default function RootLayout({
         <ThemeProvider theme={theme}>
           <Grid minHeight='100vh' display={'flex'} flexDirection={'column'}>
             <Navbar />
+            <Image src={BackgroundImg} alt='' className='home-background' />
             <Grid flexGrow={1} display={'flex'} flexDirection={'column'}>
               {children}
             </Grid>

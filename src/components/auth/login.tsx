@@ -31,6 +31,7 @@ const Login = () => {
       sx={{
         width: '500px',
         padding: '50px 80px',
+        height: '630px',
         borderRadius: '20px',
         background:
           'linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0%, rgba(51, 50, 50, 0.12) 100%)',

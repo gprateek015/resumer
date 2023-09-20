@@ -1,10 +1,8 @@
 import React from 'react';
 import { Grid, Typography, Box } from '@mui/material';
-import Image from 'next/image';
 
 import { Righteous } from 'next/font/google';
 
-import BackgroundImg from '@/assets/home-background.png';
 import Login from '@/components/auth/login';
 
 const righteous = Righteous({
@@ -20,7 +18,6 @@ export default function Home() {
       flexGrow={1}
       className={righteous.className}
     >
-      <Image src={BackgroundImg} alt='' className='home-background' />
       <Grid
         sx={{
           display: 'flex',
