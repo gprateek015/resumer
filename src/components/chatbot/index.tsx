@@ -73,7 +73,8 @@ const Chatbot = () => {
                 }}
                 options={{
                   cursor: '|',
-                  delay: 50
+                  delay: 50,
+                  devMode: false
                 }}
               />
             ) : (

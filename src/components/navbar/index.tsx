@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { Button, Grid, Typography } from '@mui/material';
 import Image from 'next/image';
@@ -5,6 +7,10 @@ import { SignupBtn, NavLink } from './styles';
 import Link from 'next/link';
 
 import { Righteous } from 'next/font/google';
+import { useSelector } from 'react-redux';
+import { RootState, useDispatch } from '@/redux/store';
+import { changeAuthPage, logoutUser } from '@/redux/slice/auth';
+import { clearUserData } from '@/redux/slice/user';
 
 const righteous = Righteous({
   weight: ['400'],
@@ -12,6 +18,18 @@ const righteous = Righteous({
 });
 
 const Navbar = () => {
+  const { isLoggedIn } = useSelector((state: RootState) => state.auth);
+  const dispatch = useDispatch();
+
+  const handleClick = () => {
+    if (isLoggedIn) {
+      dispatch(logoutUser());
+      dispatch(clearUserData());
+    } else {
+      dispatch(changeAuthPage(1));
+    }
+  };
+
   return (
     <Grid
       sx={{
@@ -45,7 +63,9 @@ const Navbar = () => {
         </Link>
       </Grid>
       <Grid>
-        <SignupBtn>Sign up</SignupBtn>
+        <SignupBtn onClick={handleClick}>
+          {isLoggedIn ? 'Log out' : 'Sign up'}
+        </SignupBtn>
       </Grid>
     </Grid>
   );
