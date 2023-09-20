@@ -1,0 +1,32 @@
+.sidebar {
+    width: 220px;
+    background: linear-gradient(265deg, rgba(255, 255, 255, 0.12) -63.32%, rgba(51, 50, 50, 0.12) 158.75%);
+    backdrop-filter: blur(20px);
+
+    .upperSection {
+        text-align: center;
+        padding-top: 40px;
+
+        .bt {
+            border-radius: 5px;
+            border: 1px solid #3F3F3F;
+            background: var(--main, rgba(255, 255, 255, 0.10));
+            width: 85%;
+            text-transform: none;
+            position: relative;
+
+            .icon{
+                position: absolute;
+                left: 18px;
+            }
+        }
+
+    }
+
+    .line {
+        margin-top: 20px;
+        width: 100%;
+        height: .8px;
+        background: linear-gradient(270deg, #3F3F3F 50%, rgba(63, 63, 63, 0.00) 89.05%);
+    }
+}
