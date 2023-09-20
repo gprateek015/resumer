@@ -162,7 +162,7 @@ const page = () => {
               </div>
 
 
-              {/* //-------------------------------- Second service ----------------------------------------// */}
+              {/* //-------------------------------- third service ----------------------------------------// */}
               <div className='serviceFirst'>
                 <div className='serviceTop' onClick={() => setThird(!third)}> <SchoolIcon className='iconClass' /> Academic History <KeyboardArrowDownIcon className='arrow' /> </div>
                 {third && <div className='serviceData'>
@@ -170,13 +170,20 @@ const page = () => {
                   <div className='basicBottom'>
                     <div className='inpGrid'>
                       <div>
-                        <label htmlFor="fname">Company name</label>
+                        <label htmlFor="fname">Institution name</label>
                         <input type="text" name="" id="fname" />
                       </div>
                       <div>
-                        <label htmlFor="lname">Job title</label>
+                        <label htmlFor="lname">Field of study</label>
                         <input type="text" name="" id="lname" />
                       </div>
+                    </div>
+                    <div className='inpGrid'>
+                      <div>
+                        <label htmlFor="fname">Degree</label>
+                        <input type="text" name="" id="fname" />
+                      </div>
+                      <div></div>
                     </div>
                     <div className='inpGrid'>
                       <div>
@@ -185,17 +192,6 @@ const page = () => {
                       </div>
                       <div>
                         <label htmlFor="lname">Country</label>
-                        <input type="text" name="" id="lname" />
-                      </div>
-                    </div>
-
-                    <div className='inpGrid'>
-                      <div>
-                        <label htmlFor="fname">Start Date</label>
-                        <input type="text" name="" id="fname" />
-                      </div>
-                      <div>
-                        <label htmlFor="lname">End Date</label>
                         <input type="text" name="" id="lname" />
                       </div>
                     </div>
