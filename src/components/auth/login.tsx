@@ -48,7 +48,7 @@ const Login = () => {
     <Grid
       sx={{
         width: '500px',
-        padding: '50px 80px',
+        padding: '40px 60px',
         height: '630px',
         borderRadius: '20px',
         background:

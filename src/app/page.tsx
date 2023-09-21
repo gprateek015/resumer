@@ -35,16 +35,20 @@ export default function Home() {
           }}
         >
           <Box>
-            <Typography fontSize={'66px'} lineHeight={'80px'}>
-              Improve your <br /> CV Attractiveness <br /> Using AI
+            <Typography
+              fontSize={'66px'}
+              lineHeight={'80px'}
+              marginBottom={'30px'}
+            >
+              Improve your <br /> Resume ATS score <br /> Using AI
             </Typography>
             <Typography
               fontSize={'25px'}
               lineHeight={'35px'}
               color='rgba(232, 235, 243, 0.70)'
             >
-              Lorem ipsum dolor sit amet consectetur congue libero nec aliquam
-              posuere mattis laoreet sit odio pharetra lectus non ornare dis.
+              Let AI do the heavy lifting for you in optimizing your resumes
+              when you apply for various job roles
             </Typography>
           </Box>
           <Grid
@@ -56,10 +60,10 @@ export default function Home() {
           >
             <Box>
               <Typography fontSize={'30px'} lineHeight={'20px'}>
-                32K+
+                12K+
               </Typography>
               <Typography fontSize={'20px'} color='rgba(255, 255, 255, 0.48)'>
-                Artworks
+                Downloads
               </Typography>
             </Box>
             <Box>
@@ -67,15 +71,15 @@ export default function Home() {
                 20K+
               </Typography>
               <Typography fontSize={'20px'} color='rgba(255, 255, 255, 0.48)'>
-                Auction
+                Visits
               </Typography>
             </Box>
             <Box>
               <Typography fontSize={'30px'} lineHeight={'20px'}>
-                10K+
+                10+
               </Typography>
               <Typography fontSize={'20px'} color='rgba(255, 255, 255, 0.48)'>
-                Artists
+                Templates
               </Typography>
             </Box>
           </Grid>
