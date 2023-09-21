@@ -26,7 +26,8 @@ export const DividerWithText = styled(Divider)({
 export const FormLabel = styled(Typography)({
   textAlign: 'left',
   marginBottom: '5px',
-  color: 'rgba(255, 255, 255, 0.70)'
+  color: 'rgba(255, 255, 255, 0.70)',
+  fontSize: '16px'
 });
 
 export const FormInput = styled(TextField)({

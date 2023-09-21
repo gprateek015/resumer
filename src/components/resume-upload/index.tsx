@@ -46,7 +46,7 @@ const ResumeUpload = () => {
         const newProg = prog + Math.floor((100 / timeToTake) * (moveIn / 1000));
         if (newProg > 100) {
           clearInterval(intervalId);
-          route.push('/workbench');
+          route.push('/job-description');
           return 100;
         }
         return newProg;

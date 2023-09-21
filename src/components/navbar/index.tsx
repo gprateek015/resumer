@@ -11,6 +11,7 @@ import { useSelector } from 'react-redux';
 import { RootState, useDispatch } from '@/redux/store';
 import { changeAuthPage, logoutUser } from '@/redux/slice/auth';
 import { clearUserData } from '@/redux/slice/user';
+import { useRouter } from 'next/navigation';
 
 const righteous = Righteous({
   weight: ['400'],
@@ -20,8 +21,10 @@ const righteous = Righteous({
 const Navbar = () => {
   const { isLoggedIn } = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
+  const route = useRouter();
 
   const handleClick = () => {
+    route.push('/');
     if (isLoggedIn) {
       dispatch(logoutUser());
       dispatch(clearUserData());

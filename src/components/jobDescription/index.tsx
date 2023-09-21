@@ -1,11 +1,14 @@
 'use client';
 
 import React from 'react';
-import { Grid, TextField, Typography } from '@mui/material';
+import { Grid, TextField, Typography, Button } from '@mui/material';
 import icon from '@/assets/profile.png';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 const DescriptionForm = () => {
+  const route = useRouter();
+
   return (
     <Grid
       sx={{
@@ -68,7 +71,7 @@ const DescriptionForm = () => {
         >
           <Typography
             style={{
-              marginBottom: 40
+              marginBottom: 20
             }}
             fontSize={26}
           >
@@ -105,6 +108,33 @@ const DescriptionForm = () => {
               }
             }}
           />
+          <Button
+            sx={{
+              borderRadius: '10px',
+              border: '1px solid #FFF',
+              background: '#FFF',
+              padding: '10px',
+              marginTop: '25px'
+            }}
+            fullWidth
+            onClick={() => route.push('/workbench')}
+          >
+            <Typography
+              sx={{
+                background:
+                  'linear-gradient(90deg, #4ADFD5 0.42%, #7479FA 41.67%, #E92EC3 106.58%)',
+                backgroundClip: 'text',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                fontSize: '14px',
+                fontWeight: '600',
+                width: '155px',
+                letterSpacing: '1px'
+              }}
+            >
+              Generate Resume
+            </Typography>
+          </Button>
         </Grid>
         <Grid>
           <Image

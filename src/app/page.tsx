@@ -1,16 +1,37 @@
-import React from 'react';
+'use client';
+
+import React, { useEffect } from 'react';
 import { Grid, Typography, Box } from '@mui/material';
 
-import { Righteous } from 'next/font/google';
+import { Righteous, Poppins } from 'next/font/google';
 
 import Login from '@/components/auth/login';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/redux/store';
+import Register from '@/components/auth/register';
+import { useRouter } from 'next/navigation';
 
 const righteous = Righteous({
   weight: ['400'],
   subsets: ['latin']
 });
 
+const poppins = Poppins({
+  weight: ['300', '400', '500'],
+  subsets: ['latin'],
+  style: 'normal'
+});
+
 export default function Home() {
+  const route = useRouter();
+  const { page, isLoggedIn } = useSelector((state: RootState) => state.auth);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      route.push('/onboarding');
+    }
+  }, [isLoggedIn]);
+
   return (
     <Grid
       display={'flex'}
@@ -84,7 +105,10 @@ export default function Home() {
             </Box>
           </Grid>
         </Grid>
-        <Login />
+        <Grid className={poppins.className}>
+          {page === 0 && <Login />}
+          {page === 1 && <Register />}
+        </Grid>
       </Grid>
     </Grid>
   );

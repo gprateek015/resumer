@@ -14,16 +14,18 @@ import Image from 'next/image';
 import GoogleIcon from '@/assets/icons/google-icon.svg';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import { RootState, useDispatch } from '@/redux/store';
-import { loginUser } from '@/actions/user';
+import { loginUser, registerUser } from '@/actions/user';
 import { useSelector } from 'react-redux';
 import { changeAuthPage, resetError } from '@/redux/slice/auth';
 
 type FormValues = {
   email: string;
   password: string;
+  first_name: string;
+  last_name: string;
 };
 
-const Login = () => {
+const Register = () => {
   const dispatch = useDispatch();
   const {
     register,
@@ -34,7 +36,7 @@ const Login = () => {
 
   const onSubmit = (data: FormValues) => {
     dispatch(resetError());
-    dispatch(loginUser(data));
+    dispatch(registerUser(data));
   };
 
   return (
@@ -42,13 +44,14 @@ const Login = () => {
       sx={{
         width: '500px',
         padding: '40px 60px',
-        height: '630px',
+        minHeight: '630px',
         borderRadius: '20px',
         background:
           'linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0%, rgba(51, 50, 50, 0.12) 100%)',
         backdropFilter: 'blur(20px)',
         textAlign: 'center'
       }}
+      // className={poppins.className}
     >
       <Typography fontWeight={'500'} fontSize={'17px'}>
         You Must Sign in to join
@@ -105,8 +108,40 @@ const Login = () => {
           gap: '15px'
         }}
       >
+        <Grid
+          sx={{
+            display: 'flex',
+            gap: '20px',
+            alignItems: 'center'
+          }}
+        >
+          <Grid sx={{ flexBasis: '50%' }}>
+            <FormLabel>First name</FormLabel>
+            <FormInput
+              {...register('first_name', {
+                required: 'Please enter your first name'
+              })}
+              fullWidth
+              placeholder='janedoe@email.com'
+              helperText={errors?.first_name?.message as string}
+              error={!!errors?.first_name}
+            />
+          </Grid>
+          <Grid sx={{ flexBasis: '50%' }}>
+            <FormLabel>Last name</FormLabel>
+            <FormInput
+              {...register('last_name', {
+                required: 'Please enter your last name'
+              })}
+              fullWidth
+              placeholder='janedoe@email.com'
+              helperText={errors?.last_name?.message as string}
+              error={!!errors?.last_name}
+            />
+          </Grid>
+        </Grid>
         <Grid>
-          <FormLabel>Email or Username</FormLabel>
+          <FormLabel>Email</FormLabel>
           <FormInput
             {...register('email', { required: 'Please enter your email' })}
             fullWidth
@@ -125,6 +160,7 @@ const Login = () => {
             error={!!errors?.email}
             fullWidth
             placeholder='Password'
+            type='password'
           />
         </Grid>
         <Grid>
@@ -156,13 +192,13 @@ const Login = () => {
                 backgroundClip: 'text',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
-                fontSize: '16px',
+                fontSize: '14px',
                 fontWeight: '600',
                 width: '135px',
                 letterSpacing: '1px'
               }}
             >
-              Sign In
+              Register
             </Typography>
           </Button>
         </Grid>
@@ -179,19 +215,19 @@ const Login = () => {
           sx={{ color: 'rgba(255, 255, 255, 0.80)' }}
           fontSize={'14px'}
         >
-          Don't have an account ?
+          Already have an account?
         </Typography>
         <Typography
           fontWeight={'600'}
           fontSize={'14px'}
-          onClick={() => dispatch(changeAuthPage(1))}
+          onClick={() => dispatch(changeAuthPage(0))}
           sx={{ cursor: 'pointer' }}
         >
-          Sign Up
+          Sign In
         </Typography>
       </Grid>
     </Grid>
   );
 };
 
-export default Login;
+export default Register;
