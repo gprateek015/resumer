@@ -23,14 +23,16 @@
     "next": "13.4.19",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "sass": "^1.67.0",
     "react-hook-form": "^7.46.1",
+    "react-pdf": "^7.3.3",
     "react-redux": "^8.1.2",
     "redux-logger": "^3.0.6",
+    "sass": "^1.67.0",
     "typescript": "5.2.2",
     "typewriter-effect": "^2.21.0"
   },
   "devDependencies": {
-    "@types/redux-logger": "^3.0.9"
+    "@types/redux-logger": "^3.0.9",
+    "file-loader": "^6.2.0"
   }
 }
