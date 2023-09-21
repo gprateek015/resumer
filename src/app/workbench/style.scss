@@ -168,12 +168,46 @@
             padding-top: 20px;
 
             .pdfContainer {
-                width: 70%;
+                width: 80%;
                 margin: auto;
-                height: 60vh;
+                height: 65vh;
                 border-radius: 15px;
                 background: rgba(255, 255, 255, 0.10);
                 backdrop-filter: blur(20px);
+
+                .topBtnCon {
+                    display: grid;
+                    height: 55px;
+                    grid-template-columns: 1fr 1fr 1fr 1fr;
+                    border-radius: 15px 15px 0px 0px;
+                    overflow: hidden;
+
+                    div {
+                        border-right: 1px solid var(--main, rgba(255, 255, 255, 0.10));
+                        background: rgba(29, 29, 29, .8);
+                        backdrop-filter: blur(20px);
+                        color: #616161;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-weight: bold;
+                        font-size: 14px;
+                        cursor: pointer;
+
+                        .imgIcon {
+                            width: 20px;
+                            margin-right: 5px;
+                            margin-top: 2px;
+                        }
+
+                        &:hover {
+                            background: rgba(47, 47, 47, 0.4);
+                            backdrop-filter: blur(20px);
+                            color: white;
+                        }
+                    }
+
+                }
             }
         }
     }

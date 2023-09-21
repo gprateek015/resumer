@@ -10,6 +10,11 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import profile from "@/assets/profile.png";
 import WorkHistoryIcon from '@mui/icons-material/WorkHistory';
 import SchoolIcon from '@mui/icons-material/School';
+import AcUnitIcon from '@mui/icons-material/AcUnit';
+import GridViewIcon from '@mui/icons-material/GridView';
+import DescriptionIcon from '@mui/icons-material/Description';
+import AirplayIcon from '@mui/icons-material/Airplay';
+import HelpIcon from '@mui/icons-material/Help';
 
 
 const page = () => {
@@ -18,6 +23,7 @@ const page = () => {
   const [first, setFirst] = useState(false);
   const [second, setSecond] = useState(false);
   const [third, setThird] = useState(false);
+  const [fourth, setFourth] = useState(false);
 
 
   return (
@@ -153,6 +159,12 @@ const page = () => {
                       </div>
                     </div>
 
+                    <div className='inputTag'>
+                      <label htmlFor="email">Description</label>
+                      <input type="text" id='email' />
+                    </div>
+
+
                     <Button variant='contained' className='subBt'>+ Add Work Experience</Button>
 
                   </div>
@@ -160,6 +172,7 @@ const page = () => {
 
                 </div>}
               </div>
+
 
 
               {/* //-------------------------------- third service ----------------------------------------// */}
@@ -196,7 +209,63 @@ const page = () => {
                       </div>
                     </div>
 
-                    <Button variant='contained' className='subBt'>+ Add Work Experience</Button>
+                    <Button variant='contained' className='subBt'>+ Add Academic Experience</Button>
+
+                  </div>
+
+
+                </div>}
+              </div>
+
+
+              {/* //-------------------------------- fourth service ----------------------------------------// */}
+              <div className='serviceFirst'>
+                <div className='serviceTop' onClick={() => setFourth(!fourth)}> <AcUnitIcon className='iconClass' /> Skill <KeyboardArrowDownIcon className='arrow' /> </div>
+                {fourth && <div className='serviceData'>
+
+                  <div className='basicBottom'>
+                    <div className='inpGrid'>
+                      <div>
+                        <label htmlFor="fname">Skill #1</label>
+                        <input type="text" name="" id="fname" readOnly value={"Technical Skill"} />
+                      </div>
+                      <div>
+                        <label htmlFor="lname">Skill level</label>
+                        <input type="text" name="" id="lname" />
+                      </div>
+                    </div>
+                    <div className='inpGrid'>
+                      <div>
+                        <label htmlFor="fname">Skill #2</label>
+                        <input type="text" name="" id="fname" readOnly value={"Core Subjects"} />
+                      </div>
+                      <div>
+                        <label htmlFor="lname">Skill level</label>
+                        <input type="text" name="" id="lname" />
+                      </div>
+                    </div>
+                    <div className='inpGrid'>
+                      <div>
+                        <label htmlFor="fname">Skill #3</label>
+                        <input type="text" name="" id="fname" readOnly value={"Languages"} />
+                      </div>
+                      <div>
+                        <label htmlFor="lname">Skill level</label>
+                        <input type="text" name="" id="lname" />
+                      </div>
+                    </div>
+                    <div className='inpGrid'>
+                      <div>
+                        <label htmlFor="fname">Skill #4</label>
+                        <input type="text" name="" id="fname" readOnly value={"Dev Tools"} />
+                      </div>
+                      <div>
+                        <label htmlFor="lname">Skill level</label>
+                        <input type="text" name="" id="lname" />
+                      </div>
+                    </div>
+
+                    <Button variant='contained' className='subBt'>+ Add New Skill</Button>
 
                   </div>
 
@@ -207,11 +276,17 @@ const page = () => {
 
 
 
-
             </div>
 
             <div className='rightGrid'>
-              <div className='pdfContainer'></div>
+              <div className='pdfContainer'>
+                <div className='topBtnCon'>
+                  <div><GridViewIcon className='imgIcon' /> Overview</div>
+                  <div><DescriptionIcon className='imgIcon' />models</div>
+                  <div><AirplayIcon className='imgIcon' />instructions</div>
+                  <div><HelpIcon className='imgIcon' />Assistance</div>
+                </div>
+              </div>
             </div>
 
           </div>
