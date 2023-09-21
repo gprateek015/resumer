@@ -38,7 +38,7 @@ const page = () => {
 
   useEffect(() => {
     if (resumeData) {
-      console.log(resumeData);
+
       setValue("fname", String(resumeData.name).split(" ")[0]);
       setValue("lname", String(resumeData.name).split(" ")[1]);
       setValue("phone", resumeData.phone);
@@ -90,7 +90,14 @@ const page = () => {
 
 
   const onSubmit = (data: any) => {
-    console.log(data);
+    console.log({
+      ...resumeData,
+      name: data.fname + " " + data.lname,
+      email: data.email,
+      phone: data.phone,
+      city: data.city,
+      state: data.state
+    });
   }
 
 
@@ -108,244 +115,247 @@ const page = () => {
           <div className='innerGrid'>
 
             <div className='leftGrid'>
-              <form onSubmit={handleSubmit(onSubmit)}></form>
+              <form onSubmit={handleSubmit(onSubmit)}>
 
 
-              {/* //-------------------------------- first service ----------------------------------------// */}
-              <div className='serviceFirst'>
-                <div className='serviceTop' onClick={() => setFirst(!first)}> <Image className='iconClass' src={user} alt='' /> Personal Overview <KeyboardArrowDownIcon className='arrow' /> </div>
-                {first && <div className='serviceData'>
-                  <div className='basicDetails'>
-                    <div className='imageContainer'>
-                      <Image alt='' src={profile} className='profile' />
+                {/* //-------------------------------- first service ----------------------------------------// */}
+                <div className='serviceFirst'>
+                  <div className='serviceTop' onClick={() => setFirst(!first)}> <Image className='iconClass' src={user} alt='' /> Personal Overview <KeyboardArrowDownIcon className='arrow' /> </div>
+                  {first && <div className='serviceData'>
+                    <div className='basicDetails'>
+                      <div className='imageContainer'>
+                        <Image alt='' src={profile} className='profile' />
+                      </div>
+
+                      <div className='basicTop'>
+
+                        <div className='inpGrid'>
+                          <div>
+                            <label htmlFor="fname">First Name</label>
+                            <input type="text" id="fname" {...register('fname')} />
+                          </div>
+                          <div>
+                            <label htmlFor="lname">Last Name</label>
+                            <input type="text" id="lname" {...register('lname')} />
+                          </div>
+                        </div>
+
+                        <div className='inputTag'>
+                          <label htmlFor="phone">Phone Number</label>
+                          <input type="text" id='phone' {...register('phone')} />
+                        </div>
+
+                        <div className='inputTag'>
+                          <label htmlFor="email">Email</label>
+                          <input type="text" id='email' {...register('email')} />
+                        </div>
+                      </div>
                     </div>
 
-                    <div className='basicTop'>
+                    <div className='basicBottom'>
+                      <div className='inpGrid'>
+                        <div>
+                          <label htmlFor="fname">Date of birth</label>
+                          <input type="text" name="" id="fname" />
+                        </div>
+                        <div>
+                          <label htmlFor="lname">Nationality</label>
+                          <input type="text" id="lname" {...register('nationality')} />
+                        </div>
+                      </div>
+                      <div className='inpGrid'>
+                        <div>
+                          <label htmlFor="fname">Street, number</label>
+                          <input type="text" name="" id="fname" />
+                        </div>
+                        <div>
+                          <label htmlFor="lname">city</label>
+                          <input type="text" id="lname" {...register('city')} />
+                        </div>
+                      </div>
+                      <div className='inpGrid'>
+                        <div>
+                          <label htmlFor="fname">State</label>
+                          <input type="text" id="fname" {...register('state')} />
+                        </div>
+                        <div>
+                          <label htmlFor="lname">Country</label>
+                          <input type="text" id="lname" {...register('country')} />
+                        </div>
+                      </div>
+                      <div className='inputTag'>
+                        <label htmlFor="email">Web</label>
+                        <input type="text" id='email' />
+                      </div>
+
+                      <Button variant='contained' className='subBt'>+ Add Custom Fields</Button>
+
+                    </div>
+
+
+                  </div>}
+                </div>
+
+
+                {/* //-------------------------------- Second service ----------------------------------------// */}
+                <div className='serviceFirst'>
+                  <div className='serviceTop' onClick={() => setSecond(!second)}> <WorkHistoryIcon className='iconClass' /> Experiences <KeyboardArrowDownIcon className='arrow' /> </div>
+                  {second && <div className='serviceData'>
+
+                    <div className='basicBottom'>
+                      <div className='inpGrid'>
+                        <div>
+                          <label htmlFor="fname">Company name</label>
+                          <input type="text" id="fname" {...register('company_name')} />
+                        </div>
+                        <div>
+                          <label htmlFor="lname">Job title</label>
+                          <input type="text" id="lname" {...register('position')} />
+                        </div>
+                      </div>
+                      <div className='inpGrid'>
+                        <div>
+                          <label htmlFor="fname">mode</label>
+                          <input type="text" id="fname" {...register('mode')} />
+                        </div>
+                        <div>
+                          <label htmlFor="lname">Country</label>
+                          <input type="text" id="lname" {...register('country')} />
+                        </div>
+                      </div>
 
                       <div className='inpGrid'>
                         <div>
-                          <label htmlFor="fname">First Name</label>
-                          <input type="text" id="fname" {...register('fname')} />
+                          <label htmlFor="fname">Start Date</label>
+                          <input type="text" id="fname" {...register('start_date')} />
                         </div>
                         <div>
-                          <label htmlFor="lname">Last Name</label>
-                          <input type="text" id="lname" {...register('lname')} />
+                          <label htmlFor="lname">End Date</label>
+                          <input type="text" id="lname" {...register('end_date')} />
                         </div>
                       </div>
 
                       <div className='inputTag'>
-                        <label htmlFor="phone">Phone Number</label>
-                        <input type="text" id='phone' {...register('phone')} />
+                        <label htmlFor="email">Description</label>
+                        <input type="text" id='email' {...register('description')} />
                       </div>
 
-                      <div className='inputTag'>
-                        <label htmlFor="email">Email</label>
-                        <input type="text" id='email' {...register('email')} />
-                      </div>
-                    </div>
-                  </div>
 
-                  <div className='basicBottom'>
-                    <div className='inpGrid'>
-                      <div>
-                        <label htmlFor="fname">Date of birth</label>
-                        <input type="text" name="" id="fname" />
-                      </div>
-                      <div>
-                        <label htmlFor="lname">Nationality</label>
-                        <input type="text" id="lname" {...register('nationality')} />
-                      </div>
-                    </div>
-                    <div className='inpGrid'>
-                      <div>
-                        <label htmlFor="fname">Street, number</label>
-                        <input type="text" name="" id="fname" />
-                      </div>
-                      <div>
-                        <label htmlFor="lname">city</label>
-                        <input type="text" id="lname" {...register('city')} />
-                      </div>
-                    </div>
-                    <div className='inpGrid'>
-                      <div>
-                        <label htmlFor="fname">State</label>
-                        <input type="text" id="fname" {...register('state')} />
-                      </div>
-                      <div>
-                        <label htmlFor="lname">Country</label>
-                        <input type="text" id="lname" {...register('country')} />
-                      </div>
-                    </div>
-                    <div className='inputTag'>
-                      <label htmlFor="email">Web</label>
-                      <input type="text" id='email' />
-                    </div>
+                      <Button variant='contained' className='subBt'>+ Add Work Experience</Button>
 
-                    <Button variant='contained' className='subBt'>+ Add Custom Fields</Button>
-
-                  </div>
-
-
-                </div>}
-              </div>
-
-
-              {/* //-------------------------------- Second service ----------------------------------------// */}
-              <div className='serviceFirst'>
-                <div className='serviceTop' onClick={() => setSecond(!second)}> <WorkHistoryIcon className='iconClass' /> Experiences <KeyboardArrowDownIcon className='arrow' /> </div>
-                {second && <div className='serviceData'>
-
-                  <div className='basicBottom'>
-                    <div className='inpGrid'>
-                      <div>
-                        <label htmlFor="fname">Company name</label>
-                        <input type="text" id="fname" {...register('company_name')} />
-                      </div>
-                      <div>
-                        <label htmlFor="lname">Job title</label>
-                        <input type="text" id="lname" {...register('position')} />
-                      </div>
-                    </div>
-                    <div className='inpGrid'>
-                      <div>
-                        <label htmlFor="fname">mode</label>
-                        <input type="text" id="fname" {...register('mode')} />
-                      </div>
-                      <div>
-                        <label htmlFor="lname">Country</label>
-                        <input type="text" id="lname" {...register('country')} />
-                      </div>
-                    </div>
-
-                    <div className='inpGrid'>
-                      <div>
-                        <label htmlFor="fname">Start Date</label>
-                        <input type="text" id="fname" {...register('start_date')} />
-                      </div>
-                      <div>
-                        <label htmlFor="lname">End Date</label>
-                        <input type="text" id="lname" {...register('end_date')} />
-                      </div>
-                    </div>
-
-                    <div className='inputTag'>
-                      <label htmlFor="email">Description</label>
-                      <input type="text" id='email' {...register('description')} />
                     </div>
 
 
-                    <Button variant='contained' className='subBt'>+ Add Work Experience</Button>
-
-                  </div>
-
-
-                </div>}
-              </div>
+                  </div>}
+                </div>
 
 
 
-              {/* //-------------------------------- third service ----------------------------------------// */}
-              <div className='serviceFirst'>
-                <div className='serviceTop' onClick={() => setThird(!third)}> <SchoolIcon className='iconClass' /> Academic History <KeyboardArrowDownIcon className='arrow' /> </div>
-                {third && <div className='serviceData'>
+                {/* //-------------------------------- third service ----------------------------------------// */}
+                <div className='serviceFirst'>
+                  <div className='serviceTop' onClick={() => setThird(!third)}> <SchoolIcon className='iconClass' /> Academic History <KeyboardArrowDownIcon className='arrow' /> </div>
+                  {third && <div className='serviceData'>
 
-                  <div className='basicBottom'>
-                    <div className='inpGrid'>
-                      <div>
-                        <label htmlFor="fname">Institution name</label>
-                        <input type="text" id="fname" {...register('institute_name')} />
+                    <div className='basicBottom'>
+                      <div className='inpGrid'>
+                        <div>
+                          <label htmlFor="fname">Institution name</label>
+                          <input type="text" id="fname" {...register('institute_name')} />
+                        </div>
+                        <div>
+                          <label htmlFor="lname">Field of study</label>
+                          <input type="text" id="lname" {...register('specialisation')} />
+                        </div>
                       </div>
-                      <div>
-                        <label htmlFor="lname">Field of study</label>
-                        <input type="text" id="lname" {...register('specialisation')} />
+                      <div className='inpGrid'>
+                        <div>
+                          <label htmlFor="fname">Degree</label>
+                          <input type="text" id="fname" {...register('education_type')} />
+                        </div>
+                        <div></div>
                       </div>
-                    </div>
-                    <div className='inpGrid'>
-                      <div>
-                        <label htmlFor="fname">Degree</label>
-                        <input type="text" id="fname" {...register('education_type')} />
+                      <div className='inpGrid'>
+                        <div>
+                          <label htmlFor="fname">Start Year</label>
+                          <input type="text" id="fname" {...register('start_year')} />
+                        </div>
+                        <div>
+                          <label htmlFor="lname">Score</label>
+                          <input type="text" id="lname" {...register('score')} />
+                        </div>
                       </div>
-                      <div></div>
-                    </div>
-                    <div className='inpGrid'>
-                      <div>
-                        <label htmlFor="fname">Start Year</label>
-                        <input type="text" id="fname" {...register('start_year')} />
-                      </div>
-                      <div>
-                        <label htmlFor="lname">Score</label>
-                        <input type="text" id="lname" {...register('score')} />
-                      </div>
-                    </div>
 
-                    <Button variant='contained' className='subBt'>+ Add Academic Experience</Button>
+                      <Button variant='contained' className='subBt'>+ Add Academic Experience</Button>
 
-                  </div>
-
-
-                </div>}
-              </div>
-
-
-              {/* //-------------------------------- fourth service ----------------------------------------// */}
-              <div className='serviceFirst'>
-                <div className='serviceTop' onClick={() => setFourth(!fourth)}> <AcUnitIcon className='iconClass' /> Skill <KeyboardArrowDownIcon className='arrow' /> </div>
-                {fourth && <div className='serviceData'>
-
-                  <div className='basicBottom'>
-                    <div className='inpGrid'>
-                      <div>
-                        <label htmlFor="fname">Skill #1</label>
-                        <input type="text" name="" id="fname" readOnly value={"Technical Skill"} />
-                      </div>
-                      <div>
-                        <label htmlFor="lname">Skill level</label>
-                        <input type="text" id="lname" {...register('technical_skills')} />
-                      </div>
-                    </div>
-                    <div className='inpGrid'>
-                      <div>
-                        <label htmlFor="fname">Skill #2</label>
-                        <input type="text" name="" id="fname" readOnly value={"Core Subjects"} />
-                      </div>
-                      <div>
-                        <label htmlFor="lname">Skill level</label>
-                        <input type="text" id="lname" {...register('core_subjects')} />
-                      </div>
-                    </div>
-                    <div className='inpGrid'>
-                      <div>
-                        <label htmlFor="fname">Skill #3</label>
-                        <input type="text" name="" id="fname" readOnly value={"Languages"} />
-                      </div>
-                      <div>
-                        <label htmlFor="lname">Skill level</label>
-                        <input type="text" id="lname" {...register('languages')} />
-                      </div>
-                    </div>
-                    <div className='inpGrid'>
-                      <div>
-                        <label htmlFor="fname">Skill #4</label>
-                        <input type="text" name="" id="fname" readOnly value={"Dev Tools"} />
-                      </div>
-                      <div>
-                        <label htmlFor="lname">Skill level</label>
-                        <input type="text" id="lname" {...register('dev_tools')} />
-                      </div>
                     </div>
 
-                    <Button variant='contained' className='subBt'>+ Add New Skill</Button>
 
-                  </div>
-
-
-                </div>}
-              </div>
+                  </div>}
+                </div>
 
 
+                {/* //-------------------------------- fourth service ----------------------------------------// */}
+                <div className='serviceFirst'>
+                  <div className='serviceTop' onClick={() => setFourth(!fourth)}> <AcUnitIcon className='iconClass' /> Skill <KeyboardArrowDownIcon className='arrow' /> </div>
+                  {fourth && <div className='serviceData'>
+
+                    <div className='basicBottom'>
+                      <div className='inpGrid'>
+                        <div>
+                          <label htmlFor="fname">Skill #1</label>
+                          <input type="text" name="" id="fname" readOnly value={"Technical Skill"} />
+                        </div>
+                        <div>
+                          <label htmlFor="lname">Skill level</label>
+                          <input type="text" id="lname" {...register('technical_skills')} />
+                        </div>
+                      </div>
+                      <div className='inpGrid'>
+                        <div>
+                          <label htmlFor="fname">Skill #2</label>
+                          <input type="text" name="" id="fname" readOnly value={"Core Subjects"} />
+                        </div>
+                        <div>
+                          <label htmlFor="lname">Skill level</label>
+                          <input type="text" id="lname" {...register('core_subjects')} />
+                        </div>
+                      </div>
+                      <div className='inpGrid'>
+                        <div>
+                          <label htmlFor="fname">Skill #3</label>
+                          <input type="text" name="" id="fname" readOnly value={"Languages"} />
+                        </div>
+                        <div>
+                          <label htmlFor="lname">Skill level</label>
+                          <input type="text" id="lname" {...register('languages')} />
+                        </div>
+                      </div>
+                      <div className='inpGrid'>
+                        <div>
+                          <label htmlFor="fname">Skill #4</label>
+                          <input type="text" name="" id="fname" readOnly value={"Dev Tools"} />
+                        </div>
+                        <div>
+                          <label htmlFor="lname">Skill level</label>
+                          <input type="text" id="lname" {...register('dev_tools')} />
+                        </div>
+                      </div>
+
+                      <Button variant='contained' className='subBt'>+ Add New Skill</Button>
+
+                    </div>
 
 
+                  </div>}
+                </div>
+
+                <div className='submitBtn'>
+                  <Button className='bt' type='submit' variant='contained'>Save</Button>
+                </div>
+
+              </form>
             </div>
+
 
             <div className='rightGrid'>
               <div className='pdfContainer'>
