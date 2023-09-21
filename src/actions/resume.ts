@@ -1,9 +1,12 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { loginUser, registerUser } from '@/actions/user';
-import { AUTH_TOKEN } from '@/constants';
-import { loadResume } from '@/actions/resume';
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import Axios from '.';
 
-const resumeData = {
+export const loadResume = createAsyncThunk('load/resume', async () => {
+  const response = await Axios.post('/resume/engineering/0/load', data);
+  return response.data;
+});
+
+const data = {
   name: 'Prateek Goyal',
   city: 'Gwalior',
   state: 'Madhya Pradesh',
@@ -73,21 +76,7 @@ const resumeData = {
       id: '648d8da4cfae573f3de45d6f'
     }
   ],
-  educations: [
-    {
-      level: 'graduation',
-      institute_name: 'Jabalpur Engineering College',
-      start_year: 2020,
-      end_year: 2024,
-      score: 8.4,
-      scoring_type: 'CGPA',
-      maximum_score: 10,
-      specialisation: 'Computer Science and Engineering',
-      user_id: '647ce532a5a3a4d70901914d',
-      id: '650afe121142c7452356d1dd',
-      education_type: 'Bachelors in Computer Science and Engineering'
-    }
-  ],
+  educations: [],
   linkedin: 'https://linkedin.com/in/prateek-goyal1/',
   github: 'https://github.com/gpratekk015',
   profile_links: [
@@ -126,41 +115,3 @@ const resumeData = {
   ],
   languages: ['English', 'Hindi']
 };
-
-const initialState = {
-  authAoken: '',
-  data: {},
-  resumeData: resumeData,
-  pdf: undefined
-};
-
-export const userSlice = createSlice({
-  name: 'user',
-  initialState,
-  reducers: {
-    clearUserData: state => {
-      state.authAoken = '';
-      state.data = {};
-    }
-  },
-  extraReducers: builder => {
-    builder
-      .addCase(loginUser.fulfilled, (state, action) => {
-        state.data = action.payload?.user;
-        state.authAoken = action.payload?.token;
-        localStorage.setItem(AUTH_TOKEN, action.payload?.token);
-      })
-      .addCase(registerUser.fulfilled, (state, action) => {
-        state.data = action.payload?.user;
-        state.authAoken = action.payload?.token;
-        localStorage.setItem(AUTH_TOKEN, action.payload?.token);
-      })
-      .addCase(loadResume.fulfilled, (state, action) => {
-        state.pdf = action.payload;
-      });
-  }
-});
-
-export const { clearUserData } = userSlice.actions;
-
-export default userSlice.reducer;

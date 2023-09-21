@@ -1,227 +1,223 @@
 .workHome {
+  width: 100%;
+  height: 100%;
+  flex-grow: 1;
+  display: grid;
+  grid-template-columns: 220px 1fr;
+
+  .title {
     width: 100%;
-    height: 100%;
-    flex-grow: 1;
+    height: 50px;
     display: grid;
-    grid-template-columns: 220px 1fr;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    margin-top: 25px;
 
-    .title {
-        width: 100%;
-        height: 50px;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        align-items: center;
-        margin-top: 25px;
+    .leftSection {
+      padding-left: 30px;
 
-        .leftSection {
-            padding-left: 30px;
-
-            span {
-                color: rgba(255, 255, 255, 0.48);
-            }
-        }
-
-        .rightSection {
-            text-align: right;
-            padding-right: 30px;
-
-            .downloadBt {
-                font-size: 10px;
-                text-transform: none;
-                border-radius: 8px;
-                background: linear-gradient(180deg, #698E66 0%, #A3F29D 100%);
-                padding: 5px 15px 5px 15px;
-            }
-        }
+      span {
+        color: rgba(255, 255, 255, 0.48);
+      }
     }
 
+    .rightSection {
+      text-align: right;
+      padding-right: 30px;
 
-    .innerGrid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        padding-bottom: 30px;
-
-        .leftGrid {
-            padding-top: 25px;
-
-            .serviceFirst {
-                margin: auto;
-                width: 75%;
-                border-radius: 15px;
-                background: rgba(255, 255, 255, 0.10);
-                backdrop-filter: blur(20px);
-                margin-bottom: 20px;
-
-                .serviceTop {
-                    height: 50px;
-                    border-radius: 15px;
-                    background: rgba(255, 255, 255, 0.08);
-                    display: flex;
-                    align-items: center;
-                    padding-left: 25px;
-                    cursor: pointer;
-
-                    .iconClass {
-                        width: 22px;
-                        margin-right: 20px;
-                    }
-
-                    .arrow {
-                        margin-left: auto;
-                        margin-right: 20px;
-                        color: #686868;
-                    }
-                }
-
-                .serviceData {
-                    padding-bottom: 20px;
-
-                    .inpGrid {
-                        display: grid;
-                        grid-template-columns: 1fr 1fr;
-                        grid-gap: 30px;
-                        margin-bottom: 10px;
-
-                        label {
-                            font-size: 12px;
-                            color: #DCDCDC;
-                        }
-
-                        input {
-                            width: 100%;
-                            height: 25px;
-                            background-color: #737373;
-                            outline: none;
-                            border: none;
-                            border-radius: 2px;
-                            color: white;
-                            padding-left: 10px;
-                            margin-top: 5px;
-                        }
-                    }
-
-                    .inputTag {
-                        margin-bottom: 10px;
-
-                        label {
-                            font-size: 12px;
-                            color: #DCDCDC;
-                        }
-
-                        input {
-                            width: 100%;
-                            height: 25px;
-                            background-color: #737373;
-                            outline: none;
-                            border: none;
-                            border-radius: 2px;
-                            color: white;
-                            padding-left: 10px;
-                            margin-top: 5px;
-                        }
-                    }
-
-                    .basicDetails {
-                        display: grid;
-                        grid-template-columns: 130px 1fr;
-                        margin-top: 20px;
-
-                        .imageContainer {
-                            text-align: center;
-
-                            .profile {
-                                width: 80px;
-                                height: 80px;
-                                border-radius: 50%;
-                                border: 2px solid white;
-                            }
-                        }
-
-                        .basicTop {
-                            padding: 0px 25px 0px 15px;
-                            border-left: .8px solid #E9E9E9;
-                        }
-
-                    }
-
-                    .basicBottom {
-                        margin: auto;
-                        padding: 15px;
-                        padding-right: 25px;
-
-                        .subBt {
-                            width: 103%;
-                            height: 32px;
-                            font-size: 12px;
-                            margin: auto;
-                            margin-top: 20px;
-                            border-radius: 4px;
-                            border: 1px solid var(--field-color, #698E66);
-                            background: linear-gradient(180deg, #698E66 0%, #A3F29D 100%);
-                        }
-                    }
-                }
-            }
-
-            .submitBtn {
-                text-align: center;
-                margin: auto;
-                width: 75%;
-
-                .bt {
-                    width: 100%;
-                    background: linear-gradient(180deg, #698E66 0%, #A3F29D 100%);
-                    height: 40px;
-                    border-radius: 10px;
-                }
-            }
-        }
-
-        .rightGrid {
-            padding-top: 20px;
-
-            .pdfContainer {
-                width: 80%;
-                margin: auto;
-                height: 65vh;
-                border-radius: 15px;
-                background: rgba(255, 255, 255, 0.10);
-                backdrop-filter: blur(20px);
-
-                .topBtnCon {
-                    display: grid;
-                    height: 55px;
-                    grid-template-columns: 1fr 1fr 1fr 1fr;
-                    border-radius: 15px 15px 0px 0px;
-                    overflow: hidden;
-
-                    div {
-                        border-right: 1px solid var(--main, rgba(255, 255, 255, 0.10));
-                        background: rgba(29, 29, 29, .8);
-                        backdrop-filter: blur(20px);
-                        color: #616161;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        font-weight: bold;
-                        font-size: 14px;
-                        cursor: pointer;
-
-                        .imgIcon {
-                            width: 20px;
-                            margin-right: 5px;
-                            margin-top: 2px;
-                        }
-
-                        &:hover {
-                            background: rgba(47, 47, 47, 0.4);
-                            backdrop-filter: blur(20px);
-                            color: white;
-                        }
-                    }
-
-                }
-            }
-        }
+      .downloadBt {
+        font-size: 10px;
+        text-transform: none;
+        border-radius: 8px;
+        background: linear-gradient(180deg, #698e66 0%, #a3f29d 100%);
+        padding: 5px 15px 5px 15px;
+      }
     }
+  }
+
+  .innerGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-bottom: 30px;
+
+    .leftGrid {
+      padding-top: 25px;
+
+      .serviceFirst {
+        margin: auto;
+        width: 75%;
+        border-radius: 15px;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(20px);
+        margin-bottom: 20px;
+
+        .serviceTop {
+          height: 50px;
+          border-radius: 15px;
+          background: rgba(255, 255, 255, 0.08);
+          display: flex;
+          align-items: center;
+          padding-left: 25px;
+          cursor: pointer;
+
+          .iconClass {
+            width: 22px;
+            margin-right: 20px;
+          }
+
+          .arrow {
+            margin-left: auto;
+            margin-right: 20px;
+            color: #686868;
+          }
+        }
+
+        .serviceData {
+          padding-bottom: 20px;
+
+          .inpGrid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-gap: 30px;
+            margin-bottom: 10px;
+
+            label {
+              font-size: 12px;
+              color: #dcdcdc;
+            }
+
+            input {
+              width: 100%;
+              height: 25px;
+              background-color: #737373;
+              outline: none;
+              border: none;
+              border-radius: 2px;
+              color: white;
+              padding-left: 10px;
+              margin-top: 5px;
+            }
+          }
+
+          .inputTag {
+            margin-bottom: 10px;
+
+            label {
+              font-size: 12px;
+              color: #dcdcdc;
+            }
+
+            input {
+              width: 100%;
+              height: 25px;
+              background-color: #737373;
+              outline: none;
+              border: none;
+              border-radius: 2px;
+              color: white;
+              padding-left: 10px;
+              margin-top: 5px;
+            }
+          }
+
+          .basicDetails {
+            display: grid;
+            grid-template-columns: 130px 1fr;
+            margin-top: 20px;
+
+            .imageContainer {
+              text-align: center;
+
+              .profile {
+                width: 80px;
+                height: 80px;
+                border-radius: 50%;
+                border: 2px solid white;
+              }
+            }
+
+            .basicTop {
+              padding: 0px 25px 0px 15px;
+              border-left: 0.8px solid #e9e9e9;
+            }
+          }
+
+          .basicBottom {
+            margin: auto;
+            padding: 15px;
+            padding-right: 25px;
+
+            .subBt {
+              width: 103%;
+              height: 32px;
+              font-size: 12px;
+              margin: auto;
+              margin-top: 20px;
+              border-radius: 4px;
+              border: 1px solid var(--field-color, #698e66);
+              background: linear-gradient(180deg, #698e66 0%, #a3f29d 100%);
+            }
+          }
+        }
+      }
+
+      .submitBtn {
+        text-align: center;
+        margin: auto;
+        width: 75%;
+
+        .bt {
+          width: 100%;
+          background: linear-gradient(180deg, #698e66 0%, #a3f29d 100%);
+          height: 40px;
+          border-radius: 10px;
+        }
+      }
+    }
+
+    .rightGrid {
+      padding-top: 20px;
+
+      .pdfContainer {
+        width: 80%;
+        margin: auto;
+        border-radius: 15px;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(20px);
+
+        .topBtnCon {
+          display: grid;
+          height: 55px;
+          grid-template-columns: 1fr 1fr 1fr 1fr;
+          border-radius: 15px 15px 0px 0px;
+          overflow: hidden;
+
+          div {
+            border-right: 1px solid var(--main, rgba(255, 255, 255, 0.1));
+            background: rgba(29, 29, 29, 0.8);
+            backdrop-filter: blur(20px);
+            color: #616161;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+            cursor: pointer;
+
+            .imgIcon {
+              width: 20px;
+              margin-right: 5px;
+              margin-top: 2px;
+            }
+
+            &:hover {
+              background: rgba(47, 47, 47, 0.4);
+              backdrop-filter: blur(20px);
+              color: white;
+            }
+          }
+        }
+      }
+    }
+  }
 }
