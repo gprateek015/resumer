@@ -11,6 +11,7 @@ import { useSelector } from 'react-redux';
 import { RootState, useDispatch } from '@/redux/store';
 import { changeAuthPage, logoutUser } from '@/redux/slice/auth';
 import { clearUserData } from '@/redux/slice/user';
+import { useRouter } from 'next/navigation';
 
 const righteous = Righteous({
   weight: ['400'],
@@ -20,8 +21,10 @@ const righteous = Righteous({
 const Navbar = () => {
   const { isLoggedIn } = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
+  const route = useRouter();
 
   const handleClick = () => {
+    route.push('/');
     if (isLoggedIn) {
       dispatch(logoutUser());
       dispatch(clearUserData());
@@ -42,7 +45,11 @@ const Navbar = () => {
       className={righteous.className}
     >
       {/* <Image src='' alt='Logo' /> */}
-      <Typography color={'white'}>LOGO</Typography>
+      <Link href='/'>
+        <NavLink active='true'>
+          <Typography fontSize={22}>Dr. Resume</Typography>
+        </NavLink>
+      </Link>
       <Grid
         sx={{
           display: 'flex',
@@ -56,10 +63,10 @@ const Navbar = () => {
           <NavLink active='false'>About Us</NavLink>
         </Link>
         <Link href='/'>
-          <NavLink active='false'>Collection</NavLink>
+          <NavLink active='false'>FAQs</NavLink>
         </Link>
         <Link href='/'>
-          <NavLink active='false'>Artists</NavLink>
+          <NavLink active='false'>Templates</NavLink>
         </Link>
       </Grid>
       <Grid>

@@ -8,3 +8,25 @@ export const loginUser = createAsyncThunk(
     return response.data;
   }
 );
+
+export const registerUser = createAsyncThunk(
+  'user/register',
+  async ({
+    email,
+    password,
+    first_name,
+    last_name
+  }: {
+    email: string;
+    password: string;
+    first_name: string;
+    last_name: string;
+  }) => {
+    const response = await Axios.post('/user', {
+      name: first_name + ' ' + last_name,
+      email,
+      password
+    });
+    return response.data;
+  }
+);
