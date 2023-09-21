@@ -66,7 +66,7 @@ const DescriptionForm = () => {
       >
         <Grid
           sx={{
-            padding: '40px'
+            padding: '20px 40px'
           }}
         >
           <Typography

@@ -48,10 +48,8 @@ const Chatbot = () => {
     <Grid
       sx={{
         width: { xs: '360px', md: '400px' },
-        height: '560px',
+        height: '500px',
         borderRadius: '20px',
-        background: 'rgba(255, 255, 255, 0.10)',
-        backdropFilter: 'blur(20px)',
         padding: '26px'
       }}
     >

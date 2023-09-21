@@ -41,21 +41,25 @@ const ResumeUpload = () => {
   const moveIn = 200; // in ms
 
   useEffect(() => {
-    const intervalId = setInterval(() => {
-      setProgress(prog => {
-        const newProg = prog + Math.floor((100 / timeToTake) * (moveIn / 1000));
-        if (newProg > 100) {
-          clearInterval(intervalId);
-          route.push('/job-description');
-          return 100;
-        }
-        return newProg;
-      });
-    }, moveIn);
+    let intervalId: any;
+    if (files) {
+      intervalId = setInterval(() => {
+        setProgress(prog => {
+          const newProg =
+            prog + Math.floor((100 / timeToTake) * (moveIn / 1000));
+          if (newProg > 100) {
+            clearInterval(intervalId);
+            route.push('/job-description');
+            return 100;
+          }
+          return newProg;
+        });
+      }, moveIn);
+    }
     return () => {
       clearInterval(intervalId);
     };
-  }, []);
+  }, [files]);
 
   return (
     <UploadContainer width={'100%'}>
