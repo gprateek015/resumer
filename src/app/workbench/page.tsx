@@ -38,7 +38,6 @@ const page = () => {
 
   useEffect(() => {
     if (resumeData) {
-
       setValue("fname", String(resumeData.name).split(" ")[0]);
       setValue("lname", String(resumeData.name).split(" ")[1]);
       setValue("phone", resumeData.phone);
