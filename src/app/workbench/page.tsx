@@ -22,7 +22,7 @@ import { useDispatch } from '@/redux/store';
 import { loadResume } from '@/actions/resume';
 import { setResumeData } from '@/redux/slice/user';
 
-const page = () => {
+const Workbench = () => {
   const {
     register,
     handleSubmit,
@@ -541,4 +541,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Workbench;

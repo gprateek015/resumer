@@ -115,16 +115,19 @@ const Chatbot = () => {
                   gap: '10px'
                 }}
               >
-                {AiChats[aiChatsInd]?.options?.map((option: string) => (
-                  <OptionTypography
-                    label={option}
-                    onClick={e => {
-                      // setText((e.target as any).innerText);
-                      handleClick((e.target as any).innerText);
-                      setShowOptions(false);
-                    }}
-                  />
-                ))}
+                {AiChats[aiChatsInd]?.options?.map(
+                  (option: string, ind: number) => (
+                    <OptionTypography
+                      label={option}
+                      onClick={e => {
+                        // setText((e.target as any).innerText);
+                        handleClick((e.target as any).innerText);
+                        setShowOptions(false);
+                      }}
+                      key={ind}
+                    />
+                  )
+                )}
               </Grid>
             )}
           </Grid>

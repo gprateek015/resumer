@@ -59,7 +59,7 @@ const ResumeUpload = () => {
     return () => {
       clearInterval(intervalId);
     };
-  }, [files]);
+  }, [files, route]);
 
   return (
     <UploadContainer width={'100%'}>
