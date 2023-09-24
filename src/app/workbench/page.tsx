@@ -18,6 +18,9 @@ import HelpIcon from '@mui/icons-material/Help';
 import { useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import PdfViewer from '@/components/pdf-viewer';
+import { useDispatch } from '@/redux/store';
+import { loadResume } from '@/actions/resume';
+import { setResumeData } from '@/redux/slice/user';
 
 const page = () => {
   const {
@@ -26,13 +29,15 @@ const page = () => {
     formState: { errors },
     setValue
   } = useForm();
+  const dispatch = useDispatch();
 
-  const [first, setFirst] = useState(false);
+  const [first, setFirst] = useState(!false);
   const [second, setSecond] = useState(false);
   const [third, setThird] = useState(false);
   const [fourth, setFourth] = useState(false);
 
   const { resumeData } = useSelector((state: any) => state.user);
+  const [pdf, setPdf] = useState<ArrayBuffer | null>(null);
 
   useEffect(() => {
     if (resumeData) {
@@ -93,7 +98,24 @@ const page = () => {
       city: data.city,
       state: data.state
     });
+    dispatch(
+      setResumeData({
+        ...resumeData,
+        name: data.fname + ' ' + data.lname,
+        email: data.email,
+        phone: data.phone,
+        city: data.city,
+        state: data.state
+      })
+    );
   };
+
+  useEffect(() => {
+    (async () => {
+      const resp = await dispatch(loadResume({ resumeData }));
+      if (resp.type === 'load/resume/fulfilled') setPdf(resp.payload);
+    })();
+  }, [resumeData]);
 
   return (
     <>
@@ -509,7 +531,7 @@ const page = () => {
                     Assistance
                   </div>
                 </div>
-                <PdfViewer />
+                <PdfViewer pdfUrl={pdf} />
               </div>
             </div>
           </div>

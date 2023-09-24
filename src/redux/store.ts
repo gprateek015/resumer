@@ -6,7 +6,12 @@ import reducers from './slice';
 
 const store = configureStore({
   reducer: reducers,
-  middleware: getDefaultMiddleware => getDefaultMiddleware().concat(logger)
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: ['load/resume/fulfilled']
+      }
+    }).concat(logger)
 });
 
 export type RootState = ReturnType<typeof store.getState>;

@@ -131,7 +131,7 @@ const initialState = {
   authAoken: '',
   data: {},
   resumeData: resumeData,
-  pdf: undefined
+  pdfUrl: undefined
 };
 
 export const userSlice = createSlice({
@@ -141,6 +141,9 @@ export const userSlice = createSlice({
     clearUserData: state => {
       state.authAoken = '';
       state.data = {};
+    },
+    setResumeData: (state, action) => {
+      state.resumeData = action.payload;
     }
   },
   extraReducers: builder => {
@@ -156,11 +159,11 @@ export const userSlice = createSlice({
         localStorage.setItem(AUTH_TOKEN, action.payload?.token);
       })
       .addCase(loadResume.fulfilled, (state, action) => {
-        state.pdf = action.payload;
+        state.pdfUrl = action.payload;
       });
   }
 });
 
-export const { clearUserData } = userSlice.actions;
+export const { clearUserData, setResumeData } = userSlice.actions;
 
 export default userSlice.reducer;

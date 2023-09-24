@@ -122,7 +122,7 @@ const Register = () => {
                 required: 'Please enter your first name'
               })}
               fullWidth
-              placeholder='janedoe@email.com'
+              placeholder='John'
               helperText={errors?.first_name?.message as string}
               error={!!errors?.first_name}
             />
@@ -134,7 +134,7 @@ const Register = () => {
                 required: 'Please enter your last name'
               })}
               fullWidth
-              placeholder='janedoe@email.com'
+              placeholder='Doe'
               helperText={errors?.last_name?.message as string}
               error={!!errors?.last_name}
             />
