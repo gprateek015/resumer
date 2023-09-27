@@ -1,13 +1,27 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Grid, TextField, Typography, Button } from '@mui/material';
 import icon from '@/assets/profile.png';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { RootState, useDispatch } from '@/redux/store';
+import { generateResumeData } from '@/actions/resume';
+import { useSelector } from 'react-redux';
 
 const DescriptionForm = () => {
+  const dispatch = useDispatch();
   const route = useRouter();
+  const { resumeData = {} } = useSelector((state: RootState) => state.user);
+  const [jobDescription, setJobDescription] = useState('');
+
+  const getResumeData = () => {
+    dispatch(generateResumeData({ jobDescription }));
+  };
+
+  useEffect(() => {
+    if (!!Object.keys(resumeData).length) route.push('/workbench');
+  }, [resumeData]);
 
   return (
     <Grid
@@ -56,6 +70,7 @@ const DescriptionForm = () => {
               marginBottom: '30px'
             }
           }}
+          onChange={e => setJobDescription(e.target.value)}
         />
       </Grid>
       <Grid
@@ -117,7 +132,7 @@ const DescriptionForm = () => {
               marginTop: '25px'
             }}
             fullWidth
-            onClick={() => route.push('/workbench')}
+            onClick={() => getResumeData()}
           >
             <Typography
               sx={{

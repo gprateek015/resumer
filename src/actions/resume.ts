@@ -14,3 +14,14 @@ export const loadResume = createAsyncThunk(
     return response.data;
   }
 );
+
+export const generateResumeData = createAsyncThunk(
+  'generate/resume',
+  async ({ jobDescription }: { jobDescription: string }) => {
+    const response = await Axios.post(
+      `/resume/data-new?rewrite=${!!jobDescription.length}`,
+      { job_description: jobDescription }
+    );
+    return response.data;
+  }
+);

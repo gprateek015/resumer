@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button, Grid, Typography } from '@mui/material';
 import Image from 'next/image';
 import { SignupBtn, NavLink } from './styles';
@@ -12,6 +12,7 @@ import { RootState, useDispatch } from '@/redux/store';
 import { changeAuthPage, logoutUser } from '@/redux/slice/auth';
 import { clearUserData } from '@/redux/slice/user';
 import { useRouter } from 'next/navigation';
+import { autoLogin } from '@/utils';
 
 const righteous = Righteous({
   weight: ['400'],
@@ -32,6 +33,10 @@ const Navbar = () => {
       dispatch(changeAuthPage(1));
     }
   };
+
+  useEffect(() => {
+    dispatch(autoLogin());
+  }, []);
 
   return (
     <Grid

@@ -41,53 +41,59 @@ const Workbench = () => {
 
   useEffect(() => {
     if (resumeData) {
-      setValue('fname', String(resumeData.name).split(' ')[0]);
-      setValue('lname', String(resumeData.name).split(' ')[1]);
-      setValue('phone', resumeData.phone);
-      setValue('email', resumeData.email);
-      setValue('city', resumeData.city);
-      setValue('state', resumeData.state);
+      setValue('fname', String(resumeData?.name).split(' ')[0]);
+      setValue('lname', String(resumeData?.name).split(' ')[1]);
+      setValue('phone', resumeData?.phone);
+      setValue('email', resumeData?.email);
+      setValue('city', resumeData?.city);
+      setValue('state', resumeData?.state);
       setValue('nationality', 'Indian');
       setValue('country', 'India');
 
-      setValue('company_name', resumeData.experiences[0].company_name);
-      setValue('start_date', resumeData.experiences[0].start_date);
-      setValue('end_date', resumeData.experiences[0].end_date);
-      setValue('position', resumeData.experiences[0].position);
-      setValue('mode', resumeData.experiences[0].mode);
-      setValue('description', resumeData.experiences[0].description[0]);
+      setValue('company_name', resumeData?.experiences?.[0]?.company_name);
+      setValue('start_date', resumeData?.experiences?.[0]?.start_date);
+      setValue('end_date', resumeData?.experiences?.[0]?.end_date);
+      setValue('position', resumeData?.experiences?.[0]?.position);
+      setValue('mode', resumeData?.experiences?.[0]?.mode);
+      setValue('description', resumeData?.experiences?.[0]?.description?.[0]);
 
-      setValue('institute_name', resumeData.educations[0].institute_name);
-      setValue('education_type', resumeData.educations[0].education_type);
-      setValue('specialisation', resumeData.educations[0].specialisation);
-      setValue('start_year', resumeData.educations[0].start_year);
-      setValue('score', resumeData.educations[0].score);
+      setValue('institute_name', resumeData?.educations?.[0]?.institute_name);
+      setValue('education_type', resumeData?.educations?.[0]?.education_type);
+      setValue('specialisation', resumeData?.educations?.[0]?.specialisation);
+      setValue('start_year', resumeData?.educations?.[0]?.start_year);
+      setValue('score', resumeData?.educations?.[0]?.score);
 
       let techString = '';
-      for (let i = 0; i < resumeData.technical_skills.length; i++) {
-        techString += resumeData.technical_skills[i] + ', ';
+      for (let i = 0; i < resumeData?.technical_skills?.length; i++) {
+        techString += resumeData?.technical_skills[i] + ', ';
       }
       setValue('technical_skills', techString);
 
       let langString = '';
-      for (let i = 0; i < resumeData.languages.length; i++) {
-        langString += resumeData.languages[i] + ', ';
+      for (let i = 0; i < resumeData?.languages?.length; i++) {
+        langString += resumeData?.languages[i] + ', ';
       }
       setValue('languages', langString);
 
       let coreStr = '';
-      for (let i = 0; i < resumeData.core_subjects.length; i++) {
-        coreStr += resumeData.core_subjects[i] + ', ';
+      for (let i = 0; i < resumeData?.core_subjects?.length; i++) {
+        coreStr += resumeData?.core_subjects[i] + ', ';
       }
       setValue('core_subjects', coreStr);
 
       let devStr = '';
-      for (let i = 0; i < resumeData.dev_tools.length; i++) {
-        devStr += resumeData.dev_tools[i] + ', ';
+      for (let i = 0; i < resumeData?.dev_tools?.length; i++) {
+        devStr += resumeData?.dev_tools[i] + ', ';
       }
       setValue('dev_tools', devStr);
     }
   }, [resumeData]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(setResumeData({}));
+    };
+  }, []);
 
   const onSubmit = (data: any) => {
     console.log({

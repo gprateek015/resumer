@@ -30,3 +30,8 @@ export const registerUser = createAsyncThunk(
     return response.data;
   }
 );
+
+export const fetchSelf = createAsyncThunk('user/self', async () => {
+  const response = await Axios.get('/user');
+  return response.data;
+});
