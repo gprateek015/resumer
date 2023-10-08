@@ -5,6 +5,7 @@ import Image from 'next/image';
 import OnboardingIcon from '@/assets/onboarding2.png';
 
 import { Righteous } from 'next/font/google';
+import OnboardingQuestions from '@/components/onboarding-questions';
 
 const righteous = Righteous({
   weight: ['400'],
@@ -23,7 +24,8 @@ const Onboarding = () => {
         alignItems: 'center'
       }}
     >
-      <Grid
+      <OnboardingQuestions />
+      {/* <Grid
         sx={{
           display: 'flex',
           flexDirection: 'column',
@@ -69,7 +71,7 @@ const Onboarding = () => {
             />
           </Grid>
         </Grid>
-      </Grid>
+      </Grid> */}
     </Grid>
   );
 };
