@@ -14,6 +14,7 @@ import ContactDetails from './contact-details';
 import Degrees from './degrees';
 import EducationalDetails from './educational-details';
 import ProjectDetails from './project-details';
+import CodingProfiles from './coding-profile';
 
 const righteous = Righteous({
   weight: ['400'],
@@ -38,6 +39,8 @@ const OnboardingQuestions = () => {
         return <EducationalDetails />;
       case 6:
         return <ProjectDetails />;
+      case 7:
+        return <CodingProfiles />;
     }
   };
   const nextPage = () => {
