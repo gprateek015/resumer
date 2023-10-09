@@ -9,7 +9,9 @@ import OnboardingIcon from '@/assets/onboarding2.png';
 import { Heading, Option, Options, PageNavButton } from './styles';
 import WorkExperience from './work-experience';
 import WorkExperienceDetails from './work-experience-details';
-import Location from './location';
+import HighestEducation from './highest-education';
+import ContactDetails from './contact-details';
+import Degrees from './degrees';
 
 const righteous = Righteous({
   weight: ['400'],
@@ -17,7 +19,7 @@ const righteous = Righteous({
 });
 
 const OnboardingQuestions = () => {
-  const [page, setPage] = useState<number>(2);
+  const [page, setPage] = useState<number>(4);
   const OnboardingPage = () => {
     switch (page) {
       case 0:
@@ -25,7 +27,11 @@ const OnboardingQuestions = () => {
       case 1:
         return <WorkExperienceDetails />;
       case 2:
-        return <Location />;
+        return <ContactDetails />;
+      case 3:
+        return <HighestEducation />;
+      case 4:
+        return <Degrees />;
     }
   };
   const nextPage = () => {
