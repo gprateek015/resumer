@@ -18,7 +18,7 @@ export const Heading = styled(Typography)({
   WebkitBackgroundClip: 'text',
   width: 'fit-content',
   fontWeight: '400',
-  fontSize: '40px',
+  fontSize: '36px',
   lineHeight: '50px',
   letterSpacing: '1.1px'
 });
@@ -48,7 +48,8 @@ export const Option = styled(Box)({
   borderRadius: '5px',
   background: '#ffffff10',
   backdropFilter: 'blur(45px)',
-  cursor: 'pointer'
+  cursor: 'pointer',
+  height: '20px'
 });
 
 export const PageNavButton = styled(Button)({
@@ -75,7 +76,7 @@ export const FormInput = styled(TextField)({
   background: 'rgba(255, 255, 255, 0.10)',
   colorScheme: 'dark',
 
-  '& input': {
+  '& input,textarea': {
     color: 'white',
     fontSize: '14px',
     padding: '12px 16px'

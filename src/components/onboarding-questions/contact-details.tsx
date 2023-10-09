@@ -2,7 +2,15 @@ import React from 'react';
 import { Grid } from '@mui/material';
 import Select from 'react-select';
 import { contries } from '@/constants';
-import { Heading, Subtitle, selectStyles, FormInput, FormLabel, Option, Options } from './styles';
+import {
+  Heading,
+  Subtitle,
+  selectStyles,
+  FormInput,
+  FormLabel,
+  Option,
+  Options
+} from './styles';
 
 const ContactDetails = () => {
   const contriesOption = contries.map(country => ({
@@ -22,19 +30,21 @@ const ContactDetails = () => {
           gap: '20px'
         }}
       >
-        <FormLabel>Please provide us with your phone number including country code</FormLabel>
+        <FormLabel>Please provide us with your phone number</FormLabel>
         <FormInput />
         <FormLabel>Your Linkedin for the recruiters</FormLabel>
-        <FormInput placeholder='https://linkedin.com/in/username'/>
+        <FormInput placeholder='https://linkedin.com/in/username' />
         <FormLabel>Showcase all your work through your github</FormLabel>
-        <FormInput placeholder='https://github.com/username'/>
+        <FormInput placeholder='https://github.com/username' />
         <FormLabel>Lets show your twitter to everyone</FormLabel>
         <FormInput />
-        <FormLabel>Do you have a personal portfolio website, if yes, please provide it</FormLabel>
+        <FormLabel>
+          Do you have a personal portfolio website, if yes, please provide it
+        </FormLabel>
         <FormInput />
         <FormLabel>
-          Please share your current adress which you would like to include in your
-          resume
+          Please share your current adress which you would like to include in
+          your resume
         </FormLabel>
         <Grid
           sx={{

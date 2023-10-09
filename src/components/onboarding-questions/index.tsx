@@ -22,7 +22,7 @@ const righteous = Righteous({
 });
 
 const OnboardingQuestions = () => {
-  const [page, setPage] = useState<number>(4);
+  const [page, setPage] = useState<number>(0);
   const OnboardingPage = () => {
     switch (page) {
       case 0:
@@ -57,16 +57,24 @@ const OnboardingQuestions = () => {
         justifyContent: 'center',
         alignItems: 'center',
         gap: '100px',
-        height: 'fit-content',
         borderRadius: '20px',
         padding: '20px 40px',
         margin: 'auto 150px',
-        width: '100%'
+        width: '100%',
+        height: '600px'
       }}
       className={righteous.className}
     >
-      <Grid flexGrow={1}>
-        {OnboardingPage()}
+      <Grid flexGrow={1} height='100%'>
+        <Grid
+          sx={{
+            height: 'calc(100% - 60px)',
+            overflowY: 'auto',
+            padding: '10px'
+          }}
+        >
+          {OnboardingPage()}
+        </Grid>
         <Grid
           sx={{
             display: 'flex',
