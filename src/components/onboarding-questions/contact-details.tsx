@@ -22,11 +22,15 @@ const ContactDetails = () => {
           gap: '20px'
         }}
       >
-        <FormLabel>Please provide us with your phone number</FormLabel>
+        <FormLabel>Please provide us with your phone number including country code</FormLabel>
         <FormInput />
         <FormLabel>Your Linkedin for the recruiters</FormLabel>
-        <FormInput />
+        <FormInput placeholder='https://linkedin.com/in/username'/>
+        <FormLabel>Showcase all your work through your github</FormLabel>
+        <FormInput placeholder='https://github.com/username'/>
         <FormLabel>Lets show your twitter to everyone</FormLabel>
+        <FormInput />
+        <FormLabel>Do you have a personal portfolio website, if yes, please provide it</FormLabel>
         <FormInput />
         <FormLabel>
           Please share your current adress which you would like to include in your
