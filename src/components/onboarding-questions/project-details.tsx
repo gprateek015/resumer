@@ -3,12 +3,12 @@ import { Grid } from '@mui/material';
 
 import { FormInput, FormLabel, Heading, Option, Options } from './styles';
 
-const WorkExperienceDetails = () => {
+const ProjectDetails = () => {
   return (
     <Grid>
       <Heading mb='20px'>
-        Share your internship/ <br />
-        work experience with us
+        Please provide us with <br />
+        your projects
       </Heading>
       <Grid
         sx={{
@@ -17,11 +17,9 @@ const WorkExperienceDetails = () => {
           gap: '15px'
         }}
       >
-        <FormLabel>Employer/company name</FormLabel>
+        <FormLabel>Name of the project</FormLabel>
         <FormInput />
-        <FormLabel>Job Title</FormLabel>
-        <FormInput />
-        <FormLabel>Technology stack</FormLabel>
+        <FormLabel>Technology stack used</FormLabel>
         <FormInput />
         <Grid
           sx={{
@@ -39,13 +37,11 @@ const WorkExperienceDetails = () => {
             <FormInput type='date' />
           </Grid>
         </Grid>
-        <FormLabel>Location</FormLabel>
-        <FormInput />
-        <FormLabel>Please describe your work experience below</FormLabel>
+        <FormLabel>Please describe your project below</FormLabel>
         <FormInput multiline rows={7} />
       </Grid>
     </Grid>
   );
 };
 
-export default WorkExperienceDetails;
+export default ProjectDetails;

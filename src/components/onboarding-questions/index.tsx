@@ -12,6 +12,8 @@ import WorkExperienceDetails from './work-experience-details';
 import HighestEducation from './highest-education';
 import ContactDetails from './contact-details';
 import Degrees from './degrees';
+import EducationalDetails from './educational-details';
+import ProjectDetails from './project-details';
 
 const righteous = Righteous({
   weight: ['400'],
@@ -32,6 +34,10 @@ const OnboardingQuestions = () => {
         return <HighestEducation />;
       case 4:
         return <Degrees />;
+      case 5:
+        return <EducationalDetails />;
+      case 6:
+        return <ProjectDetails />;
     }
   };
   const nextPage = () => {
