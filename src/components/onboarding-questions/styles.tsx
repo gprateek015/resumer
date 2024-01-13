@@ -2,7 +2,7 @@
 
 import {
   Box,
-  Button,
+  Button as MuiButton,
   Grid,
   TextField,
   Typography,
@@ -33,26 +33,27 @@ export const Options = styled(Grid)({
   display: 'flex',
   flexDirection: 'row',
   flexWrap: 'wrap',
-  gap: '15px',
-  marginTop: '40px'
+  gap: '15px'
 });
 
-export const Option = styled(Box)({
-  display: 'flex',
-  padding: '40px 30px',
-  justifyContent: 'center',
-  alignItems: 'center',
-  alignSelf: 'stretch',
-  border: '1px solid white',
-  width: '110px',
-  borderRadius: '5px',
-  background: '#ffffff10',
-  backdropFilter: 'blur(45px)',
-  cursor: 'pointer',
-  height: '20px'
-});
+export const Option = styled(Box)(
+  ({ active = 'false' }: { active?: string }) => ({
+    display: 'flex',
+    padding: '40px 30px',
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'stretch',
+    border: '1px solid white',
+    width: '110px',
+    borderRadius: '5px',
+    background: active === 'false' ? '#ffffff10' : '#ffffff50',
+    backdropFilter: 'blur(45px)',
+    cursor: 'pointer',
+    height: '20px'
+  })
+);
 
-export const PageNavButton = styled(Button)({
+export const PageNavButton = styled(MuiButton)({
   color: 'white',
   borderColor: 'white',
   padding: '2px 25px',
@@ -70,11 +71,13 @@ export const FormLabel = styled(Typography)({
 });
 
 export const FormInput = styled(TextField)({
-  border: '1px solid #DDD',
   width: '100%',
-  borderRadius: '4px',
-  background: 'rgba(255, 255, 255, 0.10)',
-  colorScheme: 'dark',
+  '& .MuiInputBase-root': {
+    border: '1px solid #DDD',
+    borderRadius: '4px',
+    background: 'rgba(255, 255, 255, 0.10)',
+    colorScheme: 'dark'
+  },
 
   '& input,textarea': {
     color: 'white',
@@ -91,9 +94,15 @@ export const FormInput = styled(TextField)({
 });
 
 export const selectStyles: StylesConfig = {
-  container: styles => ({ ...styles, flexGrow: 1 }),
+  container: styles => ({
+    ...styles,
+    flexGrow: 1,
+    width: '100%',
+    height: '100%'
+  }),
   control: styles => ({
     ...styles,
+    height: '100%',
     background: 'rgba(255, 255, 255, 0.10)',
     borderColor: 'rgba(255, 255, 255, 0.50)',
     '&:hover': {
@@ -110,3 +119,10 @@ export const selectStyles: StylesConfig = {
     background: isFocused ? '#ffffff10' : 'black'
   })
 };
+
+export const Button = styled(MuiButton)({
+  color: 'white',
+  border: '1px solid white',
+  borderRadius: '3px',
+  background: 'rgba(255, 255, 255, 0.10)'
+});

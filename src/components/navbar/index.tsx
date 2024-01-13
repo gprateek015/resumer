@@ -52,7 +52,7 @@ const Navbar = () => {
       {/* <Image src='' alt='Logo' /> */}
       <Link href='/'>
         <NavLink active='true'>
-          <Typography fontSize={22}>Dr. Resume</Typography>
+          <Typography fontSize={22}>Resume.AI</Typography>
         </NavLink>
       </Link>
       <Grid

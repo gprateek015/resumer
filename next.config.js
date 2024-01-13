@@ -1,9 +1,6 @@
-// /** @type {import('next').NextConfig} */
-// const nextConfig = {};
+/** @type {import('next').NextConfig} */
 
-// module.exports = nextConfig;
-
-module.exports = {
+const nextConfig = {
   webpack: config => {
     config.module.rules.push({
       test: /\.node/,
@@ -13,3 +10,5 @@ module.exports = {
     return config;
   }
 };
+
+module.exports = nextConfig;

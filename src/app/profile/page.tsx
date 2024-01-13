@@ -3,7 +3,7 @@
 import React, { useEffect } from 'react';
 import './profile.scss';
 import Image from 'next/image';
-import profile from '@/assets/profile.png';
+import profile from '@/assets/onboarding1.png';
 import { Button } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
@@ -19,7 +19,7 @@ const Profile = () => {
   const { resumeData } = useSelector((state: any) => state.user);
 
   useEffect(() => {
-    if (resumeData) {
+    if (resumeData.name) {
       setValue('fname', String(resumeData.name).split(' ')[0]);
       setValue('lname', String(resumeData.name).split(' ')[1]);
       setValue('phone', resumeData.phone);

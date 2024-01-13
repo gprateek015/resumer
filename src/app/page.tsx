@@ -10,6 +10,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
 import Register from '@/components/auth/register';
 import { useRouter } from 'next/navigation';
+import { User } from '@/types';
 
 const righteous = Righteous({
   weight: ['400'],
@@ -25,10 +26,12 @@ const poppins = Poppins({
 export default function Home() {
   const route = useRouter();
   const { page, isLoggedIn } = useSelector((state: RootState) => state.auth);
+  const { data: user } = useSelector((state: RootState) => state.user);
 
   useEffect(() => {
     if (isLoggedIn) {
-      route.push('/onboarding');
+      if (!user.onboarding_completed) route.push('/onboarding');
+      else route.push('/profile');
     }
   }, [isLoggedIn]);
 

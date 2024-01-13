@@ -11,7 +11,7 @@ import { useRouter } from 'next/navigation';
 
 import { Heading, UploadContainer, Uploader } from './styles';
 
-const ResumeUpload = () => {
+const ResumeUpload = ({ onCompleteUpload }: { onCompleteUpload: Function }) => {
   const route = useRouter();
   const [files, setFiles] = useState<any>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -60,6 +60,12 @@ const ResumeUpload = () => {
       clearInterval(intervalId);
     };
   }, [files, route]);
+
+  useEffect(() => {
+    if (progress === 100) {
+      onCompleteUpload();
+    }
+  }, [progress]);
 
   return (
     <UploadContainer width={'100%'}>

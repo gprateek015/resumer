@@ -17,6 +17,7 @@ import { RootState, useDispatch } from '@/redux/store';
 import { loginUser, registerUser } from '@/actions/user';
 import { useSelector } from 'react-redux';
 import { changeAuthPage, resetError } from '@/redux/slice/auth';
+import PasswordField from './password-field';
 
 type FormValues = {
   email: string;
@@ -152,7 +153,8 @@ const Register = () => {
         </Grid>
         <Grid>
           <FormLabel>Password</FormLabel>
-          <FormInput
+
+          <PasswordField
             {...register('password', {
               required: 'Please enter your password'
             })}
@@ -160,7 +162,6 @@ const Register = () => {
             error={!!errors?.email}
             fullWidth
             placeholder='Password'
-            type='password'
           />
         </Grid>
         <Grid>

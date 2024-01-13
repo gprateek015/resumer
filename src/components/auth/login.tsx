@@ -17,6 +17,7 @@ import { RootState, useDispatch } from '@/redux/store';
 import { loginUser } from '@/actions/user';
 import { useSelector } from 'react-redux';
 import { changeAuthPage, resetError } from '@/redux/slice/auth';
+import PasswordField from './password-field';
 
 type FormValues = {
   email: string;
@@ -117,7 +118,7 @@ const Login = () => {
         </Grid>
         <Grid>
           <FormLabel>Password</FormLabel>
-          <FormInput
+          <PasswordField
             {...register('password', {
               required: 'Please enter your password'
             })}
