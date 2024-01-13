@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { Grid, TextField, Typography, Button } from '@mui/material';
-import icon from '@/assets/profile.png';
+import icon from '@/assets/onboarding7.png';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { RootState, useDispatch } from '@/redux/store';
@@ -17,11 +17,12 @@ const DescriptionForm = () => {
 
   const getResumeData = () => {
     dispatch(generateResumeData({ jobDescription }));
+    route.push('/workbench');
   };
 
-  useEffect(() => {
-    if (!!Object.keys(resumeData).length) route.push('/workbench');
-  }, [resumeData]);
+  // useEffect(() => {
+  //   if (!!Object.keys(resumeData).length) route.push('/workbench');
+  // }, [resumeData]);
 
   return (
     <Grid
@@ -49,29 +50,61 @@ const DescriptionForm = () => {
           borderRadius: '20px',
           background: 'rgba(255, 255, 255, 0.10)',
           backdropFilter: 'blur(20px)',
-          padding: '12px'
+          padding: '12px',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center'
         }}
       >
-        <Typography textAlign='center'>Enter job description below</Typography>
+        <Typography textAlign='center'>
+          Please enter job description below
+        </Typography>
         <TextField
           fullWidth
           multiline
-          rows={15}
+          rows={12}
           hidden
           placeholder='Start typing in here'
           inputProps={{
             sx: {
               background: 'white',
               padding: '7px 10px',
-              height: '400px',
+              height: '300px',
               border: '1px solid #E9E9E9',
               borderRadius: '4px',
               lineHeight: '20px',
-              marginBottom: '30px'
+              marginBottom: '10px'
             }
           }}
           onChange={e => setJobDescription(e.target.value)}
         />
+        <Button
+          sx={{
+            borderRadius: '10px',
+            border: '1px solid #FFF',
+            background: '#FFF',
+            padding: '10px',
+            width: '90%'
+          }}
+          fullWidth
+          onClick={() => getResumeData()}
+        >
+          <Typography
+            sx={{
+              background:
+                'linear-gradient(90deg, #4ADFD5 0.42%, #7479FA 41.67%, #E92EC3 106.58%)',
+              backgroundClip: 'text',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              fontSize: '14px',
+              fontWeight: '600',
+              width: '155px',
+              letterSpacing: '1px'
+            }}
+          >
+            Generate Resume
+          </Typography>
+        </Button>
       </Grid>
       <Grid
         sx={{
@@ -79,18 +112,39 @@ const DescriptionForm = () => {
           width: '100%'
         }}
       >
+        <Grid>
+          <Typography sx={{ marginTop: '10px' }} textAlign='center'>
+            ----- Or -----
+          </Typography>
+          <Image
+            src={icon}
+            alt='icon'
+            style={{
+              height: '350px',
+              width: '350px',
+              marginTop: '5%'
+            }}
+          />
+        </Grid>
         <Grid
           sx={{
-            padding: '20px 40px'
+            width: { xs: '360px', md: '340px' },
+            height: '400px',
+            borderRadius: '20px',
+            background: 'rgba(255, 255, 255, 0.10)',
+            backdropFilter: 'blur(20px)',
+            padding: '20px',
+            marginLeft: '5%'
           }}
         >
           <Typography
             style={{
-              marginBottom: 20
+              marginBottom: 40
             }}
-            fontSize={26}
+            fontSize={16}
+            textAlign='center'
           >
-            Or if you have a job ID then please enter here
+            Do you have a job ID then please provide the details below
           </Typography>
           <Typography paddingBottom={1}>Enter company name</Typography>
           <TextField
@@ -129,7 +183,7 @@ const DescriptionForm = () => {
               border: '1px solid #FFF',
               background: '#FFF',
               padding: '10px',
-              marginTop: '25px'
+              marginTop: '40px'
             }}
             fullWidth
             onClick={() => getResumeData()}
@@ -150,18 +204,6 @@ const DescriptionForm = () => {
               Generate Resume
             </Typography>
           </Button>
-        </Grid>
-        <Grid>
-          <Image
-            src={icon}
-            alt='icon'
-            style={{
-              height: '350px',
-              width: '350px',
-              marginTop: '5%',
-              marginLeft: '10%'
-            }}
-          />
         </Grid>
       </Grid>
     </Grid>

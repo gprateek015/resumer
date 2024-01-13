@@ -15,40 +15,58 @@ import Degrees from './degrees';
 import EducationalDetails from './educational-details';
 import ProjectDetails from './project-details';
 import CodingProfiles from './coding-profile';
+import { useRouter } from 'next/navigation';
 
 const righteous = Righteous({
   weight: ['400'],
   subsets: ['latin']
 });
 
+export type PageNavPropsType = {
+  nextPage: Function;
+  prevPage: Function;
+};
+
 const OnboardingQuestions = () => {
+  const route = useRouter();
   const [page, setPage] = useState<number>(0);
-  const OnboardingPage = () => {
-    switch (page) {
-      case 0:
-        return <WorkExperience />;
-      case 1:
-        return <WorkExperienceDetails />;
-      case 2:
-        return <ContactDetails />;
-      case 3:
-        return <HighestEducation />;
-      case 4:
-        return <Degrees />;
-      case 5:
-        return <EducationalDetails />;
-      case 6:
-        return <ProjectDetails />;
-      case 7:
-        return <CodingProfiles />;
-    }
-  };
+
   const nextPage = () => {
+    if (page === 7) {
+      route.push('/job-description');
+      return;
+    }
     setPage(page => page + 1);
   };
   const prevPage = () => {
     setPage(page => Math.max(0, page - 1));
   };
+
+  const OnboardingPage = () => {
+    switch (page) {
+      case 0:
+        return <WorkExperience nextPage={nextPage} prevPage={prevPage} />;
+      case 1:
+        return (
+          <WorkExperienceDetails nextPage={nextPage} prevPage={prevPage} />
+        );
+      case 2:
+        return <ContactDetails nextPage={nextPage} prevPage={prevPage} />;
+      case 3:
+        return <HighestEducation nextPage={nextPage} prevPage={prevPage} />;
+      case 4:
+        return <Degrees nextPage={nextPage} prevPage={prevPage} />;
+      case 5:
+        return <EducationalDetails nextPage={nextPage} prevPage={prevPage} />;
+      case 6:
+        return <ProjectDetails nextPage={nextPage} prevPage={prevPage} />;
+      case 7:
+        return <CodingProfiles nextPage={nextPage} prevPage={prevPage} />;
+      default:
+        return <WorkExperience nextPage={nextPage} prevPage={prevPage} />;
+    }
+  };
+
   return (
     <Grid
       sx={{
@@ -66,30 +84,7 @@ const OnboardingQuestions = () => {
       className={righteous.className}
     >
       <Grid flexGrow={1} height='100%'>
-        <Grid
-          sx={{
-            height: 'calc(100% - 60px)',
-            overflowY: 'auto',
-            padding: '10px'
-          }}
-        >
-          {OnboardingPage()}
-        </Grid>
-        <Grid
-          sx={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            marginTop: '30px'
-          }}
-        >
-          <PageNavButton variant='outlined' onClick={prevPage}>
-            Previous
-          </PageNavButton>
-          <PageNavButton variant='outlined' onClick={nextPage}>
-            Next
-          </PageNavButton>
-        </Grid>
+        {OnboardingPage()}
       </Grid>
       <Image
         src={OnboardingIcon}

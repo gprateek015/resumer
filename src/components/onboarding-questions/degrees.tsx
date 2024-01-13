@@ -1,33 +1,37 @@
 import React from 'react';
 import { Grid, Typography } from '@mui/material';
 
-import { Heading, Option, Options } from './styles';
+import { Heading, Option, Options, PageNavButton } from './styles';
+import { PageNavPropsType } from '.';
+import PageContainer from './page-container';
 
-const Degrees = () => {
+const Degrees = ({ nextPage, prevPage }: PageNavPropsType) => {
   return (
-    <Grid>
-      <Heading mb='20px'>
-        Which all degrees do <br /> you hold?
-      </Heading>
-      <Typography>Select even if you are enrolled.</Typography>
-      <Options>
-        <Option>
-          <Typography textAlign={'center'}>Bachelor of Technology</Typography>
-        </Option>
-        <Option>
-          <Typography textAlign={'center'}>Master of Technology</Typography>
-        </Option>
-        <Option>
-          <Typography textAlign={'center'}>Master in Science</Typography>
-        </Option>
-        <Option>
-          <Typography>Diploma</Typography>
-        </Option>
-        <Option>
-          <Typography>Other</Typography>
-        </Option>
-      </Options>
-    </Grid>
+    <PageContainer nextPage={nextPage} prevPage={prevPage}>
+      <Grid>
+        <Heading mb='20px'>
+          Highest Qualification <br /> you hold?
+        </Heading>
+        <Typography>Select even if you are enrolled.</Typography>
+        <Options>
+          <Option onClick={() => nextPage()}>
+            <Typography textAlign={'center'}>Bachelor of Technology</Typography>
+          </Option>
+          <Option onClick={() => nextPage()}>
+            <Typography textAlign={'center'}>Master of Technology</Typography>
+          </Option>
+          <Option onClick={() => nextPage()}>
+            <Typography textAlign={'center'}>Master in Science</Typography>
+          </Option>
+          <Option onClick={() => nextPage()}>
+            <Typography>Diploma</Typography>
+          </Option>
+          <Option onClick={() => nextPage()}>
+            <Typography>Other</Typography>
+          </Option>
+        </Options>
+      </Grid>
+    </PageContainer>
   );
 };
 

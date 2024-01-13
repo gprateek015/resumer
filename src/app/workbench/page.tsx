@@ -7,7 +7,7 @@ import { Button, Grid } from '@mui/material';
 import user from '@/assets/icons/user.svg';
 import Image from 'next/image';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import profile from '@/assets/profile.png';
+import profile from '@/assets/onboarding1.png';
 import WorkHistoryIcon from '@mui/icons-material/WorkHistory';
 import SchoolIcon from '@mui/icons-material/School';
 import AcUnitIcon from '@mui/icons-material/AcUnit';
@@ -19,7 +19,7 @@ import { useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import PdfViewer from '@/components/pdf-viewer';
 import { useDispatch } from '@/redux/store';
-import { loadResume } from '@/actions/resume';
+import { generateResumeData, loadResume } from '@/actions/resume';
 import { setResumeData } from '@/redux/slice/user';
 
 const Workbench = () => {
@@ -122,6 +122,10 @@ const Workbench = () => {
       if (resp.type === 'load/resume/fulfilled') setPdf(resp.payload);
     })();
   }, [resumeData]);
+
+  useEffect(() => {
+    dispatch(generateResumeData({ jobDescription: '' }));
+  }, []);
 
   return (
     <>

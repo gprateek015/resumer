@@ -23,7 +23,7 @@ const AiChats = [
   }
 ];
 
-const Chatbot = () => {
+const Chatbot = ({ setShowQuestions }: { setShowQuestions: Function }) => {
   const [chats, setChats] = useState<string[]>([AiChats[0]?.message]);
   const [text, setText] = useState<string>('');
   const [allowUserToType, setAllowUserToType] = useState(false);
@@ -55,7 +55,7 @@ const Chatbot = () => {
     >
       {' '}
       {resumeUpload ? (
-        <ResumeUpload />
+        <ResumeUpload onCompleteUpload={() => setShowQuestions(true)} />
       ) : (
         <Grid
           sx={{
