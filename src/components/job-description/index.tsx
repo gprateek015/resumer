@@ -12,7 +12,6 @@ import { useSelector } from 'react-redux';
 const DescriptionForm = () => {
   const dispatch = useDispatch();
   const route = useRouter();
-  const { resumeData = {} } = useSelector((state: RootState) => state.user);
   const [jobDescription, setJobDescription] = useState('');
 
   const getResumeData = () => {

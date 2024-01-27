@@ -61,7 +61,7 @@ export const updateUser = createAsyncThunk(
       country?: string;
       state?: string;
       city?: string;
-      profile_links: ProfileLink[];
+      profile_links?: ProfileLink[];
       onboarding_completed?: boolean;
       callback?: Function;
     },

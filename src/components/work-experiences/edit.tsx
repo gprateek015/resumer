@@ -1,111 +1,85 @@
-'use client';
-
 import React, { useEffect, useState } from 'react';
 import {
-  Box,
-  FormHelperText,
-  Grid,
-  IconButton,
-  Typography
-} from '@mui/material';
-import { useFieldArray, useForm } from 'react-hook-form';
-import AddIcon from '@mui/icons-material/Add';
-import DeleteIcon from '@mui/icons-material/DeleteForever';
-import ShortUniqueId from 'short-unique-id';
-
-import {
+  Button,
   FormInput,
   FormLabel,
-  Heading,
-  Button,
-  Options,
-  Option
-} from './styles';
+  Option,
+  Options
+} from '../onboarding-questions/styles';
+import {
+  SubmitHandler,
+  useFieldArray,
+  useForm,
+  useFormContext
+} from 'react-hook-form';
+import { Box, FormHelperText, Grid, IconButton } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
+import DeleteIcon from '@mui/icons-material/DeleteForever';
 import { Experience } from '@/types';
-import { postExperience, updateExperience } from '@/actions/experience';
-import { RootState, useDispatch } from '@/redux/store';
-import { useSelector } from 'react-redux';
+import { useDispatch } from '@/redux/store';
 import { clearOnboardingErrors } from '@/redux/slice/onboarding';
 
-type ExperienceData = Experience & {
-  descriptions?: {
-    id: string;
-    value: string;
-  }[];
-};
-
-const WorkExperienceEdit = ({
-  value,
-  handleCancel
+const WorkExpEdit = ({
+  handleCancel,
+  onSubmit,
+  buttonText,
+  apiError: apiErrors,
+  experience
 }: {
-  value?: Experience;
   handleCancel: Function;
+  onSubmit: SubmitHandler<any>;
+  buttonText: string;
+  apiError?: string | object | null;
+  experience?: Experience;
 }) => {
-  const uid = new ShortUniqueId({ length: 5 });
   const dispatch = useDispatch();
-  const { errors: apiErrors } = useSelector(
-    (state: RootState) => state.onboarding
-  );
-  const [apiError, setApiError] = useState<string | null>(null);
-
+  const [apiError, setApiError] = useState('');
   const {
     control,
     register,
-    handleSubmit,
     formState: { errors },
     watch,
     setValue,
+    handleSubmit,
     setError,
     clearErrors
-  } = useForm({
-    defaultValues: value
-      ? {
-          ...value,
-          descriptions: value?.description?.map?.((desc: string) => ({
-            id: uid.rnd(),
-            value: desc
-          }))
-        }
-      : ({
-          company_name: undefined,
-          position: undefined,
-          start_date: undefined,
-          end_date: undefined,
-          mode: undefined,
-          location: undefined,
-          user_id: undefined,
-          descriptions: [{ id: uid.rnd(), value: '' }]
-        } as ExperienceData)
-  });
+  } = useForm();
+
+  const mode = watch('mode');
 
   const {
     fields: description,
     append,
     remove
   } = useFieldArray({
-    name: 'descriptions',
+    name: 'description',
     control
   });
 
-  const mode = watch('mode');
-
-  const onSubmit = async (data: ExperienceData) => {
-    setApiError(null);
-
-    const newData = {
-      ...data,
-      description: data.descriptions?.map(desc => desc.value),
-      descriptions: undefined
-    };
-    if (value && value?.id)
-      await dispatch(
-        updateExperience({
-          data: { ...newData, id: undefined, user_id: undefined },
-          id: value?.id
-        })
+  useEffect(() => {
+    if (experience) {
+      (Object.keys(experience || {}) as Array<keyof Experience>).forEach(
+        key => {
+          if (key !== '_id' && key !== 'user_id' && experience)
+            setValue(key, experience[key] as any);
+        }
       );
-    else await dispatch(postExperience(newData));
-  };
+    } else {
+      const newValues = {
+        company_name: undefined,
+        position: undefined,
+        start_date: undefined,
+        end_date: undefined,
+        mode: undefined,
+        location: undefined,
+        description: ['']
+      };
+
+      (Object.keys(newValues) as Array<keyof typeof newValues>).map(key => {
+        setValue(key, newValues[key]);
+      });
+    }
+  }, [experience]);
 
   useEffect(() => {
     if (typeof apiErrors === 'string') {
@@ -113,14 +87,12 @@ const WorkExperienceEdit = ({
       dispatch(clearOnboardingErrors());
     } else if (apiErrors) {
       Object.keys(apiErrors || {}).forEach((error: any) => {
-        console.log(error, apiErrors[error].message);
-        setError(error, { message: apiErrors[error].message });
+        setError(error, { message: (apiErrors as any)[error].message });
       });
       dispatch(clearOnboardingErrors());
 
       setTimeout(() => {
         clearErrors('description');
-        clearErrors('descriptions');
       }, 2000);
     }
   }, [apiErrors]);
@@ -141,14 +113,14 @@ const WorkExperienceEdit = ({
             required: 'Company name is required'
           })}
           placeholder='Enter the company name'
-          helperText={errors?.company_name?.message}
+          helperText={errors?.company_name?.message as any}
           error={!!errors?.company_name?.message}
         />
         <FormLabel>Job Title</FormLabel>
         <FormInput
           {...register('position', { required: 'Position is required' })}
           placeholder='Enter the job title'
-          helperText={errors?.position?.message}
+          helperText={errors?.position?.message as any}
           error={!!errors?.position?.message}
         />
         <FormLabel>Mode of Internship</FormLabel>
@@ -178,7 +150,7 @@ const WorkExperienceEdit = ({
             <FormInput
               type='date'
               {...register('start_date', { required: true })}
-              helperText={errors?.start_date?.message}
+              helperText={errors?.start_date?.message as any}
               error={!!errors?.start_date?.message}
             />
           </Grid>
@@ -187,7 +159,7 @@ const WorkExperienceEdit = ({
             <FormInput
               type='date'
               {...register('end_date', { required: true })}
-              helperText={errors?.end_date?.message}
+              helperText={errors?.end_date?.message as any}
               error={!!errors?.end_date?.message}
             />
           </Grid>
@@ -198,7 +170,7 @@ const WorkExperienceEdit = ({
             <FormInput
               {...register('location', { required: 'Location is required' })}
               placeholder='Type in your work location'
-              helperText={errors?.location?.message}
+              helperText={errors?.location?.message as any}
               error={!!errors?.location?.message}
             />
           </>
@@ -208,7 +180,7 @@ const WorkExperienceEdit = ({
           {description?.map((desc, ind: number) => (
             <Box display={'flex'} gap='10px' key={desc.id} mb='10px'>
               <FormInput
-                {...register(`descriptions.${ind}.value`)}
+                {...register(`description.${ind}`)}
                 placeholder='Tasks you did in your internship/job'
               />
               <IconButton
@@ -225,16 +197,11 @@ const WorkExperienceEdit = ({
           ))}
           {errors?.description && (
             <FormHelperText error>
-              {errors?.description?.message}
+              {errors?.description?.message as string}
             </FormHelperText>
           )}
           <Button
-            onClick={() =>
-              append({
-                id: uid.rnd(),
-                value: ''
-              })
-            }
+            onClick={() => append('')}
             sx={{
               background: 'transparent'
             }}
@@ -257,7 +224,7 @@ const WorkExperienceEdit = ({
             Cancel
           </Button>
           <Button onClick={handleSubmit(onSubmit)} sx={{ flexBasis: '50%' }}>
-            {value ? 'Save' : 'Add experience'}
+            {buttonText}
           </Button>
         </Grid>
       </Grid>
@@ -265,4 +232,4 @@ const WorkExperienceEdit = ({
   );
 };
 
-export default WorkExperienceEdit;
+export default WorkExpEdit;

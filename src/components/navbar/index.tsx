@@ -11,7 +11,7 @@ import { useSelector } from 'react-redux';
 import { RootState, useDispatch } from '@/redux/store';
 import { changeAuthPage, logoutUser } from '@/redux/slice/auth';
 import { clearUserData } from '@/redux/slice/user';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { autoLogin } from '@/utils';
 
 const righteous = Righteous({
@@ -23,6 +23,8 @@ const Navbar = () => {
   const { isLoggedIn } = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
   const route = useRouter();
+
+  const pathname = usePathname();
 
   const handleClick = () => {
     route.push('/');
@@ -43,16 +45,19 @@ const Navbar = () => {
       sx={{
         display: 'flex',
         justifyContent: 'space-between',
-        padding: '20px 80px',
+        padding: '15px 80px',
         alignItems: 'center',
-        background: 'transparent'
+        background:
+          pathname === '/'
+            ? 'transparent'
+            : 'linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0%, rgba(51, 50, 50, 0.12) 113.38%)',
+        backdropFilter: 'blur(20px)'
       }}
       className={righteous.className}
     >
-      {/* <Image src='' alt='Logo' /> */}
       <Link href='/'>
-        <NavLink active='true'>
-          <Typography fontSize={22}>Resume.AI</Typography>
+        <NavLink active='true' sx={{ fontSize: '22px' }}>
+          Resumer
         </NavLink>
       </Link>
       <Grid

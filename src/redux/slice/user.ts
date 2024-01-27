@@ -7,15 +7,11 @@ import { User } from '@/types';
 export type UserState = {
   authToken: string;
   data: User;
-  resumeData: any;
-  pdfUrl: string | undefined;
 };
 
 const initialState: UserState = {
   authToken: '',
-  data: {},
-  resumeData: {},
-  pdfUrl: undefined
+  data: {}
 };
 
 const userDataToState = (state: UserState, action: PayloadAction<any>) => {
@@ -34,9 +30,6 @@ export const userSlice = createSlice({
       state.authToken = '';
       state.data = {};
     },
-    setResumeData: (state, action) => {
-      state.resumeData = action?.payload || {};
-    },
     addAuthToken: (state, action) => {
       state.authToken = action.payload || '';
     }
@@ -51,16 +44,10 @@ export const userSlice = createSlice({
       })
       .addCase(fetchSelf.fulfilled, (state, action) => {
         userDataToState(state, action);
-      })
-      .addCase(loadResume.fulfilled, (state, action) => {
-        state.pdfUrl = action.payload;
-      })
-      .addCase(generateResumeData.fulfilled, (state, action) => {
-        state.resumeData = action.payload;
       });
   }
 });
 
-export const { clearUserData, setResumeData, addAuthToken } = userSlice.actions;
+export const { clearUserData, addAuthToken } = userSlice.actions;
 
 export default userSlice.reducer;

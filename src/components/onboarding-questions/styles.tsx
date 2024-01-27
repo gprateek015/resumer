@@ -93,7 +93,7 @@ export const FormInput = styled(TextField)({
   }
 });
 
-export const selectStyles: StylesConfig = {
+export const selectStyles: StylesConfig<any> = {
   container: styles => ({
     ...styles,
     flexGrow: 1,
@@ -112,7 +112,6 @@ export const selectStyles: StylesConfig = {
   }),
   singleValue: styles => ({ ...styles, color: 'white' }),
   input: styles => ({ ...styles, color: 'white' }),
-
   menu: styles => ({ ...styles, background: 'black' }),
   option: (styles, { isFocused }) => ({
     ...styles,

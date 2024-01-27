@@ -12,19 +12,16 @@ import {
   Options,
   PageNavButton,
   Button
-} from './styles';
-import { PageNavPropsType } from '.';
-import PageContainer from './page-container';
+} from '../onboarding-questions/styles';
 import { Education } from '@/types';
-import ShortUniqueId from 'short-unique-id';
 import { useDispatch, useSelector } from '@/redux/store';
-import { useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { firstLetterCapital } from '@/utils';
 import { postEducation, updateEducation } from '@/actions/education';
 import { clearOnboardingErrors } from '@/redux/slice/onboarding';
 import moment from 'moment';
 
-type EducationData = Education & {
+export type EducationData = Education & {
   edu_level?: {
     label: string;
     value: string;
@@ -33,14 +30,19 @@ type EducationData = Education & {
 
 const EducationalDetailsEdit = ({
   handleCancel,
-  value
+  education,
+  onSubmit,
+  buttonText,
+  apiError: apiErrors
 }: {
   handleCancel: Function;
-  value?: EducationData;
+  education?: EducationData;
+  onSubmit: SubmitHandler<EducationData>;
+  buttonText?: string;
+  apiError?: string | object | null;
 }) => {
-  const uid = new ShortUniqueId({ length: 5 });
   const dispatch = useDispatch();
-  const { errors: apiErrors } = useSelector(state => state.onboarding);
+  // const { errors: apiErrors } = useSelector(state => state.onboarding);
   const [apiError, setApiError] = useState<string | null>(null);
 
   const cgpaOption = cgpa.map(cgpa => ({
@@ -64,12 +66,14 @@ const EducationalDetailsEdit = ({
     clearErrors,
     getValues
   } = useForm({
-    defaultValues: value
+    defaultValues: education
       ? {
-          ...value,
-          edu_level: levelOption.find(opt => opt.value === value.level),
-          start_year: moment(`${value.start_year || ''}`).format('YYYY-MM-DD'),
-          end_year: moment(`${value.end_year || ''}`).format('YYYY-MM-DD')
+          ...education,
+          edu_level: levelOption.find(opt => opt.value === education.level),
+          start_year: moment(`${education.start_year || ''}`).format(
+            'YYYY-MM-DD'
+          ),
+          end_year: moment(`${education.end_year || ''}`).format('YYYY-MM-DD')
         }
       : {
           // level: undefined,
@@ -88,37 +92,13 @@ const EducationalDetailsEdit = ({
   const eduLevel = watch('edu_level');
   const scoringType = watch('scoring_type');
 
-  const onSubmit = async (data: Education) => {
-    setApiError(null);
-
-    const newData = {
-      ...data,
-      start_year: data?.start_year?.split?.('-')?.[0],
-      end_year: data?.end_year?.split?.('-')?.[0],
-      level: eduLevel?.value,
-      edu_level: undefined,
-      maximum_score:
-        data.scoring_type === 'percentage' ? 100 : data.maximum_score
-    };
-
-    if (value && value?.id)
-      await dispatch(
-        updateEducation({
-          data: { ...newData, id: undefined, user_id: undefined },
-          id: value?.id
-        })
-      );
-    else await dispatch(postEducation(newData));
-  };
-
   useEffect(() => {
     if (typeof apiErrors === 'string') {
       setApiError(apiErrors);
       dispatch(clearOnboardingErrors());
     } else if (apiErrors) {
       Object.keys(apiErrors || {}).forEach((error: any) => {
-        console.log(error, apiErrors[error].message);
-        setError(error, { message: apiErrors[error].message });
+        setError(error, { message: (apiErrors as any)[error].message });
       });
       dispatch(clearOnboardingErrors());
     }
@@ -173,7 +153,7 @@ const EducationalDetailsEdit = ({
             {...register('score', { required: 'Score is required' })}
             helperText={errors?.score?.message}
             error={!!errors?.score}
-            placeholder={scoringType === 'cgpa' ? '4.5 / 9.0' : '90%'}
+            placeholder={scoringType === 'cgpa' ? '4.5 OR 9.0' : '90%'}
           />
         </Box>
         {scoringType === 'cgpa' && (
@@ -186,7 +166,7 @@ const EducationalDetailsEdit = ({
               })}
               helperText={errors?.maximum_score?.message}
               error={!!errors?.maximum_score}
-              placeholder='5 / 10'
+              placeholder='5 OR 10'
             />
           </Box>
         )}
@@ -260,7 +240,7 @@ const EducationalDetailsEdit = ({
           Cancel
         </Button>
         <Button onClick={handleSubmit(onSubmit)} sx={{ flexBasis: '50%' }}>
-          {value ? 'Save' : 'Add experience'}
+          {buttonText}
         </Button>
       </Grid>
     </Grid>

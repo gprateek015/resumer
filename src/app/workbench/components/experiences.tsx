@@ -1,0 +1,74 @@
+import { Grid } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import Heading from './heading';
+import SchoolIcon from '@mui/icons-material/School';
+import WorkExpDetailDesign from '@/components/work-experiences/detail';
+import { SubmitHandler, useFormContext } from 'react-hook-form';
+import { Experience } from '@/types';
+
+const Experiences = ({
+  collapsed,
+  toggleCollapse
+}: {
+  collapsed: boolean;
+  toggleCollapse: Function;
+}) => {
+  const [editId, setEditId] = useState<string | null>(null);
+  const { setValue, watch } = useFormContext();
+  const experiences = watch('experiences');
+
+  const onSubmit: SubmitHandler<Experience> = data => {
+    if (editId === 'new') {
+      setValue('experiences', [...experiences, data]);
+    } else {
+      setValue(
+        'experiences',
+        experiences.map((exp: Experience) => {
+          if (exp._id === editId) {
+            return data;
+          }
+          return exp;
+        })
+      );
+    }
+  };
+
+  const handleDelete = (id: string) => {
+    setValue(
+      'experiences',
+      experiences.filter((exp: Experience) => exp._id !== id)
+    );
+  };
+
+  return (
+    <Grid>
+      <Heading
+        title='Experiences'
+        icon={<SchoolIcon />}
+        collapsed={collapsed}
+        toggleCollapse={() => toggleCollapse()}
+      />
+
+      {!collapsed && (
+        <Grid
+          sx={{
+            borderRadius: '0px 0px 20px 20px',
+            background: 'rgba(255, 255, 255, 0.10)',
+            backdropFilter: 'blur(20px)',
+            padding: '25px 15px'
+          }}
+        >
+          <WorkExpDetailDesign
+            experiences={experiences}
+            handleDelete={handleDelete}
+            editId={editId}
+            setEditId={setEditId}
+            onSubmit={onSubmit}
+          />
+        </Grid>
+      )}
+    </Grid>
+  );
+};
+
+export default Experiences;

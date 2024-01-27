@@ -1,9 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import Axios from '.';
+import { Resume } from '@/types';
 
 export const loadResume = createAsyncThunk(
   'load/resume',
-  async ({ resumeData }: { resumeData: any }) => {
+  async ({ resumeData }: { resumeData: Resume }) => {
     const response = await Axios.post(
       '/resume/engineering/0/load',
       resumeData,
