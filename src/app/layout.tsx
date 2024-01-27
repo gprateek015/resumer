@@ -7,7 +7,7 @@ import BackgroundImg from '@/assets/home-background.png';
 import Prodiver from '@/components/redux-provider';
 
 export const metadata = {
-  title: 'Resume.AI',
+  title: 'Resumer',
   description:
     'Get you resume specially talored for you and specific Job description'
 };

@@ -1,4 +1,4 @@
-import DescriptionForm from '@/components/jobDescription';
+import DescriptionForm from '@/components/job-description';
 import { Grid, Typography } from '@mui/material';
 import { Righteous } from 'next/font/google';
 import React from 'react';

@@ -2,15 +2,17 @@ import Education from './education';
 import Experience from './experience';
 import Project from './project';
 import User from './user';
+import Resume from './resume';
 
 export type Skill = {
-  id?: string;
-  name?: string;
+  _id?: string;
+  name: string;
   proficiency?: 'beginner' | 'moderate' | 'expert';
+  type: 'technical_skills' | 'dev_tools' | 'core_subjects' | 'languages';
 };
 
 export type ProfileLink = {
-  id?: string;
+  _id?: string;
   name:
     | 'leetcode'
     | 'codeforces'
@@ -22,4 +24,4 @@ export type ProfileLink = {
   link?: string;
 };
 
-export type { Education, Experience, Project, User };
+export type { Education, Experience, Project, User, Resume };

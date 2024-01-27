@@ -1,7 +1,5 @@
 'use client';
 
-import { Grid } from '@mui/material';
-import React, { useEffect, useRef, useState } from 'react';
 import { Document, Page } from 'react-pdf';
 import { pdfjs } from 'react-pdf';
 
@@ -10,12 +8,9 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   import.meta.url
 ).toString();
 
-const PdfViewer = ({ pdfUrl }: { pdfUrl: any }) => {
-  // const container = useRef<HTMLDivElement>(null);
-
+const PdfViewer = ({ pdf }: { pdf: ArrayBuffer | null }) => {
   return (
-    // <Grid ref={container} minHeight={'600px'} maxWidth={'40vw'}>
-    <Document file={pdfUrl}>
+    <Document file={pdf}>
       <Page
         pageNumber={1}
         width={480}
@@ -24,7 +19,6 @@ const PdfViewer = ({ pdfUrl }: { pdfUrl: any }) => {
         renderTextLayer={false}
       />
     </Document>
-    // </Grid>
   );
 };
 

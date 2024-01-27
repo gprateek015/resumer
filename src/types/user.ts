@@ -4,7 +4,7 @@ import Experience from './experience';
 import Project from './project';
 
 type User = {
-  id?: string;
+  _id?: string;
   name?: string;
   username?: string;
   city?: string;
