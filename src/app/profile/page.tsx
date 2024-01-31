@@ -5,8 +5,8 @@ import './profile.scss';
 import Image from 'next/image';
 import profile from '@/assets/onboarding1.png';
 import { Button } from '@mui/material';
-import { useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
+import { useSelector } from '@/redux/store';
 
 const Profile = () => {
   const {
@@ -16,62 +16,55 @@ const Profile = () => {
     setValue
   } = useForm();
 
-  const { resumeData } = useSelector((state: any) => state.user);
+  const { data: resumeData } = useSelector(state => state.workbench);
 
   useEffect(() => {
     if (resumeData.name) {
-      setValue('fname', String(resumeData.name).split(' ')[0]);
-      setValue('lname', String(resumeData.name).split(' ')[1]);
-      setValue('phone', resumeData.phone);
-      setValue('email', resumeData.email);
-      setValue('city', resumeData.city);
-      setValue('street', '207/8 Mahakal Colony Dewas');
-      setValue('dob', '07 June 2002');
-      setValue('website', 'https://anandtechnical.netlify.app');
-      setValue('state', resumeData.state);
-      setValue('nationality', 'Indian');
-      setValue('country', 'India');
-
-      setValue('company_name', resumeData.experiences[0].company_name);
-      setValue('start_date', resumeData.experiences[0].start_date);
-      setValue('end_date', resumeData.experiences[0].end_date);
-      setValue('position', resumeData.experiences[0].position);
-      setValue('mode', resumeData.experiences[0].mode);
-      setValue('description', resumeData.experiences[0].description[0]);
-
-      setValue('institute_name', resumeData.educations[0].institute_name);
-      setValue('education_type', resumeData.educations[0].education_type);
-      setValue('specialisation', resumeData.educations[0].specialisation);
-      setValue('start_year', resumeData.educations[0].start_year);
-      setValue('score', resumeData.educations[0].score);
-
-      setValue('project_name', resumeData.projects[0].name);
-      setValue('project_link', resumeData.projects[0].live_url);
-      setValue('project_description', resumeData.projects[0].description[0]);
-
-      let techString = '';
-      for (let i = 0; i < resumeData.technical_skills.length; i++) {
-        techString += resumeData.technical_skills[i] + ', ';
-      }
-      setValue('technical_skills', techString);
-
-      let langString = '';
-      for (let i = 0; i < resumeData.languages.length; i++) {
-        langString += resumeData.languages[i] + ', ';
-      }
-      setValue('languages', langString);
-
-      let coreStr = '';
-      for (let i = 0; i < resumeData.core_subjects.length; i++) {
-        coreStr += resumeData.core_subjects[i] + ', ';
-      }
-      setValue('core_subjects', coreStr);
-
-      let devStr = '';
-      for (let i = 0; i < resumeData.dev_tools.length; i++) {
-        devStr += resumeData.dev_tools[i] + ', ';
-      }
-      setValue('dev_tools', devStr);
+      // setValue('fname', String(resumeData.name).split(' ')[0]);
+      // setValue('lname', String(resumeData.name).split(' ')[1]);
+      // setValue('phone', resumeData.phone);
+      // setValue('email', resumeData.email);
+      // setValue('city', resumeData.city);
+      // setValue('street', '207/8 Mahakal Colony Dewas');
+      // setValue('dob', '07 June 2002');
+      // setValue('website', 'https://anandtechnical.netlify.app');
+      // setValue('state', resumeData.state);
+      // setValue('nationality', 'Indian');
+      // setValue('country', 'India');
+      // setValue('company_name', resumeData.experiences[0].company_name);
+      // setValue('start_date', resumeData.experiences[0].start_date);
+      // setValue('end_date', resumeData.experiences[0].end_date);
+      // setValue('position', resumeData.experiences[0].position);
+      // setValue('mode', resumeData.experiences[0].mode);
+      // setValue('description', resumeData.experiences[0].description[0]);
+      // setValue('institute_name', resumeData.educations[0].institute_name);
+      // setValue('education_type', resumeData.educations[0].education_type);
+      // setValue('specialisation', resumeData.educations[0].specialisation);
+      // setValue('start_year', resumeData.educations[0].start_year);
+      // setValue('score', resumeData.educations[0].score);
+      // setValue('project_name', resumeData.projects[0].name);
+      // setValue('project_link', resumeData.projects[0].live_url);
+      // setValue('project_description', resumeData.projects[0].description[0]);
+      // let techString = '';
+      // for (let i = 0; i < resumeData.technical_skills.length; i++) {
+      //   techString += resumeData.technical_skills[i] + ', ';
+      // }
+      // setValue('technical_skills', techString);
+      // let langString = '';
+      // for (let i = 0; i < resumeData.languages.length; i++) {
+      //   langString += resumeData.languages[i] + ', ';
+      // }
+      // setValue('languages', langString);
+      // let coreStr = '';
+      // for (let i = 0; i < resumeData.core_subjects.length; i++) {
+      //   coreStr += resumeData.core_subjects[i] + ', ';
+      // }
+      // setValue('core_subjects', coreStr);
+      // let devStr = '';
+      // for (let i = 0; i < resumeData.dev_tools.length; i++) {
+      //   devStr += resumeData.dev_tools[i] + ', ';
+      // }
+      // setValue('dev_tools', devStr);
     }
   }, [resumeData]);
 

@@ -42,6 +42,7 @@ export const updateUser = createAsyncThunk(
   async (
     {
       phone,
+      name,
       linkedin,
       github,
       twitter,
@@ -54,6 +55,7 @@ export const updateUser = createAsyncThunk(
       callback
     }: {
       phone?: string;
+      name?: string;
       linkedin?: string;
       github?: string;
       twitter?: string;
@@ -69,6 +71,7 @@ export const updateUser = createAsyncThunk(
   ) => {
     const response = await Axios.put('/user', {
       phone,
+      name,
       linkedin,
       github,
       twitter,

@@ -17,7 +17,17 @@ const SkillsInput = ({ onChange }: { onChange: Function }) => {
     <>
       <Typography>Skills</Typography>
       <AsyncCreatableSelect
-        onChange={val => onChange(val)}
+        onChange={(val: any) => {
+          if (!val?._id) {
+            // new skill
+            onChange({
+              ...val,
+              type: 'new_skill'
+            });
+          } else {
+            onChange(val);
+          }
+        }}
         defaultOptions
         value={null}
         loadOptions={async input => {

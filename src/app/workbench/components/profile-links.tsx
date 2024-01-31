@@ -89,7 +89,7 @@ const ProfileLinks = ({
           <Typography>Other Profile Links</Typography>
 
           {profileLinks?.map((profileLink: any, ind: number) => (
-            <Box display={'flex'} gap='10px' key={profileLink._id} mb='10px'>
+            <Box display={'flex'} gap='10px' key={profileLink.id} mb='10px'>
               <FormInput
                 {...register(`profile_links.${ind}.name`)}
                 placeholder='Codeforces'

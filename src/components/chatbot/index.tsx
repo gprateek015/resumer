@@ -1,40 +1,89 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Grid, IconButton, TextField } from '@mui/material';
 import Image from 'next/image';
 import Typewriter from 'typewriter-effect';
-import OnboardingIcon from '@/assets/onboarding.png';
 
 import SendIcon from '@/assets/icons/send-icon.svg';
 import { ChatTypography, OptionTypography } from './styles';
 import ResumeUpload from '../resume-upload';
-
-const AiChats = [
-  {
-    message:
-      "Hello Prateek, Let's embark on the adventure of crafting your outstanding resume! To initiate the process, could you kindly provide us with your name?",
-    options: ['Prateek Goyal', 'Choose a different one']
-  },
-  {
-    message:
-      "Perfect, Let's get the things rolling. Would you like to import your existing resume or create one from scratch",
-    options: ['Import resume', 'Create a brand new resume']
-  }
-];
+import { useDispatch, useSelector } from '@/redux/store';
+import { updateUser } from '@/actions/user';
 
 const Chatbot = ({ setShowQuestions }: { setShowQuestions: Function }) => {
-  const [chats, setChats] = useState<string[]>([AiChats[0]?.message]);
-  const [text, setText] = useState<string>('');
+  const dispatch = useDispatch();
+  const {
+    data: { name, _id }
+  } = useSelector(state => state.user);
+
+  const [chats, setChats] = useState<string[]>([]);
+  const [inputText, setInputText] = useState<string>('');
   const [allowUserToType, setAllowUserToType] = useState(false);
-  const [aiChatsInd, setAiChatsInd] = useState(0);
   const [showOptions, setShowOptions] = useState<boolean>(false);
+  const [aiChatsInd, setAiChatsInd] = useState(0);
   const [resumeUpload, setResumeUpload] = useState<boolean>(false);
 
-  const handleClick = (msg?: string) => {
-    const newMsg = msg || text;
+  const AiChats = useMemo(() => {
+    if (!_id) return [];
+    return [
+      {
+        message: `Hello ${
+          name?.split(' ')[0] ?? 'there'
+        }, Let's embark on the adventure of crafting your outstanding resume! To initiate the process, could you kindly provide us with your name?`,
+        options: [
+          {
+            label: `${name}`,
+            value: 'profile_name'
+          },
+          {
+            label: 'Choose a different one',
+            value: 'new_name'
+          }
+        ]
+      },
+      {
+        message:
+          "Perfect, Let's get the things rolling. Would you like to import your existing resume or create one from scratch",
+        options: [
+          {
+            label: 'Import resume',
+            value: 'import_resume'
+          },
+          {
+            label: 'Create a brand new resume',
+            value: 'create_new'
+          }
+        ]
+      }
+    ];
+  }, [_id]);
+
+  const handleOptionChoose = (option?: (typeof AiChats)[0]['options'][0]) => {
+    switch (option?.value) {
+      case 'profile_name':
+        handleClick(option.label);
+        break;
+      case 'new_name':
+        setAllowUserToType(true);
+        break;
+      case 'import_resume':
+        handleClick(option.label);
+        break;
+      case 'create_new':
+        setShowQuestions(true);
+        break;
+    }
+    setShowOptions(false);
+  };
+
+  const handleClick = (optionValue?: string) => {
+    const newMsg = optionValue || inputText;
+    if (inputText) {
+      dispatch(updateUser({ name: inputText }));
+    }
     setChats(chats => [...chats, newMsg]);
-    setText('');
+    setInputText('');
     setAllowUserToType(false);
     setTimeout(() => {
       if (newMsg === 'Import resume') setResumeUpload(true);
@@ -43,6 +92,12 @@ const Chatbot = ({ setShowQuestions }: { setShowQuestions: Function }) => {
       setAiChatsInd(curr => curr + 1);
     }, 1000);
   };
+
+  useEffect(() => {
+    if (AiChats.length > 0) {
+      setChats([AiChats[0]?.message]);
+    }
+  }, [AiChats]);
 
   return (
     <Grid
@@ -92,14 +147,11 @@ const Chatbot = ({ setShowQuestions }: { setShowQuestions: Function }) => {
                         .typeString(chat + '.')
                         .deleteChars(1)
                         .start()
-                        .callFunction(() => {
-                          setAllowUserToType(true);
-                          setShowOptions(true);
-                        });
+                        .callFunction(() => setShowOptions(true));
                     }}
                     options={{
                       cursor: '|',
-                      delay: 50,
+                      delay: 30,
                       devMode: false
                     }}
                   />
@@ -115,19 +167,16 @@ const Chatbot = ({ setShowQuestions }: { setShowQuestions: Function }) => {
                   gap: '10px'
                 }}
               >
-                {AiChats[aiChatsInd]?.options?.map(
-                  (option: string, ind: number) => (
-                    <OptionTypography
-                      label={option}
-                      onClick={e => {
-                        // setText((e.target as any).innerText);
-                        handleClick((e.target as any).innerText);
-                        setShowOptions(false);
-                      }}
-                      key={ind}
-                    />
-                  )
-                )}
+                {AiChats[aiChatsInd]?.options?.map((option, ind: number) => (
+                  <OptionTypography
+                    label={option.label}
+                    onClick={e => {
+                      // handleClick(option);
+                      handleOptionChoose(option);
+                    }}
+                    key={ind}
+                  />
+                ))}
               </Grid>
             )}
           </Grid>
@@ -151,9 +200,14 @@ const Chatbot = ({ setShowQuestions }: { setShowQuestions: Function }) => {
                   lineHeight: '20px'
                 }
               }}
-              onKeyDownCapture={e => e.key === 'Enter' && handleClick()}
-              value={text}
-              onChange={e => setText(e.target.value)}
+              onKeyDownCapture={e => {
+                if (e.key === 'Enter') {
+                  handleClick();
+                  setShowOptions(false);
+                }
+              }}
+              value={inputText}
+              onChange={e => setInputText(e.target.value)}
               disabled={!allowUserToType}
             />
             <IconButton
@@ -161,12 +215,15 @@ const Chatbot = ({ setShowQuestions }: { setShowQuestions: Function }) => {
                 background:
                   'linear-gradient(90deg, #4ADFD5 0.42%, #7479FA 41.67%, #E92EC3 106.58%)',
                 borderRadius: '4px',
-                opacity: !text ? '0.6' : '1',
+                opacity: !inputText ? '0.6' : '1',
                 aspectRatio: '1',
                 width: '36px',
                 height: '36px'
               }}
-              onClick={() => handleClick()}
+              onClick={() => {
+                handleClick();
+                setShowOptions(false);
+              }}
             >
               <Image src={SendIcon} alt='sned-icon' />
             </IconButton>

@@ -15,4 +15,7 @@ export const autoLogin = () => {
 };
 
 export const firstLetterCapital = (str: string) =>
-  str[0].toUpperCase() + str.slice(1);
+  str
+    .split(' ')
+    .map(word => word[0].toUpperCase() + word.slice(1))
+    .join(' ');
