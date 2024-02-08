@@ -87,3 +87,11 @@ export const updateUser = createAsyncThunk(
     return response.data;
   }
 );
+
+export const socialLogin = createAsyncThunk(
+  'user/social-login',
+  async ({ name, email }: { name?: string | null; email?: string | null }) => {
+    const response = await Axios.post('/user/social-login', { name, email });
+    return response.data;
+  }
+);

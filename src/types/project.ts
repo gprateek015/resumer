@@ -1,5 +1,6 @@
 type Project = {
   _id?: string;
+  id?: string;
   name?: string;
   skills_required?: string[];
   description?: string[];

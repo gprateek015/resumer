@@ -1,5 +1,10 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { fetchSelf, loginUser, registerUser } from '@/actions/user';
+import {
+  fetchSelf,
+  loginUser,
+  registerUser,
+  socialLogin
+} from '@/actions/user';
 import { AUTH_TOKEN } from '@/constants';
 import { generateResumeData, loadResume } from '@/actions/resume';
 import { User } from '@/types';
@@ -43,6 +48,9 @@ export const userSlice = createSlice({
         userDataToState(state, action);
       })
       .addCase(fetchSelf.fulfilled, (state, action) => {
+        userDataToState(state, action);
+      })
+      .addCase(socialLogin.fulfilled, (state, action) => {
         userDataToState(state, action);
       });
   }

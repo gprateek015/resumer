@@ -4,7 +4,9 @@ import { Grid, ThemeProvider } from '@mui/material';
 import theme from '@/theme';
 import Image from 'next/image';
 import BackgroundImg from '@/assets/home-background.png';
-import Prodiver from '@/components/redux-provider';
+import ReduxProvider from '@/components/redux-provider';
+import AuthProvider from '@/components/auth-provider';
+import ProtectedRoutes from '@/components/protected-routes';
 
 export const metadata = {
   title: 'Resumer',
@@ -20,17 +22,29 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body>
-        <Prodiver>
+        <ReduxProvider>
           <ThemeProvider theme={theme}>
-            <Grid minHeight='100vh' display={'flex'} flexDirection={'column'}>
-              <Navbar />
-              <Image src={BackgroundImg} alt='' className='home-background' />
-              <Grid flexGrow={1} display={'flex'} flexDirection={'column'}>
-                {children}
-              </Grid>
-            </Grid>
+            <AuthProvider>
+              <ProtectedRoutes>
+                <Grid
+                  minHeight='100vh'
+                  display={'flex'}
+                  flexDirection={'column'}
+                >
+                  <Navbar />
+                  <Image
+                    src={BackgroundImg}
+                    alt=''
+                    className='home-background'
+                  />
+                  <Grid flexGrow={1} display={'flex'} flexDirection={'column'}>
+                    {children}
+                  </Grid>
+                </Grid>
+              </ProtectedRoutes>
+            </AuthProvider>
           </ThemeProvider>
-        </Prodiver>
+        </ReduxProvider>
       </body>
     </html>
   );

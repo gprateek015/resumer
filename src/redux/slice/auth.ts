@@ -1,5 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchSelf, loginUser, registerUser } from '@/actions/user';
+import {
+  fetchSelf,
+  loginUser,
+  registerUser,
+  socialLogin
+} from '@/actions/user';
 import { AUTH_TOKEN } from '@/constants';
 
 const initialState = {
@@ -42,6 +47,9 @@ export const authSlice = createSlice({
         state.error = action.error?.message ?? '';
       })
       .addCase(fetchSelf.fulfilled, state => {
+        state.isLoggedIn = true;
+      })
+      .addCase(socialLogin.fulfilled, state => {
         state.isLoggedIn = true;
       });
   }

@@ -1,16 +1,9 @@
-'use client';
-
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Grid, Typography, Box } from '@mui/material';
 
 import { Righteous, Poppins } from 'next/font/google';
 
-import Login from '@/components/auth/login';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/redux/store';
-import Register from '@/components/auth/register';
-import { useRouter } from 'next/navigation';
-import { User } from '@/types';
+import AuthBox from '@/components/auth';
 
 const righteous = Righteous({
   weight: ['400'],
@@ -24,17 +17,6 @@ const poppins = Poppins({
 });
 
 export default function Home() {
-  const route = useRouter();
-  const { page, isLoggedIn } = useSelector((state: RootState) => state.auth);
-  const { data: user } = useSelector((state: RootState) => state.user);
-
-  useEffect(() => {
-    if (isLoggedIn) {
-      if (!user.onboarding_completed) route.push('/onboarding');
-      else route.push('/profile');
-    }
-  }, [isLoggedIn]);
-
   return (
     <Grid
       display={'flex'}
@@ -46,7 +28,9 @@ export default function Home() {
         sx={{
           display: 'flex',
           justifyContent: 'space-evenly',
-          width: '100%'
+          width: '100%',
+          flexDirection: { xs: 'column', md: 'row' },
+          alignItems: { xs: 'center', md: 'normal' }
         }}
       >
         <Grid
@@ -55,7 +39,9 @@ export default function Home() {
             display: 'flex',
             flexDirection: 'column',
             padding: '50px 0px',
-            justifyContent: 'space-between'
+            justifyContent: 'space-between',
+            height: { xs: '100vh', md: 'auto' },
+            alignItems: 'center'
           }}
         >
           <Box>
@@ -109,8 +95,7 @@ export default function Home() {
           </Grid>
         </Grid>
         <Grid className={poppins.className}>
-          {page === 0 && <Login />}
-          {page === 1 && <Register />}
+          <AuthBox />
         </Grid>
       </Grid>
     </Grid>

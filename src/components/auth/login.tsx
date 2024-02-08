@@ -39,66 +39,7 @@ const Login = () => {
   };
 
   return (
-    <Grid
-      sx={{
-        width: '500px',
-        padding: '40px 60px',
-        height: '630px',
-        borderRadius: '20px',
-        background:
-          'linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0%, rgba(51, 50, 50, 0.12) 100%)',
-        backdropFilter: 'blur(20px)',
-        textAlign: 'center'
-      }}
-    >
-      <Typography fontWeight={'500'} fontSize={'17px'}>
-        You Must Sign in to join
-      </Typography>
-      <Typography fontWeight={'300'} fontSize={'14px'}>
-        We&apos;re a team that guides each other
-      </Typography>
-      <Grid
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '20px',
-          margin: '15px 0px'
-        }}
-      >
-        <ThirdPartyBtns
-          startIcon={
-            <Image src={GoogleIcon} alt='icon' width={'25'} height={'25'} />
-          }
-        >
-          <Typography
-            fontWeight={'500'}
-            fontSize={'14px'}
-            sx={{
-              textTransform: 'none'
-            }}
-          >
-            Sign in with Google
-          </Typography>
-        </ThirdPartyBtns>
-        <ThirdPartyBtns
-          startIcon={
-            <LinkedInIcon
-              sx={{ color: '#0073b1', width: '25px', height: '25px' }}
-            />
-          }
-        >
-          <Typography
-            fontWeight={'500'}
-            fontSize={'14px'}
-            sx={{
-              textTransform: 'none'
-            }}
-          >
-            Sign in with LinkedIn
-          </Typography>
-        </ThirdPartyBtns>
-      </Grid>
-      <DividerWithText>or</DividerWithText>
+    <>
       <Grid
         sx={{
           display: 'flex',
@@ -191,7 +132,7 @@ const Login = () => {
           Sign Up
         </Typography>
       </Grid>
-    </Grid>
+    </>
   );
 };
 

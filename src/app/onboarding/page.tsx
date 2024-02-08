@@ -49,7 +49,7 @@ const Onboarding = () => {
             fontWeight={'400'}
             className={righteous.className}
           >
-            Welcome to Resume.AI!
+            Welcome to Resumer!
           </Typography>
           <Grid
             sx={{

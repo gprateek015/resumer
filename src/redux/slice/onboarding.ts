@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { fetchSelf, loginUser, registerUser } from '@/actions/user';
 import { AUTH_TOKEN } from '@/constants';
-import { generateResumeData, loadResume } from '@/actions/resume';
+import { generateResumeData, loadResume, uploadResume } from '@/actions/resume';
 import { User, Experience, Project, Education, ProfileLink } from '@/types';
 import { fetchExperiences, postExperience } from '@/actions/experience';
 import { fetchEductions, postEducation } from '@/actions/education';
@@ -13,6 +13,7 @@ export type InitialState = {
   educations: Education[];
   errors: any;
   codingProfiles: ProfileLink[];
+  resumeParseCompleted: boolean;
 };
 
 const initialState: InitialState = {
@@ -20,7 +21,8 @@ const initialState: InitialState = {
   educations: [],
   projects: [],
   errors: null,
-  codingProfiles: []
+  codingProfiles: [],
+  resumeParseCompleted: false
 };
 
 export const onboardingSlice = createSlice({
@@ -78,6 +80,9 @@ export const onboardingSlice = createSlice({
         } catch (_) {
           state.errors = action?.error?.message;
         }
+      })
+      .addCase(uploadResume.fulfilled, (state, action) => {
+        state.resumeParseCompleted = action.payload.success;
       });
   }
 });

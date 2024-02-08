@@ -26,3 +26,15 @@ export const generateResumeData = createAsyncThunk(
     return response.data;
   }
 );
+
+export const uploadResume = createAsyncThunk(
+  'upload/resume',
+  async ({ formData }: { formData: FormData }) => {
+    const response = await Axios.post('/resume/parse-resume', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    });
+    return response.data;
+  }
+);

@@ -36,7 +36,7 @@ const WorkExperienceDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
     if (editId && editId !== 'new')
       await dispatch(
         updateExperience({
-          data: { ...data, _id: undefined, user_id: undefined },
+          data: { ...data, _id: undefined, id: undefined, user_id: undefined },
           id: editId
         })
       );

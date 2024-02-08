@@ -1,5 +1,6 @@
 type Education = {
   _id?: string;
+  id?: string;
   level?:
     | 'lower_secondary'
     | 'senior_secondary'

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useMemo, useState } from 'react';
-import { Grid, IconButton, TextField } from '@mui/material';
+import { Box, Grid, IconButton, TextField, Typography } from '@mui/material';
 import Image from 'next/image';
 import Typewriter from 'typewriter-effect';
 
@@ -25,6 +25,7 @@ const Chatbot = ({ setShowQuestions }: { setShowQuestions: Function }) => {
   const [resumeUpload, setResumeUpload] = useState<boolean>(false);
 
   const AiChats = useMemo(() => {
+    setShowOptions(false);
     if (!_id) return [];
     return [
       {
@@ -137,28 +138,30 @@ const Chatbot = ({ setShowQuestions }: { setShowQuestions: Function }) => {
             }}
           >
             {chats.map((chat, ind) => (
-              <ChatTypography ind={ind} key={ind}>
+              <Box key={ind}>
                 {ind === chats.length - 1 &&
                 ind % 2 === 0 &&
                 !allowUserToType ? (
-                  <Typewriter
-                    onInit={typewriter => {
-                      typewriter
-                        .typeString(chat + '.')
-                        .deleteChars(1)
-                        .start()
-                        .callFunction(() => setShowOptions(true));
-                    }}
-                    options={{
-                      cursor: '|',
-                      delay: 30,
-                      devMode: false
-                    }}
-                  />
+                  <ChatTypography ind={ind} component='div'>
+                    <Typewriter
+                      onInit={typewriter => {
+                        typewriter
+                          .typeString(chat + '.')
+                          .deleteChars(1)
+                          .start()
+                          .callFunction(() => setShowOptions(true));
+                      }}
+                      options={{
+                        cursor: '|',
+                        delay: 30,
+                        devMode: false
+                      }}
+                    />
+                  </ChatTypography>
                 ) : (
-                  chat
+                  <ChatTypography ind={ind}>{chat}</ChatTypography>
                 )}
-              </ChatTypography>
+              </Box>
             ))}
             {showOptions && (
               <Grid
@@ -170,10 +173,7 @@ const Chatbot = ({ setShowQuestions }: { setShowQuestions: Function }) => {
                 {AiChats[aiChatsInd]?.options?.map((option, ind: number) => (
                   <OptionTypography
                     label={option.label}
-                    onClick={e => {
-                      // handleClick(option);
-                      handleOptionChoose(option);
-                    }}
+                    onClick={() => handleOptionChoose(option)}
                     key={ind}
                   />
                 ))}

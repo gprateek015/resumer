@@ -57,6 +57,7 @@ const ProfileLinks = ({
             flexDirection: 'column'
           }}
         >
+          <Typography>Profile Links for the Header Section</Typography>
           <Box>
             <Typography>Github</Typography>
             <FormInput
@@ -86,7 +87,17 @@ const ProfileLinks = ({
             />
           </Box>
 
-          <Typography>Other Profile Links</Typography>
+          <Typography>
+            Other Profile Links{' '}
+            <Typography
+              component={'span'}
+              sx={{
+                fontSize: '12px'
+              }}
+            >
+              (For Profile Links Section)
+            </Typography>
+          </Typography>
 
           {profileLinks?.map((profileLink: any, ind: number) => (
             <Box display={'flex'} gap='10px' key={profileLink.id} mb='10px'>

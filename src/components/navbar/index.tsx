@@ -13,6 +13,7 @@ import { changeAuthPage, logoutUser } from '@/redux/slice/auth';
 import { clearUserData } from '@/redux/slice/user';
 import { usePathname, useRouter } from 'next/navigation';
 import { autoLogin } from '@/utils';
+import { signOut } from 'next-auth/react';
 
 const righteous = Righteous({
   weight: ['400'],
@@ -31,6 +32,7 @@ const Navbar = () => {
     if (isLoggedIn) {
       dispatch(logoutUser());
       dispatch(clearUserData());
+      signOut();
     } else {
       dispatch(changeAuthPage(1));
     }

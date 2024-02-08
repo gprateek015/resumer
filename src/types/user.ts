@@ -5,6 +5,7 @@ import Project from './project';
 
 type User = {
   _id?: string;
+  id?: string;
   name?: string;
   username?: string;
   city?: string;

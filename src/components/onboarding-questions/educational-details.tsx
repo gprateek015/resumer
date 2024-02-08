@@ -48,7 +48,12 @@ const EducationalDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
     if (editId && editId !== 'new')
       await dispatch(
         updateEducation({
-          data: { ...newData, id: undefined, user_id: undefined },
+          data: {
+            ...newData,
+            _id: undefined,
+            id: undefined,
+            user_id: undefined
+          },
           id: editId
         })
       );
