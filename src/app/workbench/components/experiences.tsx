@@ -5,6 +5,7 @@ import SchoolIcon from '@mui/icons-material/School';
 import WorkExpDetailDesign from '@/components/work-experiences/detail';
 import { SubmitHandler, useFormContext } from 'react-hook-form';
 import { Experience } from '@/types';
+import ShortUniqueId from 'short-unique-id';
 
 const Experiences = ({
   collapsed,
@@ -16,16 +17,22 @@ const Experiences = ({
   const [editId, setEditId] = useState<string | null>(null);
   const { setValue, watch } = useFormContext();
   const experiences = watch('experiences');
+  const uid = new ShortUniqueId({ length: 5 });
 
   const onSubmit: SubmitHandler<Experience> = data => {
+    const newData = {
+      ...data,
+      _id: uid.rnd()
+    };
+
     if (editId === 'new') {
-      setValue('experiences', [...experiences, data]);
+      setValue('experiences', [...experiences, newData]);
     } else {
       setValue(
         'experiences',
         experiences.map((exp: Experience) => {
           if (exp._id === editId) {
-            return data;
+            return newData;
           }
           return exp;
         })

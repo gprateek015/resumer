@@ -1,11 +1,4 @@
-import {
-  Box,
-  Button,
-  Grid,
-  IconButton,
-  TextField,
-  Typography
-} from '@mui/material';
+import { Box, Grid, IconButton, TextField, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import SchoolIcon from '@mui/icons-material/School';
 import WorkExpDetailDesign from '@/components/work-experiences/detail';
@@ -13,7 +6,7 @@ import { SubmitHandler, useFieldArray, useFormContext } from 'react-hook-form';
 import { Experience, ProfileLink } from '@/types';
 import EduDetailDesign from '@/components/educations/detail';
 import ProjectDetailDesign from '@/components/projects/detail';
-import { FormInput } from '@/components/onboarding-questions/styles';
+import { Button, FormInput } from '@/components/onboarding-questions/styles';
 import { firstLetterCapital } from '@/utils';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/DeleteForever';

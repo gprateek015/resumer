@@ -124,7 +124,7 @@ const WorkExpEdit = ({
           error={!!errors?.position?.message}
         />
         <FormLabel>Mode of Internship</FormLabel>
-        <Options sx={{ gap: '40px' }}>
+        <Options sx={{ gap: '20px' }}>
           <Option
             active={(mode === 'remote').toString()}
             onClick={e => setValue('mode', 'remote')}
@@ -141,11 +141,17 @@ const WorkExpEdit = ({
         <Grid
           sx={{
             display: 'flex',
-            gap: '30px',
-            justifyContent: 'space-between'
+            gap: { xs: '20px', md: '30px' },
+            justifyContent: 'space-between',
+            flexDirection: { xs: 'column', md: 'row' }
           }}
         >
-          <Grid>
+          <Grid
+            sx={{
+              flexBasis: '50%',
+              flexGrow: 1
+            }}
+          >
             <FormLabel mb='15px'>Start Date</FormLabel>
             <FormInput
               type='date'
@@ -154,7 +160,12 @@ const WorkExpEdit = ({
               error={!!errors?.start_date?.message}
             />
           </Grid>
-          <Grid>
+          <Grid
+            sx={{
+              flexBasis: '50%',
+              flexGrow: 1
+            }}
+          >
             <FormLabel mb='15px'>End Date</FormLabel>
             <FormInput
               type='date'

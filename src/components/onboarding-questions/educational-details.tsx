@@ -72,6 +72,14 @@ const EducationalDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
     dispatch(fetchEductions());
   }, []);
 
+  useEffect(() => {
+    if (educations?.length) {
+      setEditId('');
+    } else {
+      setEditId('new');
+    }
+  }, [educations]);
+
   return (
     <PageContainer nextPage={nextPage} prevPage={prevPage}>
       <Grid>

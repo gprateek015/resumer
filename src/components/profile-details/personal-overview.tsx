@@ -3,7 +3,6 @@ import React from 'react';
 import SchoolIcon from '@mui/icons-material/School';
 import {
   Box,
-  Button,
   Divider,
   FormHelperText,
   Grid,
@@ -15,6 +14,7 @@ import { FormInput, FormLabel, InputContainer, Row } from './styles';
 import DeleteIcon from '@mui/icons-material/DeleteForever';
 import AddIcon from '@mui/icons-material/Add';
 import { useFieldArray, useFormContext } from 'react-hook-form';
+import { Button } from '../onboarding-questions/styles';
 
 const PersonalOverviewContainer = () => {
   const { register } = useFormContext();

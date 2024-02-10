@@ -1,8 +1,8 @@
-import { deleteProject } from '@/actions/project';
+import { deleteProject, postProject, updateProject } from '@/actions/project';
 import ProjectDetailDesign from '@/components/projects/detail';
 import { ProjectData } from '@/components/projects/edit';
 import { useDispatch } from '@/redux/store';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { SubmitHandler, useFormContext } from 'react-hook-form';
 
 const ProfileProjects = () => {
@@ -11,29 +11,28 @@ const ProfileProjects = () => {
   const dispatch = useDispatch();
   const projects = watch('projects');
 
-  const onSubmit: SubmitHandler<ProjectData> = data => {
-    // const newData = {
-    //   ...data,
-    //   _id: uid.rnd()
-    // };
-    // if (editId === 'new') {
-    //   setValue('projects', [...projects, newData]);
-    // } else {
-    //   setValue(
-    //     'projects',
-    //     projects.map((project: Project) => {
-    //       if (project._id === editId) {
-    //         return newData;
-    //       }
-    //       return project;
-    //     })
-    //   );
-    // }
+  const onSubmit: SubmitHandler<ProjectData> = async data => {
+    if (editId && editId !== 'new')
+      await dispatch(
+        updateProject({
+          data: { ...data, _id: undefined, id: undefined, user_id: undefined },
+          id: editId
+        })
+      );
+    else await dispatch(postProject(data));
   };
 
   const handleDelete = (id: string) => {
     dispatch(deleteProject(id));
   };
+
+  useEffect(() => {
+    if (projects?.length) {
+      setEditId(null);
+    } else {
+      setEditId('new');
+    }
+  }, [projects]);
 
   return (
     <ProjectDetailDesign

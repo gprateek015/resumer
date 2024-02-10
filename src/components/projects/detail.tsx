@@ -6,7 +6,7 @@ import ProjectEdit, { ProjectData } from './edit';
 import { SubmitHandler } from 'react-hook-form';
 
 const ProjectDetailDesign = ({
-  projects,
+  projects = [],
   editId,
   setEditId,
   handleDelete,

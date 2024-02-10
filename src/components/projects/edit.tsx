@@ -188,10 +188,9 @@ const ProjectEdit = ({
         />
       </Grid>
 
+      <FormLabel>Skills Required</FormLabel>
       <SkillsInput
-        onChange={(skill: CreatableSkill) =>
-          handleSkillAppend(skill.name || skill.value)
-        }
+        onChange={(skill: CreatableSkill) => handleSkillAppend(skill.name)}
       />
       <Grid
         sx={{
@@ -240,7 +239,7 @@ const ProjectEdit = ({
             {errors?.description?.message as string}
           </FormHelperText>
         )}
-        <MuiButton
+        <Button
           onClick={() => append('')}
           sx={{
             background: 'transparent'
@@ -249,7 +248,7 @@ const ProjectEdit = ({
           fullWidth
         >
           Add another point
-        </MuiButton>
+        </Button>
       </Grid>
       {apiError && <FormHelperText error>{apiError}</FormHelperText>}
       <Grid

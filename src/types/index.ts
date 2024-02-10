@@ -7,7 +7,6 @@ import Resume from './resume';
 export type Skill = {
   _id?: string;
   name: string;
-  proficiency?: 'beginner' | 'moderate' | 'expert';
   type: 'technical_skills' | 'dev_tools' | 'core_subjects' | 'languages';
 };
 

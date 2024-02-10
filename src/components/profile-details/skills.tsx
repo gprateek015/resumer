@@ -36,9 +36,7 @@ const SkillsContainer = () => {
   const [newSkills, setNewSkills] = useState<string[]>([]);
 
   const isAlreadyAdded = (curr: any[], newVal: OnChangeValueType) => {
-    const item = curr.find(
-      skill => skill.value === (newVal.name || newVal.value)
-    );
+    const item = curr.find(skill => skill.name === newVal.name);
     return item !== undefined;
   };
 
@@ -55,29 +53,29 @@ const SkillsContainer = () => {
 
     switch (val.type) {
       case 'technical_skills': {
-        technicalAppend({ value: val.name || val.value });
+        technicalAppend({ name: val.name });
         break;
       }
       case 'dev_tools': {
-        toolsAppend({ value: val.name || val.value });
+        toolsAppend({ name: val.name });
         break;
       }
       case 'core_subjects': {
-        coreAppend({ value: val.name || val.value });
+        coreAppend({ name: val.name });
         break;
       }
       case 'languages': {
-        languagesAppend({ value: val.name || val.value });
+        languagesAppend({ name: val.name });
         break;
       }
       default: {
-        setNewSkills(curr => [...curr, val.name || (val.value as string)]);
+        setNewSkills(curr => [...curr, val.name]);
       }
     }
   };
 
   const handleRemoveFromArray = (array: any, val: string) =>
-    array.filter((ele: any) => (ele?.value || ele) !== val);
+    array.filter((ele: any) => (ele?.name || ele) !== val);
 
   const handleDelete = (
     skillType: Skill['type'] | 'new_skill',

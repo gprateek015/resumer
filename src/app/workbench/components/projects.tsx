@@ -5,7 +5,6 @@ import SchoolIcon from '@mui/icons-material/School';
 import WorkExpDetailDesign from '@/components/work-experiences/detail';
 import { SubmitHandler, useFormContext } from 'react-hook-form';
 import { Experience, Project } from '@/types';
-import EduDetailDesign from '@/components/educations/detail';
 import ProjectDetailDesign from '@/components/projects/detail';
 import { ProjectData } from '@/components/projects/edit';
 import ShortUniqueId from 'short-unique-id';

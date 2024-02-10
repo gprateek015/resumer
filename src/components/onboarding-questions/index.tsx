@@ -1,12 +1,11 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Button, Grid, Typography } from '@mui/material';
+import { Box, Button, Grid, Typography } from '@mui/material';
 import Image from 'next/image';
 import { Righteous } from 'next/font/google';
 
 import OnboardingIcon from '@/assets/onboarding2.png';
-import { Heading, Option, Options, PageNavButton } from './styles';
 import WorkExperience from './work-experience';
 import WorkExperienceDetails from './work-experience-details';
 import HighestEducation from './highest-education';
@@ -16,6 +15,7 @@ import EducationalDetails from './educational-details';
 import ProjectDetails from './project-details';
 import CodingProfiles from './coding-profile';
 import { useRouter } from 'next/navigation';
+import AchievementsSkills from './achievements-skills';
 
 const righteous = Righteous({
   weight: ['400'],
@@ -32,7 +32,7 @@ const OnboardingQuestions = () => {
   const [page, setPage] = useState<number>(0);
 
   const nextPage = () => {
-    if (page === 7) {
+    if (page === 8) {
       route.push('/job-description');
       return;
     }
@@ -61,6 +61,8 @@ const OnboardingQuestions = () => {
       case 6:
         return <ProjectDetails nextPage={nextPage} prevPage={prevPage} />;
       case 7:
+        return <AchievementsSkills nextPage={nextPage} prevPage={prevPage} />;
+      case 8:
         return <CodingProfiles nextPage={nextPage} prevPage={prevPage} />;
       default:
         return <WorkExperience nextPage={nextPage} prevPage={prevPage} />;
@@ -76,24 +78,30 @@ const OnboardingQuestions = () => {
         alignItems: 'center',
         gap: '100px',
         borderRadius: '20px',
-        padding: '20px 40px',
-        margin: 'auto 150px',
+        padding: { xs: '20px', md: '20px 40px' },
+        margin: { xs: 'auto 0px', md: 'auto 150px' },
         width: '100%',
-        height: '600px'
+        height: { xs: 'calc(100vh - 120px)', md: '600px' }
       }}
       className={righteous.className}
     >
       <Grid flexGrow={1} height='100%'>
         {OnboardingPage()}
       </Grid>
-      <Image
-        src={OnboardingIcon}
-        alt='icon'
-        style={{
-          height: '520px',
-          width: '350px'
+      <Box
+        sx={{
+          display: { xs: 'none', md: 'block' }
         }}
-      />
+      >
+        <Image
+          src={OnboardingIcon}
+          alt='icon'
+          style={{
+            height: '520px',
+            width: '350px'
+          }}
+        />
+      </Box>
     </Grid>
   );
 };

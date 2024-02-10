@@ -69,8 +69,8 @@ const SkillSection = ({
         {list.map((skill: any, ind) => (
           <DraggableChip
             key={skill.id}
-            onDelete={() => handleDelete(skillType, skill.value)}
-            label={skill.value}
+            onDelete={() => handleDelete(skillType, skill.name)}
+            label={skill.name}
             skillType={skillType}
             index={ind}
             moveCard={moveCard}

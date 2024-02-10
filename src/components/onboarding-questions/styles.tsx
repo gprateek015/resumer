@@ -36,20 +36,23 @@ export const Options = styled(Grid)({
   gap: '15px'
 });
 
-export const Option = styled(Box)(
-  ({ active = 'false' }: { active?: string }) => ({
+export const Option = styled(Box)<{ active?: string; onClick: Function }>(
+  ({ theme, active = 'false' }) => ({
     display: 'flex',
     padding: '40px 30px',
     justifyContent: 'center',
     alignItems: 'center',
     alignSelf: 'stretch',
     border: '1px solid white',
-    width: '110px',
     borderRadius: '5px',
     background: active === 'false' ? '#ffffff10' : '#ffffff50',
     backdropFilter: 'blur(45px)',
     cursor: 'pointer',
-    height: '20px'
+    height: '20px',
+    width: '85px',
+    [theme.breakpoints.up('md')]: {
+      width: '110px'
+    }
   })
 );
 

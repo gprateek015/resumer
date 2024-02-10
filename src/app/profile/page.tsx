@@ -24,10 +24,10 @@ import { updateUser } from '@/actions/user';
 import { Skill, User } from '@/types';
 
 type ProfileUserData = User & {
-  technical_skills?: { value: string }[];
-  core_subjects?: { value: string }[];
-  dev_tools?: { value: string }[];
-  languages?: { value: string }[];
+  technical_skills?: { name: string }[];
+  core_subjects?: { name: string }[];
+  dev_tools?: { name: string }[];
+  languages?: { name: string }[];
 };
 
 const Profile = () => {
@@ -43,30 +43,29 @@ const Profile = () => {
   } = useSelector(state => state.user);
 
   const onSave = (data: ProfileUserData) => {
-    console.log(data);
     const { technical_skills, core_subjects, dev_tools, languages } = data;
     let skills: { name: string; type: Skill['type'] }[] = [];
     technical_skills?.forEach(skill => {
       skills.push({
-        name: skill.value,
+        name: skill.name,
         type: 'technical_skills'
       });
     });
     core_subjects?.forEach(skill => {
       skills.push({
-        name: skill.value,
+        name: skill.name,
         type: 'core_subjects'
       });
     });
     dev_tools?.forEach(skill => {
       skills.push({
-        name: skill.value,
+        name: skill.name,
         type: 'dev_tools'
       });
     });
     languages?.forEach(skill => {
       skills.push({
-        name: skill.value,
+        name: skill.name,
         type: 'languages'
       });
     });
@@ -177,6 +176,7 @@ const Profile = () => {
                     my: '20px'
                   }}
                 />
+                <Typography mb='5px'>Skills</Typography>
                 <SkillsContainer />
                 <Divider
                   sx={{

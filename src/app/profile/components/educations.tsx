@@ -1,17 +1,21 @@
-import { deleteEducation } from '@/actions/education';
+import {
+  deleteEducation,
+  postEducation,
+  updateEducation
+} from '@/actions/education';
 import EduDetailDesign from '@/components/educations/detail';
 import { EducationData } from '@/components/educations/edit';
 import { useDispatch } from '@/redux/store';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { SubmitHandler, useFormContext } from 'react-hook-form';
 
 const ProfileEducations = () => {
   const [editId, setEditId] = useState<string | null>(null);
-  const { setValue, watch } = useFormContext();
+  const { watch } = useFormContext();
   const educations = watch('educations');
   const dispatch = useDispatch();
 
-  const onSubmit: SubmitHandler<EducationData> = data => {
+  const onSubmit: SubmitHandler<EducationData> = async data => {
     const newData = {
       ...data,
       start_year: data?.start_year?.split?.('-')?.[0],
@@ -22,24 +26,33 @@ const ProfileEducations = () => {
         data.scoring_type === 'percentage' ? 100 : data.maximum_score
     };
 
-    // if (editId === 'new') {
-    //   setValue('educations', [...educations, newData]);
-    // } else {
-    //   setValue(
-    //     'educations',
-    //     educations.map((edu: Education) => {
-    //       if (edu._id === editId) {
-    //         return newData;
-    //       }
-    //       return edu;
-    //     })
-    //   );
-    // }
+    if (editId && editId !== 'new')
+      await dispatch(
+        updateEducation({
+          data: {
+            ...newData,
+            _id: undefined,
+            id: undefined,
+            user_id: undefined
+          },
+          id: editId
+        })
+      );
+    else await dispatch(postEducation(newData));
   };
 
   const handleDelete = (id: string) => {
     dispatch(deleteEducation(id));
   };
+
+  useEffect(() => {
+    if (educations?.length) {
+      setEditId('');
+    } else {
+      setEditId('new');
+    }
+  }, [educations]);
+
   return (
     <EduDetailDesign
       educations={educations || []}

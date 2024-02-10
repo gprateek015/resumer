@@ -6,7 +6,7 @@ import EducationalDetailsEdit, { EducationData } from './edit';
 import { SubmitHandler } from 'react-hook-form';
 
 const EduDetailDesign = ({
-  educations,
+  educations = [],
   editId,
   setEditId,
   handleDelete,

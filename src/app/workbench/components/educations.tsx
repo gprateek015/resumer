@@ -7,6 +7,7 @@ import { SubmitHandler, useFormContext } from 'react-hook-form';
 import { Education, Experience } from '@/types';
 import EduDetailDesign from '@/components/educations/detail';
 import { EducationData } from '@/components/educations/edit';
+import ShortUniqueId from 'short-unique-id';
 
 const Educations = ({
   collapsed,
@@ -18,6 +19,7 @@ const Educations = ({
   const [editId, setEditId] = useState<string | null>(null);
   const { setValue, watch } = useFormContext();
   const educations = watch('educations');
+  const uid = new ShortUniqueId({ length: 5 });
 
   const onSubmit: SubmitHandler<EducationData> = data => {
     const newData = {
@@ -27,7 +29,8 @@ const Educations = ({
       level: data?.edu_level?.value,
       edu_level: undefined,
       maximum_score:
-        data.scoring_type === 'percentage' ? 100 : data.maximum_score
+        data.scoring_type === 'percentage' ? 100 : data.maximum_score,
+      _id: uid.rnd()
     };
 
     if (editId === 'new') {

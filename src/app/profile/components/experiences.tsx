@@ -1,35 +1,42 @@
-import { deleteExperience } from '@/actions/experience';
+import {
+  deleteExperience,
+  postExperience,
+  updateExperience
+} from '@/actions/experience';
 import WorkExpDetailDesign from '@/components/work-experiences/detail';
 import { useDispatch } from '@/redux/store';
 import { Experience } from '@/types';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { SubmitHandler, useFormContext } from 'react-hook-form';
 
 const ProfileExperiences = () => {
   const [editId, setEditId] = useState<string | null>(null);
-  const { setValue, watch } = useFormContext();
+  const { watch } = useFormContext();
   const dispatch = useDispatch();
   const experiences = watch('experiences');
 
-  const onSubmit: SubmitHandler<Experience> = data => {
-    // if (editId === 'new') {
-    //   setValue('experiences', [...experiences, data]);
-    // } else {
-    //   setValue(
-    //     'experiences',
-    //     experiences.map((exp: Experience) => {
-    //       if (exp._id === editId) {
-    //         return data;
-    //       }
-    //       return exp;
-    //     })
-    //   );
-    // }
+  const onSubmit: SubmitHandler<Experience> = async data => {
+    if (editId && editId !== 'new')
+      await dispatch(
+        updateExperience({
+          data: { ...data, _id: undefined, id: undefined, user_id: undefined },
+          id: editId
+        })
+      );
+    else await dispatch(postExperience(data));
   };
 
   const handleDelete = (id: string) => {
     dispatch(deleteExperience(id));
   };
+
+  useEffect(() => {
+    if (experiences?.length) {
+      setEditId(null);
+    } else {
+      setEditId('new');
+    }
+  }, [experiences]);
 
   return (
     <WorkExpDetailDesign

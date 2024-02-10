@@ -51,6 +51,14 @@ const WorkExperienceDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
     setApiError(apiErrors);
   }, [apiErrors]);
 
+  useEffect(() => {
+    if (experiences?.length) {
+      setEditId(null);
+    } else {
+      setEditId('new');
+    }
+  }, [experiences]);
+
   return (
     <PageContainer nextPage={nextPage} prevPage={prevPage}>
       <Heading mb='20px'>

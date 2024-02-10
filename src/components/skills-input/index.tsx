@@ -7,7 +7,7 @@ import { Skill } from '@/types';
 import { selectStyles } from '../onboarding-questions/styles';
 
 export type CreatableSkill = Skill & {
-  value: string;
+  name: string;
   label: string;
 };
 
@@ -15,14 +15,14 @@ const SkillsInput = ({ onChange }: { onChange: Function }) => {
   const dispatch = useDispatch();
   return (
     <>
-      <Typography>Skills</Typography>
       <AsyncCreatableSelect
         onChange={(val: any) => {
           if (!val?._id) {
             // new skill
             onChange({
               ...val,
-              type: 'new_skill'
+              type: 'new_skill',
+              name: val.value
             });
           } else {
             onChange(val);
@@ -43,6 +43,7 @@ const SkillsInput = ({ onChange }: { onChange: Function }) => {
           return opt.name;
         }}
         styles={selectStyles}
+        placeholder='Type in the skill...'
       />
     </>
   );

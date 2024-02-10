@@ -69,7 +69,7 @@ export const updateUser = createAsyncThunk(
       achievements?: string[];
       profile_links?: ProfileLink[];
       onboarding_completed?: boolean;
-      skills: { name: string; type: Skill['type'] }[];
+      skills?: { name: string; type: Skill['type'] }[];
       callback?: Function;
     },
     { dispatch }

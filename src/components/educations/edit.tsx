@@ -131,7 +131,7 @@ const EducationalDetailsEdit = ({
         placeholder='IIT Mumbai'
       />
       <FormLabel>Scoring Type</FormLabel>
-      <Options sx={{ gap: '40px' }}>
+      <Options sx={{ gap: '20px' }}>
         <Option
           active={(scoringType === 'cgpa').toString()}
           onClick={_ => setValue('scoring_type', 'cgpa')}
@@ -145,7 +145,13 @@ const EducationalDetailsEdit = ({
           Percentage
         </Option>
       </Options>
-      <Grid sx={{ display: 'flex', gap: '20px' }}>
+      <Grid
+        sx={{
+          display: 'flex',
+          gap: '20px',
+          flexDirection: { xs: 'column', md: 'row' }
+        }}
+      >
         <Box flexBasis={'50%'} flexGrow={1}>
           <FormLabel mb='10px'>Score</FormLabel>
           <FormInput
@@ -187,8 +193,9 @@ const EducationalDetailsEdit = ({
       <Grid
         sx={{
           display: 'flex',
-          gap: '30px',
-          justifyContent: 'space-between'
+          gap: '20px',
+          justifyContent: 'space-between',
+          flexDirection: { xs: 'column', md: 'row' }
         }}
       >
         <Grid>

@@ -47,6 +47,14 @@ const ProjectDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
     dispatch(fetchProjects());
   }, []);
 
+  useEffect(() => {
+    if (projects?.length) {
+      setEditId(null);
+    } else {
+      setEditId('new');
+    }
+  }, [projects]);
+
   return (
     <PageContainer nextPage={nextPage} prevPage={prevPage}>
       <Heading mb='20px'>

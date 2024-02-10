@@ -6,7 +6,7 @@ import { SubmitHandler } from 'react-hook-form';
 import WorkExpEdit from './edit';
 
 const WorkExpDetailDesign = ({
-  experiences,
+  experiences = [],
   handleDelete,
   editId,
   setEditId,
