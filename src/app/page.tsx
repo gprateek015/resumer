@@ -18,7 +18,8 @@ export default function Home() {
           justifyContent: 'space-evenly',
           width: '100%',
           flexDirection: { xs: 'column', md: 'row' },
-          alignItems: { xs: 'center', md: 'normal' }
+          alignItems: { xs: 'center', md: 'normal' },
+          overflowY: 'hidden'
         }}
       >
         <Grid
@@ -28,7 +29,7 @@ export default function Home() {
             flexDirection: 'column',
             padding: '50px 0px',
             justifyContent: 'space-between',
-            height: { xs: '100vh', md: 'auto' },
+            height: { xs: 'calc(100vh - 70px)', md: 'auto' },
             alignItems: 'center'
           }}
         >
@@ -82,7 +83,14 @@ export default function Home() {
             </Box>
           </Grid>
         </Grid>
-        <Grid className={poppins.className}>
+        <Grid
+          className={poppins.className}
+          sx={{
+            height: { xs: 'calc(100vh - 70px)', md: 'auto' },
+            display: 'flex',
+            alignItems: 'center'
+          }}
+        >
           <AuthBox />
         </Grid>
       </Grid>

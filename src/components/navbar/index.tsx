@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { ReactElement, ReactNode, useEffect, useRef } from 'react';
 import { Button, Grid, Typography } from '@mui/material';
 import Image from 'next/image';
 import { SignupBtn, NavLink } from './styles';
@@ -24,6 +24,7 @@ const Navbar = () => {
   const { isLoggedIn } = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
   const route = useRouter();
+  const authRef = useRef<any>(null);
 
   const pathname = usePathname();
 
@@ -35,6 +36,11 @@ const Navbar = () => {
       signOut();
     } else {
       dispatch(changeAuthPage(1));
+
+      window.scrollTo({
+        top: document.body.scrollHeight,
+        behavior: 'smooth'
+      });
     }
   };
 
@@ -43,7 +49,7 @@ const Navbar = () => {
       sx={{
         display: 'flex',
         justifyContent: 'space-between',
-        padding: '15px 80px',
+        padding: { xs: '15px 25px', md: '15px 80px' },
         alignItems: 'center',
         background:
           pathname === '/'
@@ -60,7 +66,7 @@ const Navbar = () => {
       </Link>
       <Grid
         sx={{
-          display: 'flex',
+          display: { xs: 'none', md: 'flex' },
           gap: '40px'
         }}
       >
@@ -77,7 +83,7 @@ const Navbar = () => {
           <NavLink active='false'>Templates</NavLink>
         </Link>
       </Grid>
-      <Grid>
+      <Grid ref={authRef}>
         <SignupBtn onClick={handleClick}>
           {isLoggedIn ? 'Log out' : 'Sign up'}
         </SignupBtn>

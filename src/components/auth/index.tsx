@@ -38,9 +38,8 @@ const AuthBox = () => {
   return (
     <Grid
       sx={{
-        width: '500px',
-        padding: '40px 60px',
-        height: '630px',
+        width: { xs: 'calc(100vw - 30px)', md: '500px' },
+        padding: { xs: '40px 30px', md: '40px 60px' },
         borderRadius: '20px',
         background:
           'linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0%, rgba(51, 50, 50, 0.12) 100%)',
