@@ -50,6 +50,14 @@ const Projects = ({
     );
   };
 
+  useEffect(() => {
+    if (projects?.length) {
+      setEditId(null);
+    } else {
+      setEditId('new');
+    }
+  }, [projects]);
+
   return (
     <Grid>
       <Heading

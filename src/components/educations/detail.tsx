@@ -22,14 +22,6 @@ const EduDetailDesign = ({
 }) => {
   const handleCancel = () => setEditId(null);
 
-  useEffect(() => {
-    if (educations?.length) {
-      setEditId('');
-    } else {
-      setEditId('new');
-    }
-  }, [educations]);
-
   return (
     <Grid
       sx={{

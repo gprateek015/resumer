@@ -20,10 +20,15 @@ type User = {
   twitter?: string;
   portfolio?: string;
   achievements?: string[];
-  projects?: Project[];
-  experiences?: Experience[];
-  skills?: Skill[];
-  educations?: Education[];
+  // projects?: Project[];
+  // experiences?: Experience[];
+  // educations?: Education[];
+  skills?: {
+    technical_skills?: string[];
+    core_subjects?: string[];
+    dev_tools?: string[];
+    languages?: string[];
+  };
   referral_code?: string;
   user_role?: 'admin' | 'user';
   resumes?: string[];

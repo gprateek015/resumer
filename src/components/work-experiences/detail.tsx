@@ -24,14 +24,6 @@ const WorkExpDetailDesign = ({
     setEditId(null);
   };
 
-  useEffect(() => {
-    if (experiences?.length) {
-      setEditId(null);
-    } else {
-      setEditId('new');
-    }
-  }, [experiences]);
-
   return (
     <Grid
       sx={{

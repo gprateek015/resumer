@@ -7,16 +7,25 @@ import {
 } from '@/actions/user';
 import { AUTH_TOKEN } from '@/constants';
 import { generateResumeData, loadResume } from '@/actions/resume';
-import { User } from '@/types';
+import { Education, Experience, Project, User } from '@/types';
+import { fetchEductions } from '@/actions/education';
+import { fetchExperiences } from '@/actions/experience';
+import { fetchProjects } from '@/actions/project';
 
 export type UserState = {
   authToken: string;
   data: User;
+  educations: Education[];
+  experiences: Experience[];
+  projects: Project[];
 };
 
 const initialState: UserState = {
   authToken: '',
-  data: {}
+  data: {},
+  educations: [],
+  experiences: [],
+  projects: []
 };
 
 const userDataToState = (state: UserState, action: PayloadAction<any>) => {
@@ -52,6 +61,15 @@ export const userSlice = createSlice({
       })
       .addCase(socialLogin.fulfilled, (state, action) => {
         userDataToState(state, action);
+      })
+      .addCase(fetchEductions.fulfilled, (state, action) => {
+        state.educations = action.payload.educations;
+      })
+      .addCase(fetchExperiences.fulfilled, (state, action) => {
+        state.experiences = action.payload.experiences;
+      })
+      .addCase(fetchProjects.fulfilled, (state, action) => {
+        state.projects = action.payload.projects;
       });
   }
 });

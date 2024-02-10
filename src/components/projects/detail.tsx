@@ -24,14 +24,6 @@ const ProjectDetailDesign = ({
     setEditId(null);
   };
 
-  useEffect(() => {
-    if (projects?.length) {
-      setEditId(null);
-    } else {
-      setEditId('new');
-    }
-  }, [projects]);
-
   return (
     <Grid
       sx={{

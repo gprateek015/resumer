@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import Axios from '.';
-import { ProfileLink } from '@/types';
+import { ProfileLink, Skill } from '@/types';
 
 export const loginUser = createAsyncThunk(
   'user/login',
@@ -37,6 +37,7 @@ export const fetchSelf = createAsyncThunk('user/self', async () => {
   return response.data;
 });
 
+let updateUserAbortController: AbortController | null = null;
 export const updateUser = createAsyncThunk(
   'user/update',
   async (
@@ -50,8 +51,10 @@ export const updateUser = createAsyncThunk(
       country,
       state,
       city,
+      achievements,
       profile_links,
       onboarding_completed,
+      skills,
       callback
     }: {
       phone?: string;
@@ -63,25 +66,41 @@ export const updateUser = createAsyncThunk(
       country?: string;
       state?: string;
       city?: string;
+      achievements?: string[];
       profile_links?: ProfileLink[];
       onboarding_completed?: boolean;
+      skills: { name: string; type: Skill['type'] }[];
       callback?: Function;
     },
     { dispatch }
   ) => {
-    const response = await Axios.put('/user', {
-      phone,
-      name,
-      linkedin,
-      github,
-      twitter,
-      portfolio,
-      country,
-      state,
-      city,
-      onboarding_completed,
-      profile_links
-    });
+    if (updateUserAbortController) {
+      updateUserAbortController.abort();
+    }
+
+    updateUserAbortController = new AbortController();
+
+    const response = await Axios.put(
+      '/user',
+      {
+        phone,
+        name,
+        linkedin,
+        github,
+        twitter,
+        portfolio,
+        country,
+        state,
+        city,
+        achievements,
+        onboarding_completed,
+        profile_links,
+        skills
+      },
+      {
+        signal: updateUserAbortController.signal
+      }
+    );
     await dispatch(fetchSelf());
     callback?.();
     return response.data;

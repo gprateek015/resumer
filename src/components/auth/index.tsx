@@ -28,12 +28,12 @@ const AuthBox = () => {
     }
   }, [session]);
 
-  // useEffect(() => {
-  //   if (isLoggedIn) {
-  //     if (!user.onboarding_completed) route.push('/onboarding');
-  //     else route.push('/profile');
-  //   }
-  // }, [isLoggedIn]);
+  useEffect(() => {
+    if (isLoggedIn) {
+      if (!user.onboarding_completed) route.push('/onboarding');
+      else route.push('/profile');
+    }
+  }, [isLoggedIn]);
 
   return (
     <Grid

@@ -38,10 +38,6 @@ const Navbar = () => {
     }
   };
 
-  useEffect(() => {
-    dispatch(autoLogin());
-  }, []);
-
   return (
     <Grid
       sx={{

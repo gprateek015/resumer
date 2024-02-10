@@ -37,7 +37,14 @@ export default function RootLayout({
                     alt=''
                     className='home-background'
                   />
-                  <Grid flexGrow={1} display={'flex'} flexDirection={'column'}>
+                  <Grid
+                    flexGrow={1}
+                    display={'flex'}
+                    flexDirection={'column'}
+                    sx={{
+                      overflow: 'auto'
+                    }}
+                  >
                     {children}
                   </Grid>
                 </Grid>

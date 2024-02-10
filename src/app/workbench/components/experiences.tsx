@@ -40,6 +40,14 @@ const Experiences = ({
     );
   };
 
+  useEffect(() => {
+    if (experiences?.length) {
+      setEditId(null);
+    } else {
+      setEditId('new');
+    }
+  }, [experiences]);
+
   return (
     <Grid>
       <Heading

@@ -52,6 +52,14 @@ const Educations = ({
     );
   };
 
+  useEffect(() => {
+    if (educations?.length) {
+      setEditId('');
+    } else {
+      setEditId('new');
+    }
+  }, [educations]);
+
   return (
     <Grid>
       <Heading

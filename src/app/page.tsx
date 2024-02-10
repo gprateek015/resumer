@@ -1,20 +1,8 @@
 import React from 'react';
 import { Grid, Typography, Box } from '@mui/material';
 
-import { Righteous, Poppins } from 'next/font/google';
-
 import AuthBox from '@/components/auth';
-
-const righteous = Righteous({
-  weight: ['400'],
-  subsets: ['latin']
-});
-
-const poppins = Poppins({
-  weight: ['300', '400', '500'],
-  subsets: ['latin'],
-  style: 'normal'
-});
+import { poppins, righteous } from '@/font-family';
 
 export default function Home() {
   return (

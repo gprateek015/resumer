@@ -26,10 +26,10 @@ import { Resume } from '@/types';
 import Experiences from './components/experiences';
 import Educations from './components/educations';
 import Projects from './components/projects';
-import Skills from './components/skills';
 import ProfileLinks from './components/profile-links';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import Skills from './components/skills';
 
 const righteous = Righteous({
   weight: ['400'],
@@ -52,7 +52,7 @@ const Workbench = () => {
 
   const methods = useForm<ResumeWorkbench>();
 
-  const { setValue, handleSubmit } = methods;
+  const { handleSubmit, reset } = methods;
 
   const loadResumePdf = async (data: Resume) => {
     const resp = await dispatch(loadResume({ resumeData: data }));
@@ -81,25 +81,7 @@ const Workbench = () => {
   useEffect(() => {
     loadResumePdf(data);
 
-    (Object.keys(data) as Array<keyof ResumeWorkbench>).forEach(key => {
-      if (
-        [
-          'technical_skills',
-          'core_subjects',
-          'dev_tools',
-          'languages'
-        ].includes(key)
-      ) {
-        setValue(
-          key,
-          (data[key] as string[])?.map(skill => ({
-            value: skill
-          })) as any
-        );
-      } else {
-        setValue(key, data[key]);
-      }
-    });
+    reset(data);
   }, [data]);
 
   useEffect(() => {

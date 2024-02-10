@@ -1,215 +1,253 @@
 'use client';
 
 import React, { useEffect } from 'react';
-import './profile.scss';
 import Image from 'next/image';
 import profile from '@/assets/onboarding1.png';
-import { Button } from '@mui/material';
-import { useForm } from 'react-hook-form';
-import { useSelector } from '@/redux/store';
+import { Button, Divider, Grid, Typography } from '@mui/material';
+import { FormProvider, useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from '@/redux/store';
+
+import PersonalOverviewDetails from '@/components/profile-details/personal-overview';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import SkillsContainer from '@/components/profile-details/skills';
+
+import ProfileEducations from './components/educations';
+import ProfileExperiences from './components/experiences';
+import ProfileProjects from './components/projects';
+import ProfileLinksContainer from '@/components/profile-details/profile-links';
+import { righteous } from '@/font-family';
+import { fetchEductions } from '@/actions/education';
+import { fetchExperiences } from '@/actions/experience';
+import { fetchProjects } from '@/actions/project';
+import { updateUser } from '@/actions/user';
+import { Skill, User } from '@/types';
+
+type ProfileUserData = User & {
+  technical_skills?: { value: string }[];
+  core_subjects?: { value: string }[];
+  dev_tools?: { value: string }[];
+  languages?: { value: string }[];
+};
 
 const Profile = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    setValue
-  } = useForm();
+  const methods = useForm();
+  const dispatch = useDispatch();
+  const { reset, setValue, handleSubmit } = methods;
 
-  const { data: resumeData } = useSelector(state => state.workbench);
+  const {
+    data: userData,
+    experiences,
+    projects,
+    educations
+  } = useSelector(state => state.user);
+
+  const onSave = (data: ProfileUserData) => {
+    console.log(data);
+    const { technical_skills, core_subjects, dev_tools, languages } = data;
+    let skills: { name: string; type: Skill['type'] }[] = [];
+    technical_skills?.forEach(skill => {
+      skills.push({
+        name: skill.value,
+        type: 'technical_skills'
+      });
+    });
+    core_subjects?.forEach(skill => {
+      skills.push({
+        name: skill.value,
+        type: 'core_subjects'
+      });
+    });
+    dev_tools?.forEach(skill => {
+      skills.push({
+        name: skill.value,
+        type: 'dev_tools'
+      });
+    });
+    languages?.forEach(skill => {
+      skills.push({
+        name: skill.value,
+        type: 'languages'
+      });
+    });
+
+    dispatch(updateUser({ ...data, skills }));
+  };
 
   useEffect(() => {
-    if (resumeData.name) {
-      // setValue('fname', String(resumeData.name).split(' ')[0]);
-      // setValue('lname', String(resumeData.name).split(' ')[1]);
-      // setValue('phone', resumeData.phone);
-      // setValue('email', resumeData.email);
-      // setValue('city', resumeData.city);
-      // setValue('street', '207/8 Mahakal Colony Dewas');
-      // setValue('dob', '07 June 2002');
-      // setValue('website', 'https://anandtechnical.netlify.app');
-      // setValue('state', resumeData.state);
-      // setValue('nationality', 'Indian');
-      // setValue('country', 'India');
-      // setValue('company_name', resumeData.experiences[0].company_name);
-      // setValue('start_date', resumeData.experiences[0].start_date);
-      // setValue('end_date', resumeData.experiences[0].end_date);
-      // setValue('position', resumeData.experiences[0].position);
-      // setValue('mode', resumeData.experiences[0].mode);
-      // setValue('description', resumeData.experiences[0].description[0]);
-      // setValue('institute_name', resumeData.educations[0].institute_name);
-      // setValue('education_type', resumeData.educations[0].education_type);
-      // setValue('specialisation', resumeData.educations[0].specialisation);
-      // setValue('start_year', resumeData.educations[0].start_year);
-      // setValue('score', resumeData.educations[0].score);
-      // setValue('project_name', resumeData.projects[0].name);
-      // setValue('project_link', resumeData.projects[0].live_url);
-      // setValue('project_description', resumeData.projects[0].description[0]);
-      // let techString = '';
-      // for (let i = 0; i < resumeData.technical_skills.length; i++) {
-      //   techString += resumeData.technical_skills[i] + ', ';
-      // }
-      // setValue('technical_skills', techString);
-      // let langString = '';
-      // for (let i = 0; i < resumeData.languages.length; i++) {
-      //   langString += resumeData.languages[i] + ', ';
-      // }
-      // setValue('languages', langString);
-      // let coreStr = '';
-      // for (let i = 0; i < resumeData.core_subjects.length; i++) {
-      //   coreStr += resumeData.core_subjects[i] + ', ';
-      // }
-      // setValue('core_subjects', coreStr);
-      // let devStr = '';
-      // for (let i = 0; i < resumeData.dev_tools.length; i++) {
-      //   devStr += resumeData.dev_tools[i] + ', ';
-      // }
-      // setValue('dev_tools', devStr);
-    }
-  }, [resumeData]);
+    reset({
+      ...userData,
+      ...userData?.skills,
+      skills: undefined,
+      educations,
+      experiences,
+      projects
+    });
+  }, [userData]);
+
+  useEffect(() => {
+    setValue('educations', educations);
+  }, [educations]);
+  useEffect(() => {
+    setValue('experiences', experiences);
+  }, [experiences]);
+  useEffect(() => {
+    setValue('projects', projects);
+  }, [projects]);
+
+  useEffect(() => {
+    dispatch(fetchEductions());
+    dispatch(fetchExperiences());
+    dispatch(fetchProjects());
+  }, []);
 
   return (
-    <>
-      <div className='profile'>
-        <section className='header'>Account and Profile</section>
+    <Grid
+      sx={{
+        width: '100vw',
+        height: 'calc(100vh - 100px)',
+        maxHeight: 'calc(100vh - 100px)',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center'
+      }}
+    >
+      <DndProvider backend={HTML5Backend}>
+        <FormProvider {...methods}>
+          <Grid
+            sx={{
+              my: '50px',
+              px: { xs: '20px', md: '200px' },
+              width: '100%',
+              height: '100%'
+            }}
+            className={righteous.className}
+          >
+            <Grid
+              sx={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                mb: '10px',
+                px: '10px'
+              }}
+            >
+              <Typography
+                sx={{
+                  fontSize: '18px'
+                }}
+              >
+                My Profile
+              </Typography>
+              <Button variant='contained' onClick={handleSubmit(onSave)}>
+                Save
+              </Button>
+            </Grid>
+            <Grid
+              sx={{
+                borderRadius: '24px',
+                background: 'rgba(255, 255, 255, 0.10)',
+                backdropFilter: 'blur(20px)',
+                display: 'flex',
+                width: '100%',
+                flexDirection: { xs: 'column', md: 'row' }
+              }}
+            >
+              <Grid
+                sx={{
+                  flexGrow: 1,
+                  flexBasis: '50%',
+                  padding: '25px',
+                  maxHeight: { xs: 'auto', md: 'calc(100vh - 200px)' },
+                  height: { xs: 'auto', md: 'calc(100vh - 200px)' },
+                  overflow: { xs: 'visible', md: 'auto' },
+                  borderRight: '1px solid rgba(255, 255, 255, 0.14)',
+                  borderWidth: { xs: '0px', md: '1px' },
 
-        <div className='innerBox'>
-          <div className='selectBar'>
-            <div className='active'>Profile</div>
-            <div>Account settings</div>
-          </div>
-          <div className='partitionBox'>
-            <div className='left'>
-              <section>Resume Profile</section>
-              <div className='imageSection'>
-                <Image className='image' src={profile} alt='' />
-              </div>
+                  '&::-webkit-scrollbar': {
+                    display: 'none'
+                  },
+                  msOverflowStyle: 'none',
+                  scrollbarWidth: 'none'
+                }}
+              >
+                <PersonalOverviewDetails />
+                <Divider
+                  sx={{
+                    borderColor: '#ffffff87',
+                    my: '20px'
+                  }}
+                />
+                <SkillsContainer />
+                <Divider
+                  sx={{
+                    borderColor: '#ffffff87',
+                    my: '20px'
+                  }}
+                />
+                <ProfileLinksContainer />
+              </Grid>
 
-              <div className='infoSection'>
-                <div className='inpGrid'>
-                  <div>
-                    <label htmlFor='fname'>First Name</label>
-                    <input type='text' id='fname' {...register('fname')} />
-                  </div>
-                  <div>
-                    <label htmlFor='lname'>Last Name</label>
-                    <input type='text' id='lname' {...register('lname')} />
-                  </div>
-                </div>
+              <Grid
+                sx={{
+                  flexGrow: 1,
+                  flexBasis: '50%',
+                  maxHeight: { xs: 'auto', md: 'calc(100vh - 200px)' },
+                  height: { xs: 'auto', md: 'calc(100vh - 200px)' },
+                  overflow: { xs: 'visible', md: 'auto' },
+                  padding: '25px',
 
-                <div className='inputTag'>
-                  <label htmlFor='phone'>Phone Number</label>
-                  <input type='text' id='phone' {...register('phone')} />
-                </div>
-
-                <div className='inputTag'>
-                  <label htmlFor='phone'>Email address</label>
-                  <input type='text' id='email' {...register('email')} />
-                </div>
-
-                <div className='inpGrid'>
-                  <div>
-                    <label htmlFor='fname'>Birth date</label>
-                    <input type='text' id='fname' {...register('dob')} />
-                  </div>
-                  <div>
-                    <label htmlFor='lname'>Nationality</label>
-                    <input
-                      type='text'
-                      id='lname'
-                      {...register('nationality')}
-                    />
-                  </div>
-                </div>
-
-                <div className='inpGrid'>
-                  <div>
-                    <label htmlFor='fname'>Street, number</label>
-                    <input type='text' id='fname' {...register('street')} />
-                  </div>
-                  <div>
-                    <label htmlFor='lname'>City</label>
-                    <input type='text' id='lname' {...register('city')} />
-                  </div>
-                </div>
-
-                <div className='inpGrid'>
-                  <div>
-                    <label htmlFor='fname'>State</label>
-                    <input type='text' id='fname' {...register('state')} />
-                  </div>
-                  <div>
-                    <label htmlFor='lname'>Country</label>
-                    <input type='text' id='lname' {...register('country')} />
-                  </div>
-                </div>
-
-                <div className='inputTag'>
-                  <label htmlFor='phone'>Website</label>
-                  <input type='text' id='phone' {...register('website')} />
-                </div>
-              </div>
-            </div>
-            <div className='right'>
-              <div className='inpGrid'>
-                <div>
-                  <label htmlFor='fname'>Job Title</label>
-                  <input type='text' id='fname' {...register('position')} />
-                </div>
-                <div>
-                  <label htmlFor='lname'>Mode</label>
-                  <input type='text' id='lname' {...register('mode')} />
-                </div>
-              </div>
-
-              <div className='inpGrid'>
-                <div>
-                  <label htmlFor='fname'>Start Date</label>
-                  <input type='text' id='fname' {...register('start_date')} />
-                </div>
-                <div>
-                  <label htmlFor='lname'>End Date</label>
-                  <input type='text' id='lname' {...register('end_date')} />
-                </div>
-              </div>
-
-              <div className='inputTag'>
-                <label htmlFor='phone'>Job Description</label> <br />
-                <textarea {...register('description')}></textarea>
-              </div>
-
-              <div className='btnCon'>
-                <Button className='moreBt' variant='contained'>
-                  Add More
-                </Button>
-              </div>
-
-              <div className='inpGrid'>
-                <div>
-                  <label htmlFor='fname'>Project Title</label>
-                  <input type='text' id='fname' {...register('project_name')} />
-                </div>
-                <div>
-                  <label htmlFor='lname'>Live Url</label>
-                  <input type='text' id='lname' {...register('project_link')} />
-                </div>
-              </div>
-
-              <div className='inputTag'>
-                <label htmlFor='phone'>Project Description</label> <br />
-                <textarea {...register('project_description')}></textarea>
-              </div>
-
-              <div className='btnCon'>
-                <Button className='moreBt' variant='contained'>
-                  Add More
-                </Button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </>
+                  '&::-webkit-scrollbar': {
+                    display: 'none'
+                  },
+                  msOverflowStyle: 'none',
+                  scrollbarWidth: 'none'
+                }}
+              >
+                <Typography
+                  sx={{
+                    fontSize: '18px',
+                    mb: '10px'
+                  }}
+                >
+                  Educations
+                </Typography>
+                <ProfileEducations />
+                <Divider
+                  sx={{
+                    borderColor: '#ffffff87',
+                    my: '20px'
+                  }}
+                />
+                <Typography
+                  sx={{
+                    fontSize: '18px',
+                    mb: '10px'
+                  }}
+                >
+                  Experiences
+                </Typography>
+                <ProfileExperiences />
+                <Divider
+                  sx={{
+                    borderColor: '#ffffff87',
+                    my: '20px'
+                  }}
+                />
+                <Typography
+                  sx={{
+                    fontSize: '18px',
+                    mb: '10px'
+                  }}
+                >
+                  Projects
+                </Typography>
+                <ProfileProjects />
+              </Grid>
+            </Grid>
+          </Grid>
+        </FormProvider>
+      </DndProvider>
+    </Grid>
   );
 };
 
