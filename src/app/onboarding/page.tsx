@@ -15,7 +15,7 @@ const righteous = Righteous({
 });
 
 const Onboarding = () => {
-  const [showQuestions, setShowQuestions] = useState<boolean>(!false);
+  const [showQuestions, setShowQuestions] = useState<boolean>(false);
   return (
     <Grid
       sx={{
