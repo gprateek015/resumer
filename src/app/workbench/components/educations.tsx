@@ -11,13 +11,15 @@ import ShortUniqueId from 'short-unique-id';
 
 const Educations = ({
   collapsed,
-  toggleCollapse
+  toggleCollapse,
+  reloadResume
 }: {
   collapsed: boolean;
   toggleCollapse: Function;
+  reloadResume: SubmitHandler<any>;
 }) => {
   const [editId, setEditId] = useState<string | null>(null);
-  const { setValue, watch } = useFormContext();
+  const { setValue, watch, handleSubmit } = useFormContext();
   const educations = watch('educations');
   const uid = new ShortUniqueId({ length: 5 });
 
@@ -46,6 +48,7 @@ const Educations = ({
         })
       );
     }
+    handleSubmit(reloadResume)();
   };
 
   const handleDelete = (id: string) => {

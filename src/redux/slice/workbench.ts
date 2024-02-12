@@ -16,7 +16,7 @@ export const workbenchSlice = createSlice({
   },
   extraReducers: builder => {
     builder.addCase(generateResumeData.fulfilled, (state, action) => {
-      state.data = { ...action.payload };
+      state.data = action.payload;
     });
   }
 });

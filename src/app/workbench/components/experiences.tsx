@@ -9,13 +9,15 @@ import ShortUniqueId from 'short-unique-id';
 
 const Experiences = ({
   collapsed,
-  toggleCollapse
+  toggleCollapse,
+  reloadResume
 }: {
   collapsed: boolean;
   toggleCollapse: Function;
+  reloadResume: SubmitHandler<any>;
 }) => {
   const [editId, setEditId] = useState<string | null>(null);
-  const { setValue, watch } = useFormContext();
+  const { setValue, watch, handleSubmit } = useFormContext();
   const experiences = watch('experiences');
   const uid = new ShortUniqueId({ length: 5 });
 
@@ -38,6 +40,7 @@ const Experiences = ({
         })
       );
     }
+    handleSubmit(reloadResume)();
   };
 
   const handleDelete = (id: string) => {

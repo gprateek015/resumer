@@ -15,7 +15,7 @@ const righteous = Righteous({
 });
 
 const Onboarding = () => {
-  const [showQuestions, setShowQuestions] = useState<boolean>(!false);
+  const [showQuestions, setShowQuestions] = useState<boolean>(false);
   return (
     <Grid
       sx={{
@@ -73,7 +73,7 @@ const Onboarding = () => {
                 left: '50%',
                 transform: {
                   xs: 'translate(-50%, -50%)',
-                  md: 'translateY(60px)'
+                  md: 'translateY(53px)'
                 }
               }}
             >

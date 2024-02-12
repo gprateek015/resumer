@@ -8,12 +8,18 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   import.meta.url
 ).toString();
 
-const PdfViewer = ({ pdf }: { pdf: ArrayBuffer | null }) => {
+const PdfViewer = ({
+  pdf,
+  width
+}: {
+  pdf: ArrayBuffer | null;
+  width?: number;
+}) => {
   return (
     <Document file={pdf}>
       <Page
         pageNumber={1}
-        width={480}
+        width={width && width}
         renderAnnotationLayer={false}
         renderMode='canvas'
         renderTextLayer={false}

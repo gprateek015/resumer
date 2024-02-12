@@ -17,10 +17,10 @@ type Resume = {
   linkedin?: string;
   github?: string;
   profile_links?: ProfileLink[];
-  technical_skills?: string[];
-  dev_tools?: string[];
-  core_subjects?: string[];
-  languages?: string[];
+  technical_skills?: { name: string }[];
+  dev_tools?: { name: string }[];
+  core_subjects?: { name: string }[];
+  languages?: { name: string }[];
 };
 
 export default Resume;

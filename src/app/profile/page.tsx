@@ -3,7 +3,7 @@
 import React, { useEffect } from 'react';
 import Image from 'next/image';
 import profile from '@/assets/onboarding1.png';
-import { Button, Divider, Grid, Typography } from '@mui/material';
+import { Divider, Grid, Typography } from '@mui/material';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from '@/redux/store';
 
@@ -22,6 +22,7 @@ import { fetchExperiences } from '@/actions/experience';
 import { fetchProjects } from '@/actions/project';
 import { updateUser } from '@/actions/user';
 import { Skill, User } from '@/types';
+import { Button } from '@/components/onboarding-questions/styles';
 
 type ProfileUserData = User & {
   technical_skills?: { name: string }[];
@@ -116,131 +117,143 @@ const Profile = () => {
           <Grid
             sx={{
               my: '20px',
-              px: { xs: '20px', md: '200px' },
-              width: '100%',
-              height: '100%',
-              maxHeight: 'calc(100vh - 90px)'
+              px: { xs: '20px', sm: '100px', lg: '200px' },
+              width: '100%'
             }}
             className={righteous.className}
           >
             <Grid
               sx={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                mb: '10px',
-                px: '10px',
-                alignItems: 'center'
-              }}
-            >
-              <Typography
-                sx={{
-                  fontSize: '18px'
-                }}
-              >
-                My Profile
-              </Typography>
-              <Button variant='contained' onClick={handleSubmit(onSave)}>
-                Save
-              </Button>
-            </Grid>
-            <Grid
-              sx={{
-                borderRadius: '24px',
-                background: 'rgba(255, 255, 255, 0.10)',
-                backdropFilter: 'blur(20px)',
-                display: 'flex',
-                width: '100%',
-                flexDirection: { xs: 'column', md: 'row' },
-                height: { md: '85%' }
+                maxWidth: '950px',
+                maxHeight: 'calc(100vh - 90px)',
+                height: '100%'
               }}
             >
               <Grid
                 sx={{
-                  flexGrow: 1,
-                  flexBasis: '50%',
-                  padding: '15px 25px 25px',
-                  overflow: { xs: 'visible', md: 'auto' },
-                  borderRight: '1px solid rgba(255, 255, 255, 0.14)',
-                  borderWidth: { xs: '0px', md: '1px' },
-
-                  '&::-webkit-scrollbar': {
-                    display: 'none'
-                  },
-                  msOverflowStyle: 'none',
-                  scrollbarWidth: 'none'
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  mb: '10px',
+                  px: '10px',
+                  alignItems: 'center'
                 }}
               >
-                <PersonalOverviewDetails />
-                <Divider
+                <Typography
                   sx={{
-                    borderColor: '#ffffff87',
-                    my: '20px'
+                    fontSize: '18px'
                   }}
-                />
-                <Typography mb='5px'>Skills</Typography>
-                <SkillsContainer />
-                <Divider
+                >
+                  My Profile
+                </Typography>
+                <Button
+                  variant='contained'
+                  onClick={handleSubmit(onSave)}
                   sx={{
-                    borderColor: '#ffffff87',
-                    my: '20px'
+                    padding: '4px 20px'
                   }}
-                />
-                <ProfileLinksContainer />
+                >
+                  Save
+                </Button>
               </Grid>
-
               <Grid
                 sx={{
-                  flexGrow: 1,
-                  flexBasis: '50%',
-                  overflow: { xs: 'visible', md: 'auto' },
-                  padding: '15px 25px 25px',
-
-                  '&::-webkit-scrollbar': {
-                    display: 'none'
-                  },
-                  msOverflowStyle: 'none',
-                  scrollbarWidth: 'none'
+                  borderRadius: '24px',
+                  background: 'rgba(255, 255, 255, 0.10)',
+                  backdropFilter: 'blur(20px)',
+                  display: 'flex',
+                  width: '100%',
+                  flexDirection: { xs: 'column', md: 'row' },
+                  height: { md: '85%' }
                 }}
               >
-                <Typography
+                <Grid
                   sx={{
-                    fontSize: '18px',
-                    mb: '10px'
+                    flexGrow: 1,
+                    flexBasis: '50%',
+                    padding: '15px 25px 25px',
+                    overflow: { xs: 'visible', md: 'auto' },
+                    borderRight: '1px solid rgba(255, 255, 255, 0.14)',
+                    borderWidth: { xs: '0px', md: '1px' },
+
+                    '&::-webkit-scrollbar': {
+                      display: 'none'
+                    },
+                    msOverflowStyle: 'none',
+                    scrollbarWidth: 'none'
                   }}
                 >
-                  Educations
-                </Typography>
-                <ProfileEducations />
-                <Divider
+                  <PersonalOverviewDetails />
+                  <Divider
+                    sx={{
+                      borderColor: '#ffffff87',
+                      my: '20px'
+                    }}
+                  />
+                  <Typography mb='5px'>Skills</Typography>
+                  <SkillsContainer />
+                  <Divider
+                    sx={{
+                      borderColor: '#ffffff87',
+                      my: '20px'
+                    }}
+                  />
+                  <ProfileLinksContainer />
+                </Grid>
+
+                <Grid
                   sx={{
-                    borderColor: '#ffffff87',
-                    my: '20px'
-                  }}
-                />
-                <Typography
-                  sx={{
-                    fontSize: '18px',
-                    mb: '10px'
+                    flexGrow: 1,
+                    flexBasis: '50%',
+                    overflow: { xs: 'visible', md: 'auto' },
+                    padding: '15px 25px 25px',
+
+                    '&::-webkit-scrollbar': {
+                      display: 'none'
+                    },
+                    msOverflowStyle: 'none',
+                    scrollbarWidth: 'none'
                   }}
                 >
-                  Experiences
-                </Typography>
-                <ProfileExperiences />
-                <Divider
-                  sx={{
-                    borderColor: '#ffffff87',
-                    my: '20px'
-                  }}
-                />
-                <Typography
-                  sx={{
-                    fontSize: '18px',
-                    mb: '10px'
-                  }}
-                >
-                  Projects
-                </Typography>
-                <ProfileProjects />
+                  <Typography
+                    sx={{
+                      fontSize: '18px',
+                      mb: '10px'
+                    }}
+                  >
+                    Educations
+                  </Typography>
+                  <ProfileEducations />
+                  <Divider
+                    sx={{
+                      borderColor: '#ffffff87',
+                      my: '20px'
+                    }}
+                  />
+                  <Typography
+                    sx={{
+                      fontSize: '18px',
+                      mb: '10px'
+                    }}
+                  >
+                    Experiences
+                  </Typography>
+                  <ProfileExperiences />
+                  <Divider
+                    sx={{
+                      borderColor: '#ffffff87',
+                      my: '20px'
+                    }}
+                  />
+                  <Typography
+                    sx={{
+                      fontSize: '18px',
+                      mb: '10px'
+                    }}
+                  >
+                    Projects
+                  </Typography>
+                  <ProfileProjects />
+                </Grid>
               </Grid>
             </Grid>
           </Grid>

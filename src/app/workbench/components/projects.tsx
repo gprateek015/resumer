@@ -11,13 +11,15 @@ import ShortUniqueId from 'short-unique-id';
 
 const Projects = ({
   collapsed,
-  toggleCollapse
+  toggleCollapse,
+  reloadResume
 }: {
   collapsed: boolean;
   toggleCollapse: Function;
+  reloadResume: SubmitHandler<any>;
 }) => {
   const [editId, setEditId] = useState<string | null>(null);
-  const { setValue, watch } = useFormContext();
+  const { setValue, watch, handleSubmit } = useFormContext();
   const projects = watch('projects');
   const uid = new ShortUniqueId({ length: 5 });
 
@@ -40,6 +42,7 @@ const Projects = ({
         })
       );
     }
+    handleSubmit(reloadResume)();
   };
 
   const handleDelete = (id: string) => {

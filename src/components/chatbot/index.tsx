@@ -194,7 +194,7 @@ const Chatbot = ({ setShowQuestions }: { setShowQuestions: Function }) => {
           >
             <TextField
               fullWidth
-              placeholder='Type here'
+              placeholder={!allowUserToType ? 'Disabled...' : 'Type here...'}
               inputProps={{
                 sx: {
                   background: 'white',
