@@ -15,11 +15,11 @@ const righteous = Righteous({
 });
 
 const Onboarding = () => {
-  const [showQuestions, setShowQuestions] = useState<boolean>(false);
+  const [showQuestions, setShowQuestions] = useState<boolean>(!false);
   return (
     <Grid
       sx={{
-        width: '100%',
+        width: '100vw',
         flexGrow: '1',
         gap: '150px',
         display: 'flex',
@@ -37,15 +37,15 @@ const Onboarding = () => {
             gap: '20px',
             background: 'rgba(255, 255, 255, 0.10)',
             backdropFilter: 'blur(20px)',
-            width: 'fit-content',
-            height: 'fit-content',
+            width: { xs: 'calc(100vw - 30px)', md: 'fit-content' },
+            maxHeight: 'calc(100vh - 100px)',
             borderRadius: '20px',
-            padding: '0px 30px 0px 10px'
+            padding: { xs: '10px', md: '20px 30px 20px 10px' },
+            position: 'relative'
           }}
         >
           <Typography
-            mt='20px'
-            fontSize={'26px'}
+            fontSize={'1.5rem'}
             fontWeight={'400'}
             className={righteous.className}
           >
@@ -58,18 +58,31 @@ const Onboarding = () => {
               alignItems: 'center',
               gap: '20px',
               width: 'fit-content',
-              height: 'fit-content'
+              height: 'fit-content',
+              flexDirection: { xs: 'column', md: 'row' }
             }}
           >
             <Chatbot setShowQuestions={setShowQuestions} />
-            <Grid sx={{ alignSelf: 'flex-end' }}>
+            <Grid
+              sx={{
+                alignSelf: 'flex-end',
+                overflow: 'hidden',
+                position: { xs: 'absolute', md: 'static' },
+                zIndex: '-1',
+                top: '50%',
+                left: '50%',
+                transform: {
+                  xs: 'translate(-50%, -50%)',
+                  md: 'translateY(60px)'
+                }
+              }}
+            >
               <Image
                 src={OnboardingIcon}
                 alt='icon'
                 style={{
-                  height: '520px',
-                  width: '350px',
-                  transform: 'translateY(60px)'
+                  height: '100%',
+                  width: '250px'
                 }}
               />
             </Grid>

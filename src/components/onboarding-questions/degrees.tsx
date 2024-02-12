@@ -9,9 +9,7 @@ const Degrees = ({ nextPage, prevPage }: PageNavPropsType) => {
   return (
     <PageContainer nextPage={nextPage} prevPage={prevPage}>
       <Grid>
-        <Heading mb='20px'>
-          Highest Qualification <br /> you hold?
-        </Heading>
+        <Heading mb='20px'>Highest Qualification you hold?</Heading>
         <Typography>Select even if you are enrolled.</Typography>
         <Options>
           <Option onClick={() => nextPage()}>

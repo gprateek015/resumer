@@ -104,8 +104,8 @@ const Profile = () => {
     <Grid
       sx={{
         width: '100vw',
-        height: 'calc(100vh - 100px)',
-        maxHeight: 'calc(100vh - 100px)',
+        height: 'calc(100vh - 70px)',
+        maxHeight: 'calc(100vh - 70px)',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center'
@@ -115,10 +115,11 @@ const Profile = () => {
         <FormProvider {...methods}>
           <Grid
             sx={{
-              my: '50px',
+              my: '20px',
               px: { xs: '20px', md: '200px' },
               width: '100%',
-              height: '100%'
+              height: '100%',
+              maxHeight: 'calc(100vh - 90px)'
             }}
             className={righteous.className}
           >
@@ -127,7 +128,8 @@ const Profile = () => {
                 display: 'flex',
                 justifyContent: 'space-between',
                 mb: '10px',
-                px: '10px'
+                px: '10px',
+                alignItems: 'center'
               }}
             >
               <Typography
@@ -148,16 +150,15 @@ const Profile = () => {
                 backdropFilter: 'blur(20px)',
                 display: 'flex',
                 width: '100%',
-                flexDirection: { xs: 'column', md: 'row' }
+                flexDirection: { xs: 'column', md: 'row' },
+                height: { md: '85%' }
               }}
             >
               <Grid
                 sx={{
                   flexGrow: 1,
                   flexBasis: '50%',
-                  padding: '25px',
-                  maxHeight: { xs: 'auto', md: 'calc(100vh - 200px)' },
-                  height: { xs: 'auto', md: 'calc(100vh - 200px)' },
+                  padding: '15px 25px 25px',
                   overflow: { xs: 'visible', md: 'auto' },
                   borderRight: '1px solid rgba(255, 255, 255, 0.14)',
                   borderWidth: { xs: '0px', md: '1px' },
@@ -191,10 +192,8 @@ const Profile = () => {
                 sx={{
                   flexGrow: 1,
                   flexBasis: '50%',
-                  maxHeight: { xs: 'auto', md: 'calc(100vh - 200px)' },
-                  height: { xs: 'auto', md: 'calc(100vh - 200px)' },
                   overflow: { xs: 'visible', md: 'auto' },
-                  padding: '25px',
+                  padding: '15px 25px 25px',
 
                   '&::-webkit-scrollbar': {
                     display: 'none'

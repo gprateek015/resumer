@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Grid, Typography, Button, FormHelperText } from '@mui/material';
 import {
   DividerWithText,
@@ -31,14 +31,26 @@ const Register = () => {
   const {
     register,
     formState: { errors },
-    handleSubmit
+    handleSubmit,
+    setError
   } = useForm<FormValues>();
-  const { error } = useSelector((state: RootState) => state.auth);
+  const { error: apiError } = useSelector((state: RootState) => state.auth);
+  const [apiErrorStr, setApiErrorStr] = useState('');
 
   const onSubmit = (data: FormValues) => {
     dispatch(resetError());
     dispatch(registerUser(data));
   };
+
+  useEffect(() => {
+    if (typeof apiError === 'object') {
+      Object.keys(apiError || {}).forEach((error: any) => {
+        setError(error, { message: (apiError as any)[error].message });
+      });
+    } else {
+      setApiErrorStr(apiError);
+    }
+  }, [apiError]);
 
   return (
     <>
@@ -98,24 +110,13 @@ const Register = () => {
             {...register('password', {
               required: 'Please enter your password'
             })}
-            helperText={errors?.email?.message as string}
-            error={!!errors?.email}
+            helperText={errors?.password?.message as string}
+            error={!!errors?.password}
             fullWidth
             placeholder='Password'
           />
         </Grid>
-        <Grid>
-          <Typography
-            sx={{
-              float: 'right',
-              transform: 'translateY(-5px)',
-              cursor: 'pointer'
-            }}
-          >
-            Forgot Password?
-          </Typography>
-        </Grid>
-        <FormHelperText error>{error}</FormHelperText>
+        <FormHelperText error>{apiErrorStr}</FormHelperText>
         <Grid>
           <Button
             sx={{

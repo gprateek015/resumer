@@ -9,9 +9,7 @@ const HighestEducation = ({ prevPage, nextPage }: PageNavPropsType) => {
   return (
     <PageContainer nextPage={nextPage} prevPage={prevPage}>
       <Grid>
-        <Heading mb='20px'>
-          Did you graduate from <br /> college / university?
-        </Heading>
+        <Heading mb='20px'>Did you graduate from college / university?</Heading>
         <Typography>Please tell us so we can optimise your resume.</Typography>
         <Options>
           <Option onClick={() => nextPage()}>

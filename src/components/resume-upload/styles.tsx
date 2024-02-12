@@ -34,7 +34,7 @@ export const UploadContainer = styled(Grid)({
 
 export const Uploader = styled(Grid)({
   height: '100%',
-  padding: '50px',
+  padding: '25px 40px',
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',

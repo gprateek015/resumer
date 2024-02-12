@@ -36,7 +36,12 @@ export const authSlice = createSlice({
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.isLoggedIn = false;
-        state.error = action.error?.message ?? '';
+
+        try {
+          state.error = JSON.parse(action?.error?.message || '');
+        } catch (_) {
+          state.error = action?.error?.message ?? '';
+        }
       })
       .addCase(registerUser.fulfilled, state => {
         state.isLoggedIn = true;
@@ -44,7 +49,11 @@ export const authSlice = createSlice({
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.isLoggedIn = false;
-        state.error = action.error?.message ?? '';
+        try {
+          state.error = JSON.parse(action?.error?.message || '');
+        } catch (_) {
+          state.error = action?.error?.message ?? '';
+        }
       })
       .addCase(fetchSelf.fulfilled, state => {
         state.isLoggedIn = true;

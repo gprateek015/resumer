@@ -21,7 +21,7 @@ const righteous = Righteous({
 });
 
 const Navbar = () => {
-  const { isLoggedIn } = useSelector((state: RootState) => state.auth);
+  const { isLoggedIn, page } = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
   const route = useRouter();
   const authRef = useRef<any>(null);
@@ -29,19 +29,19 @@ const Navbar = () => {
   const pathname = usePathname();
 
   const handleClick = () => {
-    route.push('/');
     if (isLoggedIn) {
       dispatch(logoutUser());
       dispatch(clearUserData());
       signOut();
     } else {
-      dispatch(changeAuthPage(1));
+      dispatch(changeAuthPage(page === 0 ? 1 : 0));
 
       window.scrollTo({
         top: document.body.scrollHeight,
         behavior: 'smooth'
       });
     }
+    route.replace('/');
   };
 
   return (
@@ -52,10 +52,15 @@ const Navbar = () => {
         padding: { xs: '15px 25px', md: '15px 80px' },
         alignItems: 'center',
         background:
-          pathname === '/'
-            ? 'transparent'
-            : 'linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0%, rgba(51, 50, 50, 0.12) 113.38%)',
-        backdropFilter: 'blur(20px)'
+          'linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0%, rgba(51, 50, 50, 0.12) 113.38%)',
+        // background: 'transparent'
+        // background: 'black',
+        backdropFilter: 'blur(20px)',
+        position: 'fixed',
+        top: '0px',
+        width: '100vw',
+        zIndex: '100',
+        height: '70px'
       }}
       className={righteous.className}
     >
@@ -85,7 +90,7 @@ const Navbar = () => {
       </Grid>
       <Grid ref={authRef}>
         <SignupBtn onClick={handleClick}>
-          {isLoggedIn ? 'Log out' : 'Sign up'}
+          {isLoggedIn ? 'Log out' : page === 0 ? 'Sign up' : 'Sign in'}
         </SignupBtn>
       </Grid>
     </Grid>

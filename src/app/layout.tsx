@@ -42,7 +42,8 @@ export default function RootLayout({
                     display={'flex'}
                     flexDirection={'column'}
                     sx={{
-                      overflow: 'auto'
+                      overflow: 'auto',
+                      mt: '70px'
                     }}
                   >
                     {children}

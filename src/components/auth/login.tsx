@@ -1,7 +1,7 @@
 'use client';
 
-import React from 'react';
-import { Grid, Typography, Button, FormHelperText } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { Grid, Typography, Button, FormHelperText, Box } from '@mui/material';
 import {
   DividerWithText,
   FormInput,
@@ -29,14 +29,28 @@ const Login = () => {
   const {
     register,
     formState: { errors },
-    handleSubmit
+    handleSubmit,
+    setError
   } = useForm<FormValues>();
-  const { error } = useSelector((state: RootState) => state.auth);
+  const { error: apiError = '' } = useSelector(
+    (state: RootState) => state.auth
+  );
+  const [apiErrorStr, setApiErrorStr] = useState('');
 
   const onSubmit = (data: FormValues) => {
     dispatch(resetError());
     dispatch(loginUser(data));
   };
+
+  useEffect(() => {
+    if (typeof apiError === 'object') {
+      Object.keys(apiError || {}).forEach((error: any) => {
+        setError(error, { message: (apiError as any)[error].message });
+      });
+    } else {
+      setApiErrorStr(apiError);
+    }
+  }, [apiError]);
 
   return (
     <>
@@ -44,7 +58,7 @@ const Login = () => {
         sx={{
           display: 'flex',
           flexDirection: 'column',
-          gap: '15px'
+          gap: '10px'
         }}
       >
         <Grid>
@@ -58,30 +72,37 @@ const Login = () => {
           />
         </Grid>
         <Grid>
-          <FormLabel>Password</FormLabel>
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center'
+            }}
+          >
+            <FormLabel>Password</FormLabel>
+            <Typography
+              sx={{
+                fontSize: '0.9em',
+                cursor: 'pointer',
+                mb: '5px'
+              }}
+            >
+              Forgot Password?
+            </Typography>
+          </Box>
           <PasswordField
             {...register('password', {
               required: 'Please enter your password'
             })}
-            helperText={errors?.email?.message as string}
-            error={!!errors?.email}
+            helperText={errors?.password?.message as string}
+            error={!!errors?.password}
             fullWidth
             placeholder='Password'
           />
         </Grid>
+
         <Grid>
-          <Typography
-            sx={{
-              float: 'right',
-              transform: 'translateY(-5px)',
-              cursor: 'pointer'
-            }}
-          >
-            Forgot Password?
-          </Typography>
-        </Grid>
-        <FormHelperText error>{error}</FormHelperText>
-        <Grid>
+          <FormHelperText error>{apiErrorStr}</FormHelperText>
           <Button
             sx={{
               borderRadius: '10px',
@@ -98,7 +119,7 @@ const Login = () => {
                 backgroundClip: 'text',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
-                fontSize: '16px',
+                fontSize: '1rem',
                 fontWeight: '600',
                 width: '135px',
                 letterSpacing: '1px'
@@ -114,18 +135,18 @@ const Login = () => {
           display: 'flex',
           gap: '5px',
           justifyContent: 'center',
-          marginTop: '40px'
+          marginTop: '15px'
         }}
       >
         <Typography
           sx={{ color: 'rgba(255, 255, 255, 0.80)' }}
-          fontSize={'14px'}
+          fontSize={'0.85rem'}
         >
           Don't have an account ?
         </Typography>
         <Typography
           fontWeight={'600'}
-          fontSize={'14px'}
+          fontSize={'0.85rem'}
           onClick={() => dispatch(changeAuthPage(1))}
           sx={{ cursor: 'pointer' }}
         >

@@ -70,11 +70,7 @@ const CodingProfiles = ({ prevPage, nextPage }: PageNavPropsType) => {
   return (
     <PageContainer nextPage={handleSubmit(onSubmit)} prevPage={prevPage}>
       <Grid>
-        <Heading mb='20px'>
-          Please provide us all your
-          <br />
-          coding profiles
-        </Heading>
+        <Heading mb='20px'>Please provide us all your coding profiles</Heading>
         <Grid
           sx={{
             display: 'flex',

@@ -155,8 +155,7 @@ const ProjectEdit = ({
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        gap: '15px',
-        my: '20px'
+        gap: '15px'
       }}
     >
       <FormLabel>Name of the project</FormLabel>

@@ -109,8 +109,7 @@ const EducationalDetailsEdit = ({
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        gap: '15px',
-        my: '25px'
+        gap: '15px'
       }}
     >
       <FormLabel>Educational Level</FormLabel>

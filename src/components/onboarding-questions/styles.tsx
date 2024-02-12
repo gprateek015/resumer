@@ -18,8 +18,8 @@ export const Heading = styled(Typography)({
   WebkitBackgroundClip: 'text',
   width: 'fit-content',
   fontWeight: '400',
-  fontSize: '36px',
-  lineHeight: '50px',
+  fontSize: '2rem',
+  lineHeight: '2.3rem',
   letterSpacing: '1.1px'
 });
 

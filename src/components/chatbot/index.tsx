@@ -87,7 +87,7 @@ const Chatbot = ({ setShowQuestions }: { setShowQuestions: Function }) => {
     setInputText('');
     setAllowUserToType(false);
     setTimeout(() => {
-      if (newMsg === 'Import resume') setResumeUpload(true);
+      if (newMsg.toLowerCase() === 'import resume') setResumeUpload(true);
       if (aiChatsInd + 1 >= AiChats.length) return;
       setChats(chats => [...chats, AiChats[aiChatsInd + 1]?.message]);
       setAiChatsInd(curr => curr + 1);
@@ -104,12 +104,11 @@ const Chatbot = ({ setShowQuestions }: { setShowQuestions: Function }) => {
     <Grid
       sx={{
         width: { xs: '360px', md: '400px' },
-        height: '500px',
         borderRadius: '20px',
-        padding: '26px'
+        padding: { xs: '25px 15px', md: '25px 25px 0px' },
+        transform: 'translateY(8px)'
       }}
     >
-      {' '}
       {resumeUpload ? (
         <ResumeUpload onCompleteUpload={() => setShowQuestions(true)} />
       ) : (
@@ -119,7 +118,6 @@ const Chatbot = ({ setShowQuestions }: { setShowQuestions: Function }) => {
             height: '100%',
             display: 'flex',
             flexDirection: 'column',
-            overflow: 'auto',
             '&::-webkit-scrollbar': {
               display: 'none'
             },
@@ -130,11 +128,15 @@ const Chatbot = ({ setShowQuestions }: { setShowQuestions: Function }) => {
           <Grid
             sx={{
               flexGrow: 1,
-              padding: '10px 0px 16px',
+              padding: '10px 10px 16px',
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'flex-end',
-              gap: '16px'
+              gap: '16px',
+              // maxHeight: '300px',
+              height: { xs: '275px', md: '300px' },
+              overflow: 'hidden',
+              textAlign: 'start'
             }}
           >
             {chats.map((chat, ind) => (
@@ -167,7 +169,8 @@ const Chatbot = ({ setShowQuestions }: { setShowQuestions: Function }) => {
               <Grid
                 sx={{
                   display: 'flex',
-                  gap: '10px'
+                  gap: '10px',
+                  flexWrap: 'wrap'
                 }}
               >
                 {AiChats[aiChatsInd]?.options?.map((option, ind: number) => (
@@ -181,10 +184,12 @@ const Chatbot = ({ setShowQuestions }: { setShowQuestions: Function }) => {
             )}
           </Grid>
           <Grid
-            width={'100%'}
             sx={{
+              width: '100%',
               display: 'flex',
-              gap: '10px'
+              gap: '10px',
+              justifyContent: 'center',
+              padding: '0px 10px'
             }}
           >
             <TextField
@@ -197,7 +202,8 @@ const Chatbot = ({ setShowQuestions }: { setShowQuestions: Function }) => {
                   height: '20px',
                   border: '1px solid #E9E9E9',
                   borderRadius: '4px',
-                  lineHeight: '20px'
+                  lineHeight: '20px',
+                  flexGrow: 1
                 }
               }}
               onKeyDownCapture={e => {

@@ -9,9 +9,7 @@ const WorkExperience = ({ nextPage, prevPage }: PageNavPropsType) => {
   return (
     <PageContainer nextPage={nextPage} prevPage={prevPage}>
       <Grid>
-        <Heading mb='20px'>
-          How much work <br /> experience do you have?
-        </Heading>
+        <Heading mb='20px'>How much work experience do you have?</Heading>
         <Typography>
           Includes internships, summer jobs, and unofficial jobs.
         </Typography>

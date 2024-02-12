@@ -33,6 +33,7 @@ const ResumeUpload = ({ onCompleteUpload }: { onCompleteUpload: Function }) => {
   const handleDrop = (event: any) => {
     event.preventDefault();
     event.stopPropagation();
+    if (event?.dataTransfer?.files[0]?.type !== 'application/pdf') return;
     if (inputRef?.current) inputRef.current.files = event?.dataTransfer?.files;
     setFiles(event?.dataTransfer?.files);
   };
@@ -86,6 +87,7 @@ const ResumeUpload = ({ onCompleteUpload }: { onCompleteUpload: Function }) => {
         style={{ display: 'none' }}
         ref={inputRef}
         type='file'
+        accept='application/pdf'
         onChange={handleInputChange}
       />
       {!files ? (
@@ -97,7 +99,7 @@ const ResumeUpload = ({ onCompleteUpload }: { onCompleteUpload: Function }) => {
           onDrop={handleDrop}
         >
           <Image src={CloudIcon} alt='cloud-icon' />
-          <Heading fontSize='32px'>Select a PDF / DOC file to upload</Heading>
+          <Heading fontSize='32px'>Select a PDF file to upload</Heading>
           <Typography
             sx={{
               color: '#FFFFFFCC',

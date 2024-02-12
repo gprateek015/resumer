@@ -81,7 +81,8 @@ const OnboardingQuestions = () => {
         padding: { xs: '20px', md: '20px 40px' },
         margin: { xs: 'auto 0px', md: 'auto 150px' },
         width: '100%',
-        height: { xs: 'calc(100vh - 120px)', md: '600px' }
+        height: 'calc(100vh - 120px)',
+        maxHeight: { xs: '90%', md: '600px' }
       }}
       className={righteous.className}
     >

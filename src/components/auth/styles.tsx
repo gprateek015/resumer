@@ -19,15 +19,14 @@ export const DividerWithText = styled(Divider)({
   },
   '& span': {
     color: 'rgba(255, 255, 255, 0.49)'
-  },
-  mt: '10px'
+  }
 });
 
 export const FormLabel = styled(Typography)({
   textAlign: 'left',
   marginBottom: '5px',
   color: 'rgba(255, 255, 255, 0.70)',
-  fontSize: '16px'
+  fontSize: '1em'
 });
 
 export const FormInput = styled(TextField)({

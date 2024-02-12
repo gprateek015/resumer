@@ -39,7 +39,8 @@ const AuthBox = () => {
     <Grid
       sx={{
         width: { xs: 'calc(100vw - 30px)', md: '500px' },
-        padding: { xs: '40px 30px', md: '40px 60px' },
+        maxWidth: '450px',
+        padding: { xs: '30px 30px', md: '6% 50px' },
         borderRadius: '20px',
         background:
           'linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0%, rgba(51, 50, 50, 0.12) 100%)',
@@ -47,18 +48,18 @@ const AuthBox = () => {
         textAlign: 'center'
       }}
     >
-      <Typography fontWeight={'500'} fontSize={'17px'}>
+      <Typography fontWeight={'500'} fontSize={'1em'}>
         You Must Sign in to join
       </Typography>
-      <Typography fontWeight={'300'} fontSize={'14px'}>
+      <Typography fontWeight={'300'} fontSize={'0.8em'}>
         We&apos;re a team that guides each other
       </Typography>
       <Grid
         sx={{
           display: 'flex',
           flexDirection: 'column',
-          gap: '20px',
-          margin: '15px 0px'
+          gap: '15px',
+          margin: '10px 0px'
         }}
       >
         <ThirdPartyBtns

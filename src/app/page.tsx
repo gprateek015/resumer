@@ -19,32 +19,37 @@ export default function Home() {
           width: '100%',
           flexDirection: { xs: 'column', md: 'row' },
           alignItems: { xs: 'center', md: 'normal' },
-          overflowY: 'hidden'
+          overflowY: 'hidden',
+          padding: { xs: '0px 10px', md: '0px 50px' }
         }}
       >
         <Grid
           sx={{
-            width: '600px',
+            maxWidth: '600px',
             display: 'flex',
             flexDirection: 'column',
-            padding: '50px 0px',
-            justifyContent: 'space-between',
-            height: { xs: 'calc(100vh - 70px)', md: 'auto' },
-            alignItems: 'center'
+            padding: { sm: '50px 0px' },
+            height: { md: 'auto' },
+            maxHeight: { md: 'auto' },
+            justifyContent: { xs: 'space-between', md: 'flex-start' },
+            textAlign: { xs: 'center', sm: 'start' }
           }}
         >
           <Box>
             <Typography
-              fontSize={'66px'}
-              lineHeight={'80px'}
-              marginBottom={'30px'}
+              fontSize={{ xs: '2rem', sm: '3rem' }}
+              lineHeight={'1.2em'}
+              marginBottom={{ xs: '15px', sm: '30px' }}
             >
-              Improve your <br /> Resume ATS score <br /> Using AI
+              Improve your Resume ATS score Using AI
             </Typography>
             <Typography
-              fontSize={'25px'}
-              lineHeight={'35px'}
+              fontSize={{ xs: '0.9rem', sm: '1.4rem' }}
+              lineHeight={{ xs: '1.1rem', sm: '1.3rem' }}
               color='rgba(232, 235, 243, 0.70)'
+              sx={{
+                display: { xs: 'none', sm: 'block' }
+              }}
             >
               Let AI do the heavy lifting for you in optimizing your resumes
               when you apply for various job roles
@@ -52,13 +57,17 @@ export default function Home() {
           </Box>
           <Grid
             sx={{
-              display: 'flex',
+              display: { xs: 'none', sm: 'flex' },
               alignItems: 'center',
-              gap: '60px'
+              gap: { xs: '30px', sm: '60px' },
+              marginTop: { sm: '20%' }
             }}
           >
             <Box>
-              <Typography fontSize={'30px'} lineHeight={'20px'}>
+              <Typography
+                fontSize={{ xs: '1.4em', sm: '2em' }}
+                lineHeight={'20px'}
+              >
                 12K+
               </Typography>
               <Typography fontSize={'20px'} color='rgba(255, 255, 255, 0.48)'>
@@ -66,7 +75,10 @@ export default function Home() {
               </Typography>
             </Box>
             <Box>
-              <Typography fontSize={'30px'} lineHeight={'20px'}>
+              <Typography
+                fontSize={{ xs: '1.4em', sm: '2em' }}
+                lineHeight={'20px'}
+              >
                 20K+
               </Typography>
               <Typography fontSize={'20px'} color='rgba(255, 255, 255, 0.48)'>
@@ -74,7 +86,10 @@ export default function Home() {
               </Typography>
             </Box>
             <Box>
-              <Typography fontSize={'30px'} lineHeight={'20px'}>
+              <Typography
+                fontSize={{ xs: '1.4em', sm: '2em' }}
+                lineHeight={'20px'}
+              >
                 10+
               </Typography>
               <Typography fontSize={'20px'} color='rgba(255, 255, 255, 0.48)'>
@@ -86,9 +101,10 @@ export default function Home() {
         <Grid
           className={poppins.className}
           sx={{
-            height: { xs: 'calc(100vh - 70px)', md: 'auto' },
+            height: { md: 'auto' },
             display: 'flex',
-            alignItems: 'center'
+            alignItems: 'center',
+            mt: { xs: '10px', sm: '0px' }
           }}
         >
           <AuthBox />

@@ -103,8 +103,7 @@ const WorkExpEdit = ({
         sx={{
           display: 'flex',
           flexDirection: 'column',
-          gap: '15px',
-          my: '25px'
+          gap: '15px'
         }}
       >
         <FormLabel>Employer/company name</FormLabel>

@@ -62,8 +62,7 @@ const WorkExperienceDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
   return (
     <PageContainer nextPage={nextPage} prevPage={prevPage}>
       <Heading mb='20px'>
-        Share your internship/ <br />
-        work experience with us
+        Share your internship / work experience with us
       </Heading>
 
       <WorkExpDetailDesign

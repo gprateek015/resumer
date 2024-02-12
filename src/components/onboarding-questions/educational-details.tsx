@@ -84,8 +84,7 @@ const EducationalDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
     <PageContainer nextPage={nextPage} prevPage={prevPage}>
       <Grid>
         <Heading mb='20px'>
-          Kindly provide us the following <br />
-          details regarding your education
+          Kindly provide us the following details regarding your education
         </Heading>
         <EduDetailDesign
           educations={educations}

@@ -75,9 +75,7 @@ const AchievementsSkills = ({
   return (
     <PageContainer nextPage={handleSubmit(onSubmit)} prevPage={prevPage}>
       <FormProvider {...methods}>
-        <Heading mb='20px'>
-          Share your Skills <br />& Achievements
-        </Heading>
+        <Heading mb='20px'>Share your Skills & Achievements</Heading>
         <DndProvider backend={HTML5Backend}>
           <FormLabel mb='10px'>Select Your Skills</FormLabel>
           <SkillsContainer />

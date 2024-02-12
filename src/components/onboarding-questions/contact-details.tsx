@@ -80,8 +80,7 @@ const ContactDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
     <PageContainer nextPage={handleSubmit(onSubmit)} prevPage={prevPage}>
       <Grid>
         <Heading mb='20px'>
-          Let's start with some of <br />
-          your contact details
+          Let's start with some of your contact details
         </Heading>
         <Grid
           sx={{

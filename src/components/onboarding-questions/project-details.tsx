@@ -57,10 +57,7 @@ const ProjectDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
 
   return (
     <PageContainer nextPage={nextPage} prevPage={prevPage}>
-      <Heading mb='20px'>
-        Please provide us with <br />
-        your projects
-      </Heading>
+      <Heading mb='20px'>Please provide us with your projects</Heading>
       <ProjectDetailDesign
         projects={projects}
         editId={editId}
