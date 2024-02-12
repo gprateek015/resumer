@@ -1,8 +1,6 @@
 'use client';
 
 import React, { useEffect } from 'react';
-import Image from 'next/image';
-import profile from '@/assets/onboarding1.png';
 import { Divider, Grid, Typography } from '@mui/material';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from '@/redux/store';

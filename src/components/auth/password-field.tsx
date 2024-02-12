@@ -1,6 +1,6 @@
 'use client';
 
-import React, { Ref, useState } from 'react';
+import React, { useState } from 'react';
 import { FormInput } from './styles';
 import { IconButton, InputAdornment } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
@@ -42,5 +42,7 @@ const PasswordField = React.forwardRef(
     );
   }
 );
+
+PasswordField.displayName = 'PasswordField';
 
 export default PasswordField;
