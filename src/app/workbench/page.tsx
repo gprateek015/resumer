@@ -267,7 +267,7 @@ const Workbench = () => {
                 '&:hover': {
                   borderColor: '#ffffff'
                 },
-                mb: { md: '10px' },
+                mb: '10px',
                 mt: { xs: '10px', md: '0px' },
                 padding: '2px 15px'
               }}

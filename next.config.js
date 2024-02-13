@@ -2,7 +2,12 @@
 
 const nextConfig = {
   webpack: config => {
-    config.resolve.alias.canvas = false;
+    config.module.rules.push({
+      test: /\.node/,
+      use: 'raw-loader'
+    });
+
+    // config.resolve.alias.canvas = false;
 
     return config;
   }
