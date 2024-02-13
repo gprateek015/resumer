@@ -25,7 +25,7 @@ const DescriptionForm = () => {
     setLoading(true);
     await dispatch(generateResumeData({ jobDescription }));
     setLoading(false);
-    route.replace('/workbench');
+    route.push('/workbench');
   };
 
   return (

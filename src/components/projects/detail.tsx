@@ -32,107 +32,102 @@ const ProjectDetailDesign = ({
         gap: '15px'
       }}
     >
-      <Grid>
-        {projects.map(project => (
-          <Box key={project._id}>
-            {project._id === editId ? (
-              <ProjectEdit
-                handleCancel={handleCancel}
-                project={project}
-                onSubmit={onSubmit}
-                buttonText='Save'
-                apiError={apiError}
-              />
-            ) : (
+      {projects.map(project => (
+        <Box key={project._id}>
+          {project._id === editId ? (
+            <ProjectEdit
+              handleCancel={handleCancel}
+              project={project}
+              onSubmit={onSubmit}
+              buttonText='Save'
+              apiError={apiError}
+            />
+          ) : (
+            <Grid
+              sx={{
+                border: '1px solid white',
+                p: '10px',
+                borderRadius: '5px'
+              }}
+            >
               <Grid
                 sx={{
-                  border: '1px solid white',
-                  p: '10px',
-                  borderRadius: '5px',
-                  mb: '15px'
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  justifyContent: 'space-between',
+                  alignItems: 'center'
                 }}
               >
-                <Grid
+                <Typography
+                  mr='20px'
                   sx={{
-                    display: 'flex',
-                    flexWrap: 'wrap',
-                    justifyContent: 'space-between',
-                    alignItems: 'center'
+                    fontSize: '16px'
                   }}
                 >
-                  <Typography
-                    mr='20px'
-                    sx={{
-                      fontSize: '16px'
-                    }}
-                  >
-                    {project.name}
-                  </Typography>
-                  <Typography
-                    sx={{
-                      fontSize: '12px',
-                      textDecoration: 'underline',
-                      cursor: 'pointer'
-                    }}
-                    onClick={() =>
-                      window.open(
-                        project.code_url ||
-                          project.live_url ||
-                          project.video_url
-                      )
-                    }
-                  >
-                    {project.code_url && 'Code Url'}
-                    {project.live_url && 'Live Url'}
-                    {project.video_url && 'Video Url'}
-                  </Typography>
-                </Grid>
-                <Grid
+                  {project.name}
+                </Typography>
+                <Typography
                   sx={{
-                    display: 'flex',
-                    flexWrap: 'wrap',
-                    gap: '10px',
-                    my: '10px'
+                    fontSize: '12px',
+                    textDecoration: 'underline',
+                    cursor: 'pointer'
                   }}
+                  onClick={() =>
+                    window.open(
+                      project.code_url || project.live_url || project.video_url
+                    )
+                  }
                 >
-                  {project.skills_required?.map((skill, ind) => (
-                    <Chip
-                      label={skill}
-                      key={ind}
-                      sx={{
-                        color: 'white',
-                        border: '1px solid white'
-                      }}
-                    />
-                  ))}
-                </Grid>
-                <Grid display={'flex'} gap='20px' mt='10px'>
-                  <Button
-                    sx={{ flexBasis: '50%' }}
-                    onClick={() => setEditId(project._id)}
-                  >
-                    Edit
-                  </Button>
-                  <Button
-                    sx={{ flexBasis: '50%' }}
-                    onClick={() => handleDelete(project._id)}
-                  >
-                    Delete
-                  </Button>
-                </Grid>
+                  {project.code_url && 'Code Url'}
+                  {project.live_url && 'Live Url'}
+                  {project.video_url && 'Video Url'}
+                </Typography>
               </Grid>
-            )}
-          </Box>
-        ))}
-        {editId === 'new' && (
-          <ProjectEdit
-            handleCancel={handleCancel}
-            onSubmit={onSubmit}
-            buttonText='Add project'
-            apiError={apiError}
-          />
-        )}
-      </Grid>
+              <Grid
+                sx={{
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  gap: '10px',
+                  my: '10px'
+                }}
+              >
+                {project.skills_required?.map((skill, ind) => (
+                  <Chip
+                    label={skill}
+                    key={ind}
+                    sx={{
+                      color: 'white',
+                      border: '1px solid white'
+                    }}
+                  />
+                ))}
+              </Grid>
+              <Grid display={'flex'} gap='20px' mt='10px'>
+                <Button
+                  sx={{ flexBasis: '50%' }}
+                  onClick={() => setEditId(project._id)}
+                >
+                  Edit
+                </Button>
+                <Button
+                  sx={{ flexBasis: '50%' }}
+                  onClick={() => handleDelete(project._id)}
+                >
+                  Delete
+                </Button>
+              </Grid>
+            </Grid>
+          )}
+        </Box>
+      ))}
+      {editId === 'new' && (
+        <ProjectEdit
+          handleCancel={handleCancel}
+          onSubmit={onSubmit}
+          buttonText='Add project'
+          apiError={apiError}
+        />
+      )}
       {editId !== 'new' && (
         <Button onClick={() => setEditId('new')}>Add New Project</Button>
       )}

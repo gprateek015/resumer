@@ -41,7 +41,7 @@ const Navbar = () => {
         behavior: 'smooth'
       });
     }
-    route.replace('/');
+    route.push('/');
   };
 
   return (

@@ -30,109 +30,106 @@ const EduDetailDesign = ({
         gap: '15px'
       }}
     >
-      <Grid>
-        {educations.map(education => (
-          <Box key={education._id}>
-            {editId === education._id ? (
-              <EducationalDetailsEdit
-                handleCancel={handleCancel}
-                education={education}
-                onSubmit={onSubmit}
-                buttonText='Save'
-                apiError={apiError}
-              />
-            ) : (
+      {educations.map(education => (
+        <Box key={education._id}>
+          {editId === education._id ? (
+            <EducationalDetailsEdit
+              handleCancel={handleCancel}
+              education={education}
+              onSubmit={onSubmit}
+              buttonText='Save'
+              apiError={apiError}
+            />
+          ) : (
+            <Grid
+              sx={{
+                border: '1px solid white',
+                p: '10px',
+                borderRadius: '5px'
+              }}
+            >
               <Grid
                 sx={{
-                  border: '1px solid white',
-                  p: '10px',
-                  borderRadius: '5px',
-                  mb: '15px'
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  justifyContent: 'space-between',
+                  alignItems: 'center'
                 }}
               >
-                <Grid
+                <Typography
+                  mr='20px'
                   sx={{
-                    display: 'flex',
-                    flexWrap: 'wrap',
-                    justifyContent: 'space-between',
-                    alignItems: 'center'
+                    fontSize: '16px'
                   }}
                 >
-                  <Typography
-                    mr='20px'
-                    sx={{
-                      fontSize: '16px'
-                    }}
-                  >
-                    {education.institute_name}
-                  </Typography>
-                  <Typography
-                    sx={{
-                      fontSize: '12px'
-                    }}
-                  >
-                    {education.start_year as string}&nbsp;-&nbsp;
-                    {education.end_year as string}
-                  </Typography>
-                </Grid>
-                <Grid
+                  {education.institute_name}
+                </Typography>
+                <Typography
                   sx={{
-                    display: 'flex',
-                    flexWrap: 'wrap',
-                    justifyContent: 'space-between'
+                    fontSize: '12px'
                   }}
                 >
-                  <Typography
-                    sx={{
-                      fontSize: '12px'
-                    }}
-                  >
-                    {['graduation', 'post_graduation'].includes(
-                      education.level as string
-                    )
-                      ? education.degree
-                      : education.level}
-                    {[
-                      'senior_secondary',
-                      'diploma',
-                      'graduation',
-                      'post_graduation'
-                    ].includes(education?.level as string) &&
-                      `- ${education.specialisation}`}
-                  </Typography>
-                  <Typography>
-                    {education.scoring_type}&nbsp;{education.score}
-                    &nbsp;/&nbsp;
-                    {education.maximum_score}
-                  </Typography>
-                </Grid>
-                <Grid display={'flex'} gap='20px' mt='10px'>
-                  <Button
-                    sx={{ flexBasis: '50%' }}
-                    onClick={() => setEditId(education._id)}
-                  >
-                    Edit
-                  </Button>
-                  <Button
-                    sx={{ flexBasis: '50%' }}
-                    onClick={() => handleDelete(education._id)}
-                  >
-                    Delete
-                  </Button>
-                </Grid>
+                  {education.start_year as string}&nbsp;-&nbsp;
+                  {education.end_year as string}
+                </Typography>
               </Grid>
-            )}
-          </Box>
-        ))}
-        {editId === 'new' && (
-          <EducationalDetailsEdit
-            handleCancel={handleCancel}
-            onSubmit={onSubmit}
-            buttonText='Add Education'
-            apiError={apiError}
-          />
-        )}
-      </Grid>
+              <Grid
+                sx={{
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  justifyContent: 'space-between'
+                }}
+              >
+                <Typography
+                  sx={{
+                    fontSize: '12px'
+                  }}
+                >
+                  {['graduation', 'post_graduation'].includes(
+                    education.level as string
+                  )
+                    ? education.degree
+                    : education.level}
+                  {[
+                    'senior_secondary',
+                    'diploma',
+                    'graduation',
+                    'post_graduation'
+                  ].includes(education?.level as string) &&
+                    `- ${education.specialisation}`}
+                </Typography>
+                <Typography>
+                  {education.scoring_type}&nbsp;{education.score}
+                  &nbsp;/&nbsp;
+                  {education.maximum_score}
+                </Typography>
+              </Grid>
+              <Grid display={'flex'} gap='20px' mt='10px'>
+                <Button
+                  sx={{ flexBasis: '50%' }}
+                  onClick={() => setEditId(education._id)}
+                >
+                  Edit
+                </Button>
+                <Button
+                  sx={{ flexBasis: '50%' }}
+                  onClick={() => handleDelete(education._id)}
+                >
+                  Delete
+                </Button>
+              </Grid>
+            </Grid>
+          )}
+        </Box>
+      ))}
+      {editId === 'new' && (
+        <EducationalDetailsEdit
+          handleCancel={handleCancel}
+          onSubmit={onSubmit}
+          buttonText='Add Education'
+          apiError={apiError}
+        />
+      )}
       {editId !== 'new' && (
         <Button onClick={() => setEditId('new')}>Add New Education</Button>
       )}
