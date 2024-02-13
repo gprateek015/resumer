@@ -35,7 +35,7 @@ const SideBar = ({
           <Button
             variant='contained'
             startIcon={<Image className='icon' src={newIcon} alt='' />}
-            onClick={() => routes.push('job-description')}
+            onClick={() => routes.replace('job-description')}
             sx={{
               borderRadius: '5px',
               border: '1px solid #3f3f3f',

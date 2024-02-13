@@ -33,7 +33,7 @@ const OnboardingQuestions = () => {
 
   const nextPage = () => {
     if (page === 8) {
-      route.push('/job-description');
+      route.replace('/job-description');
       return;
     }
     setPage(page => page + 1);

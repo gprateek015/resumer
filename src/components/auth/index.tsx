@@ -30,8 +30,8 @@ const AuthBox = () => {
 
   useEffect(() => {
     if (isLoggedIn) {
-      if (!user.onboarding_completed) route.push('/onboarding');
-      else route.push('/profile');
+      if (!user.onboarding_completed) route.replace('/onboarding');
+      else route.replace('/profile');
     }
   }, [isLoggedIn]);
 
