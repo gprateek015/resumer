@@ -106,7 +106,8 @@ const Workbench = () => {
 
   useEffect(() => {
     if (Object.keys(resumeData).length === 0) {
-      routes.replace('/job-description');
+      // routes.replace('/job-description');
+      dispatch(generateResumeData({ jobDescription: '' }));
     } else {
       loadResumePdf(resumeData, selectedTemplate);
       reset(resumeData);
