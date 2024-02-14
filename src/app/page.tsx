@@ -20,7 +20,8 @@ export default function Home() {
           flexDirection: { xs: 'column', md: 'row' },
           alignItems: { xs: 'center', md: 'normal' },
           overflowY: 'hidden',
-          padding: { xs: '0px 10px', md: '0px 50px' }
+          padding: { xs: '0px 10px', md: '0px 50px' },
+          gap: '50px'
         }}
       >
         <Grid
@@ -44,8 +45,8 @@ export default function Home() {
               Improve your Resume ATS score Using AI
             </Typography>
             <Typography
-              fontSize={{ xs: '0.9rem', sm: '1.4rem' }}
-              lineHeight={{ xs: '1.1rem', sm: '1.3rem' }}
+              fontSize='1.4rem'
+              lineHeight='1.8rem'
               color='rgba(232, 235, 243, 0.70)'
               sx={{
                 display: { xs: 'none', sm: 'block' }

@@ -4,9 +4,9 @@ import {
   useDispatch as useAppDispatch,
   useSelector as useAppSelector
 } from 'react-redux';
-import logger from 'redux-logger';
 
 import reducers from './slice';
+import logger from 'redux-logger';
 
 const store = configureStore({
   reducer: reducers,
@@ -15,7 +15,7 @@ const store = configureStore({
       serializableCheck: {
         ignoredActions: ['load/resume/fulfilled']
       }
-    }).concat(logger)
+    }).concat(logger as any)
 });
 
 export type RootState = ReturnType<typeof store.getState>;

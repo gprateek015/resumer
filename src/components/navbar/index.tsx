@@ -3,7 +3,7 @@
 import React, { ReactElement, ReactNode, useEffect, useRef } from 'react';
 import { Button, Grid, Typography } from '@mui/material';
 import Image from 'next/image';
-import { SignupBtn, NavLink } from './styles';
+import { NavLink, AuthButton } from './styles';
 import Link from 'next/link';
 
 import { Righteous } from 'next/font/google';
@@ -12,7 +12,6 @@ import { RootState, useDispatch } from '@/redux/store';
 import { changeAuthPage, logoutUser } from '@/redux/slice/auth';
 import { clearUserData } from '@/redux/slice/user';
 import { usePathname, useRouter } from 'next/navigation';
-import { autoLogin } from '@/utils';
 import { signOut } from 'next-auth/react';
 
 const righteous = Righteous({
@@ -89,9 +88,9 @@ const Navbar = () => {
         </Link>
       </Grid>
       <Grid ref={authRef}>
-        <SignupBtn onClick={handleClick}>
+        <AuthButton onClick={handleClick}>
           {isLoggedIn ? 'Log out' : page === 0 ? 'Sign up' : 'Sign in'}
-        </SignupBtn>
+        </AuthButton>
       </Grid>
     </Grid>
   );

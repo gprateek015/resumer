@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   Button,
   FormInput,
@@ -12,12 +12,19 @@ import {
   useForm,
   useFormContext
 } from 'react-hook-form';
-import { Box, FormHelperText, Grid, IconButton } from '@mui/material';
+import {
+  Box,
+  FormHelperText,
+  Grid,
+  IconButton,
+  Typography
+} from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/DeleteForever';
 import { Experience } from '@/types';
 import { useDispatch } from '@/redux/store';
 import { clearOnboardingErrors } from '@/redux/slice/onboarding';
+import moment from 'moment';
 
 const WorkExpEdit = ({
   handleCancel,
@@ -42,10 +49,12 @@ const WorkExpEdit = ({
     setValue,
     handleSubmit,
     setError,
-    clearErrors
+    clearErrors,
+    reset
   } = useForm();
 
   const mode = watch('mode');
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const {
     fields: description,
@@ -57,28 +66,20 @@ const WorkExpEdit = ({
   });
 
   useEffect(() => {
-    if (experience) {
-      (Object.keys(experience || {}) as Array<keyof Experience>).forEach(
-        key => {
-          if (key !== '_id' && key !== 'user_id' && experience)
-            setValue(key, experience[key] as any);
-        }
-      );
-    } else {
-      const newValues = {
-        company_name: undefined,
-        position: undefined,
-        start_date: undefined,
-        end_date: undefined,
-        mode: undefined,
-        location: undefined,
-        description: ['']
-      };
-
-      (Object.keys(newValues) as Array<keyof typeof newValues>).map(key => {
-        setValue(key, newValues[key]);
-      });
-    }
+    reset({
+      description: [''],
+      ...(experience && {
+        ...experience,
+        start_date: moment(new Date(experience.start_date ?? '')).format(
+          'YYYY-MM-DD'
+        ),
+        end_date: moment(new Date(experience.end_date ?? '')).format(
+          'YYYY-MM-DD'
+        )
+      }),
+      _id: undefined,
+      user_id: undefined
+    });
   }, [experience]);
 
   useEffect(() => {
@@ -105,122 +106,139 @@ const WorkExpEdit = ({
           flexDirection: 'column',
           gap: '15px'
         }}
+        ref={containerRef}
       >
-        <FormLabel>Employer/company name</FormLabel>
-        <FormInput
-          {...register('company_name', {
-            required: 'Company name is required'
-          })}
-          placeholder='Enter the company name'
-          helperText={errors?.company_name?.message as any}
-          error={!!errors?.company_name?.message}
-        />
-        <FormLabel>Job Title</FormLabel>
-        <FormInput
-          {...register('position', { required: 'Position is required' })}
-          placeholder='Enter the job title'
-          helperText={errors?.position?.message as any}
-          error={!!errors?.position?.message}
-        />
-        <FormLabel>Mode of Internship</FormLabel>
-        <Options sx={{ gap: '20px' }}>
-          <Option
-            active={(mode === 'remote').toString()}
-            onClick={e => setValue('mode', 'remote')}
-          >
-            Remote
-          </Option>
-          <Option
-            active={(mode === 'onsite').toString()}
-            onClick={e => setValue('mode', 'onsite')}
-          >
-            On site
-          </Option>
-        </Options>
+        <Box>
+          <FormLabel>Employer/company name</FormLabel>
+          <FormInput
+            {...register('company_name', {
+              required: 'Company name is required'
+            })}
+            placeholder='Enter the company name'
+            helperText={errors?.company_name?.message as any}
+            error={!!errors?.company_name?.message}
+          />
+        </Box>
+        <Box>
+          <FormLabel>Job Title</FormLabel>
+          <FormInput
+            {...register('position', { required: 'Position is required' })}
+            placeholder='Enter the job title'
+            helperText={errors?.position?.message as any}
+            error={!!errors?.position?.message}
+          />
+        </Box>
+        <Box>
+          <FormLabel>Mode of Internship</FormLabel>
+          <Options sx={{ gap: '20px' }}>
+            <Option
+              active={(mode === 'remote').toString()}
+              onClick={e => setValue('mode', 'remote')}
+            >
+              Remote
+            </Option>
+            <Option
+              active={(mode === 'onsite').toString()}
+              onClick={e => setValue('mode', 'onsite')}
+            >
+              On site
+            </Option>
+          </Options>
+        </Box>
         <Grid
           sx={{
             display: 'flex',
-            gap: { xs: '20px', md: '30px' },
-            justifyContent: 'space-between',
-            flexDirection: { xs: 'column', md: 'row' }
+            gap: { xs: '15px', md: '20px' },
+            flexDirection: { xs: 'column', md: 'row' },
+            overflow: 'auto'
           }}
         >
           <Grid
             sx={{
-              flexBasis: '50%',
+              flexBasis: '40%',
               flexGrow: 1
             }}
           >
-            <FormLabel mb='15px'>Start Date</FormLabel>
+            <FormLabel>Start Date</FormLabel>
             <FormInput
               type='date'
               {...register('start_date', { required: true })}
               helperText={errors?.start_date?.message as any}
               error={!!errors?.start_date?.message}
+              sx={{
+                maxWidth: (containerRef?.current?.offsetWidth || 400) / 2 - 11
+              }}
             />
           </Grid>
           <Grid
             sx={{
-              flexBasis: '50%',
+              flexBasis: '40%',
               flexGrow: 1
             }}
           >
-            <FormLabel mb='15px'>End Date</FormLabel>
+            <FormLabel>End Date</FormLabel>
             <FormInput
               type='date'
               {...register('end_date', { required: true })}
               helperText={errors?.end_date?.message as any}
               error={!!errors?.end_date?.message}
+              sx={{
+                maxWidth: (containerRef?.current?.offsetWidth || 400) / 2 - 11
+              }}
             />
           </Grid>
         </Grid>
         {mode === 'onsite' && (
-          <>
-            <FormLabel>Location</FormLabel>
-            <FormInput
-              {...register('location', { required: 'Location is required' })}
-              placeholder='Type in your work location'
-              helperText={errors?.location?.message as any}
-              error={!!errors?.location?.message}
-            />
-          </>
-        )}
-        <FormLabel>Please describe your work experience below</FormLabel>
-        <Grid>
-          {description?.map((desc, ind: number) => (
-            <Box display={'flex'} gap='10px' key={desc.id} mb='10px'>
+          <Box>
+            <>
+              <FormLabel>Location</FormLabel>
               <FormInput
-                {...register(`description.${ind}`)}
-                placeholder='Tasks you did in your internship/job'
+                {...register('location', { required: 'Location is required' })}
+                placeholder='Type in your work location'
+                helperText={errors?.location?.message as any}
+                error={!!errors?.location?.message}
               />
-              <IconButton
-                sx={{
-                  color: 'white',
-                  border: '1px solid white',
-                  borderRadius: '3px'
-                }}
-                onClick={() => remove(ind)}
-              >
-                <DeleteIcon />
-              </IconButton>
-            </Box>
-          ))}
-          {errors?.description && (
-            <FormHelperText error>
-              {errors?.description?.message as string}
-            </FormHelperText>
-          )}
-          <Button
-            onClick={() => append('')}
-            sx={{
-              background: 'transparent'
-            }}
-            startIcon={<AddIcon />}
-            fullWidth
-          >
-            Add another point
-          </Button>
-        </Grid>
+            </>
+          </Box>
+        )}
+        <Box>
+          <FormLabel>Please describe your work experience below</FormLabel>
+          <Grid>
+            {description?.map((desc, ind: number) => (
+              <Box display={'flex'} gap='10px' key={desc.id} mb='10px'>
+                <FormInput
+                  {...register(`description.${ind}`)}
+                  placeholder='Tasks you did in your internship/job'
+                />
+                <IconButton
+                  sx={{
+                    color: 'white',
+                    border: '1px solid white',
+                    borderRadius: '3px'
+                  }}
+                  onClick={() => remove(ind)}
+                >
+                  <DeleteIcon />
+                </IconButton>
+              </Box>
+            ))}
+            {errors?.description && (
+              <FormHelperText error>
+                {errors?.description?.message as string}
+              </FormHelperText>
+            )}
+            <Button
+              onClick={() => append('')}
+              sx={{
+                background: 'transparent'
+              }}
+              startIcon={<AddIcon />}
+              fullWidth
+            >
+              Add another point
+            </Button>
+          </Grid>
+        </Box>
         {apiError && <FormHelperText error>{apiError}</FormHelperText>}
         <Grid
           sx={{
@@ -234,7 +252,17 @@ const WorkExpEdit = ({
             Cancel
           </Button>
           <Button onClick={handleSubmit(onSubmit)} sx={{ flexBasis: '50%' }}>
-            {buttonText}
+            <Typography
+              sx={{
+                display: '-webkit-box',
+                WebkitLineClamp: '1',
+                WebkitBoxOrient: 'vertical',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis'
+              }}
+            >
+              {buttonText}
+            </Typography>
           </Button>
         </Grid>
       </Grid>

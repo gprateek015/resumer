@@ -139,6 +139,7 @@ const DescriptionForm = () => {
                 width: '350px',
                 marginTop: '5%'
               }}
+              priority={true}
             />
           </Grid>
           <Grid

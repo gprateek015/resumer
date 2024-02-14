@@ -24,8 +24,19 @@ const PdfViewer = ({
 
   if (!pdf) return <></>;
   return (
-    <Worker workerUrl='https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js'>
-      <Grid width={width}>{uint8Array && <Viewer fileUrl={uint8Array} />}</Grid>
+    <Worker workerUrl='https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.min.js'>
+      <Grid
+        sx={{
+          width: width,
+          '& .rpv-core__inner-page': {
+            width: 'fit-content !important',
+            left: '50% !important',
+            transform: 'translate(-50%, 0px) !important'
+          }
+        }}
+      >
+        {uint8Array && <Viewer fileUrl={uint8Array} />}
+      </Grid>
     </Worker>
   );
 };

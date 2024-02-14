@@ -1,7 +1,7 @@
 import React from 'react';
 import { Grid, Typography } from '@mui/material';
 
-import { Heading, Option, Options, PageNavButton } from './styles';
+import { Heading, Option, Options, PageNavButton, Subheading } from './styles';
 import { PageNavPropsType } from '.';
 import PageContainer from './page-container';
 
@@ -10,10 +10,10 @@ const WorkExperience = ({ nextPage, prevPage }: PageNavPropsType) => {
     <PageContainer nextPage={nextPage} prevPage={prevPage}>
       <Grid>
         <Heading mb='20px'>How much work experience do you have?</Heading>
-        <Typography>
+        <Subheading>
           Includes internships, summer jobs, and unofficial jobs.
-        </Typography>
-        <Options mt='40px'>
+        </Subheading>
+        <Options>
           <Option onClick={() => nextPage()}>
             <Typography>None</Typography>
           </Option>

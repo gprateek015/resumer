@@ -40,7 +40,7 @@
     "typewriter-effect": "^2.21.0"
   },
   "devDependencies": {
-    "@types/redux-logger": "^3.0.9",
+    "@types/redux-logger": "^3.0.13",
     "raw-loader": "^4.0.2"
   }
 }

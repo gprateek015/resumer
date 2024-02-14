@@ -21,6 +21,7 @@ import { fetchProjects } from '@/actions/project';
 import { updateUser } from '@/actions/user';
 import { Skill, User } from '@/types';
 import { Button } from '@/components/onboarding-questions/styles';
+import { AuthButton } from '@/components/navbar/styles';
 
 type ProfileUserData = User & {
   technical_skills?: { name: string }[];
@@ -143,15 +144,16 @@ const Profile = () => {
                 >
                   My Profile
                 </Typography>
-                <Button
+                <AuthButton
                   variant='contained'
                   onClick={handleSubmit(onSave)}
                   sx={{
-                    padding: '4px 20px'
+                    padding: '4px 20px',
+                    borderRadius: '20px'
                   }}
                 >
                   Save
-                </Button>
+                </AuthButton>
               </Grid>
               <Grid
                 sx={{

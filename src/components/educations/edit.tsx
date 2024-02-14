@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Box, FormHelperText, Grid } from '@mui/material';
+import React, { ReactElement, useEffect, useRef, useState } from 'react';
+import { Box, FormHelperText, Grid, Typography } from '@mui/material';
 import Select from 'react-select';
 import { cgpa, educationalLevels } from '@/constants';
 
@@ -54,6 +54,7 @@ const EducationalDetailsEdit = ({
     label: firstLetterCapital(lvl.split('_').join(' ')) as string,
     value: lvl
   }));
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const {
     control,
@@ -64,33 +65,23 @@ const EducationalDetailsEdit = ({
     setValue,
     setError,
     clearErrors,
-    getValues
-  } = useForm({
-    defaultValues: education
-      ? {
-          ...education,
-          edu_level: levelOption.find(opt => opt.value === education.level),
-          start_year: moment(`${education.start_year || ''}`).format(
-            'YYYY-MM-DD'
-          ),
-          end_year: moment(`${education.end_year || ''}`).format('YYYY-MM-DD')
-        }
-      : {
-          // level: undefined,
-          edu_level: undefined,
-          institute_name: undefined,
-          start_year: undefined,
-          end_year: undefined,
-          score: undefined,
-          scoring_type: undefined,
-          maximum_score: undefined,
-          specialisation: undefined,
-          degree: undefined
-        }
-  });
+    getValues,
+    reset
+  } = useForm();
 
   const eduLevel = watch('edu_level');
   const scoringType = watch('scoring_type');
+
+  useEffect(() => {
+    reset({
+      ...(education && {
+        ...education,
+        edu_level: levelOption.find(opt => opt.value === education.level)
+      }),
+      _id: undefined,
+      user_id: undefined
+    });
+  }, [education]);
 
   useEffect(() => {
     if (typeof apiErrors === 'string') {
@@ -111,39 +102,47 @@ const EducationalDetailsEdit = ({
         flexDirection: 'column',
         gap: '15px'
       }}
+      ref={containerRef}
     >
-      <FormLabel>Educational Level</FormLabel>
-      <Select
-        options={levelOption}
-        styles={selectStyles}
-        placeholder='Graduation'
-        value={eduLevel}
-        onChange={(opt: any) => setValue('edu_level', opt)}
-      />
-      <FormLabel>Institue / College name</FormLabel>
-      <FormInput
-        {...register('institute_name', {
-          required: 'Institute name is required!'
-        })}
-        helperText={errors?.institute_name?.message}
-        error={!!errors?.institute_name}
-        placeholder='IIT Mumbai'
-      />
-      <FormLabel>Scoring Type</FormLabel>
-      <Options sx={{ gap: '20px' }}>
-        <Option
-          active={(scoringType === 'cgpa').toString()}
-          onClick={_ => setValue('scoring_type', 'cgpa')}
-        >
-          CGPA
-        </Option>
-        <Option
-          active={(scoringType === 'percentage').toString()}
-          onClick={_ => setValue('scoring_type', 'percentage')}
-        >
-          Percentage
-        </Option>
-      </Options>
+      <Box>
+        <FormLabel>Educational Level</FormLabel>
+        <Select
+          options={levelOption}
+          styles={selectStyles}
+          placeholder='Graduation'
+          value={eduLevel}
+          onChange={(opt: any) => setValue('edu_level', opt)}
+        />
+      </Box>
+      <Box>
+        <FormLabel>Institue / College name</FormLabel>
+        <FormInput
+          {...register('institute_name', {
+            required: 'Institute name is required!'
+          })}
+          helperText={errors?.institute_name?.message as string}
+          error={!!errors?.institute_name}
+          placeholder='IIT Mumbai'
+        />
+      </Box>
+      <Box>
+        <FormLabel>Scoring Type</FormLabel>
+        <Options sx={{ gap: '20px' }}>
+          <Option
+            active={(scoringType === 'cgpa').toString()}
+            onClick={_ => setValue('scoring_type', 'cgpa')}
+          >
+            CGPA
+          </Option>
+          <Option
+            active={(scoringType === 'percentage').toString()}
+            onClick={_ => setValue('scoring_type', 'percentage')}
+          >
+            Percentage
+          </Option>
+        </Options>
+      </Box>
+
       <Grid
         sx={{
           display: 'flex',
@@ -152,43 +151,45 @@ const EducationalDetailsEdit = ({
         }}
       >
         <Box flexBasis={'50%'} flexGrow={1}>
-          <FormLabel mb='10px'>Score</FormLabel>
+          <FormLabel>Score</FormLabel>
           <FormInput
             type='number'
             {...register('score', { required: 'Score is required' })}
-            helperText={errors?.score?.message}
+            helperText={errors?.score?.message as string}
             error={!!errors?.score}
             placeholder={scoringType === 'cgpa' ? '4.5 OR 9.0' : '90%'}
           />
         </Box>
         {scoringType === 'cgpa' && (
           <Box flexBasis={'50%'}>
-            <FormLabel mb='10px'>Maximum Score</FormLabel>
+            <FormLabel>Maximum Score</FormLabel>
             <FormInput
               type='number'
               {...register('maximum_score', {
                 required: 'Max Score is required'
               })}
-              helperText={errors?.maximum_score?.message}
+              helperText={errors?.maximum_score?.message as string}
               error={!!errors?.maximum_score}
               placeholder='5 OR 10'
             />
           </Box>
         )}
       </Grid>
-      {['graduation', 'post_graduation'].includes(
-        eduLevel?.value as string
-      ) && (
-        <>
-          <FormLabel>Degree</FormLabel>
-          <FormInput
-            {...register('degree', { required: 'Degree is required' })}
-            helperText={errors?.degree?.message}
-            error={!!errors.degree}
-            placeholder='Bachelors of Technology'
-          />
-        </>
-      )}
+      <Box>
+        {['graduation', 'post_graduation'].includes(
+          eduLevel?.value as string
+        ) && (
+          <>
+            <FormLabel>Degree</FormLabel>
+            <FormInput
+              {...register('degree', { required: 'Degree is required' })}
+              helperText={errors?.degree?.message as string}
+              error={!!errors.degree}
+              placeholder='Bachelors of Technology'
+            />
+          </>
+        )}
+      </Box>
       <Grid
         sx={{
           display: 'flex',
@@ -197,42 +198,49 @@ const EducationalDetailsEdit = ({
           flexDirection: { xs: 'column', md: 'row' }
         }}
       >
-        <Grid>
-          <FormLabel mb='15px'>Start Year</FormLabel>
+        <Box>
+          <FormLabel>Start Year</FormLabel>
           <FormInput
-            type='date'
+            type='number'
             {...register('start_year', { required: 'Start year is required' })}
-            helperText={errors.start_year?.message}
+            helperText={errors.start_year?.message as string}
             error={!!errors.start_year}
+            sx={{
+              maxWidth: (containerRef?.current?.offsetWidth || 400) / 2 - 10
+            }}
           />
-        </Grid>
-        <Grid>
-          <FormLabel mb='15px'>End Year</FormLabel>
+        </Box>
+        <Box>
+          <FormLabel>End Year</FormLabel>
           <FormInput
-            type='date'
+            type='number'
             {...register('end_year', { required: 'End year is required' })}
-            helperText={errors.end_year?.message}
+            helperText={errors.end_year?.message as string}
             error={!!errors.end_year}
+            sx={{
+              maxWidth: (containerRef?.current?.offsetWidth || 400) / 2 - 10
+            }}
           />
-        </Grid>
+        </Box>
       </Grid>
-      {[
-        'senior_secondary',
-        'diploma',
-        'graduation',
-        'post_graduation'
-      ].includes(eduLevel?.value as string) && (
-        <>
-          <FormLabel>Specialization</FormLabel>
-          <FormInput
-            {...register('specialisation', { required: true })}
-            helperText={errors.specialisation?.message}
-            error={!!errors.specialisation}
-            placeholder='Computer Science and Engineering'
-          />
-        </>
-      )}
-
+      <Box>
+        {[
+          'senior_secondary',
+          'diploma',
+          'graduation',
+          'post_graduation'
+        ].includes(eduLevel?.value as string) && (
+          <>
+            <FormLabel>Specialization</FormLabel>
+            <FormInput
+              {...register('specialisation', { required: true })}
+              helperText={errors.specialisation?.message as string}
+              error={!!errors.specialisation}
+              placeholder='Computer Science and Engineering'
+            />
+          </>
+        )}
+      </Box>
       {apiError && <FormHelperText error>{apiError}</FormHelperText>}
       <Grid
         sx={{
@@ -245,8 +253,23 @@ const EducationalDetailsEdit = ({
         <Button onClick={() => handleCancel()} sx={{ flexBasis: '50%' }}>
           Cancel
         </Button>
-        <Button onClick={handleSubmit(onSubmit)} sx={{ flexBasis: '50%' }}>
-          {buttonText}
+        <Button
+          onClick={handleSubmit(onSubmit)}
+          sx={{
+            flexBasis: '50%'
+          }}
+        >
+          <Typography
+            sx={{
+              display: '-webkit-box',
+              WebkitLineClamp: '1',
+              WebkitBoxOrient: 'vertical',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis'
+            }}
+          >
+            {buttonText}
+          </Typography>
         </Button>
       </Grid>
     </Grid>

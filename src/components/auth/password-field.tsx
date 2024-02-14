@@ -1,10 +1,10 @@
 'use client';
 
 import React, { useState } from 'react';
-import { FormInput } from './styles';
 import { IconButton, InputAdornment } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import { FormInput } from '../onboarding-questions/styles';
 
 type Props = {
   value?: string;

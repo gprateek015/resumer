@@ -28,14 +28,17 @@ export default function RootLayout({
               <ProtectedRoutes>
                 <Grid
                   minHeight='100vh'
+                  maxHeight={{ md: '100vh' }}
                   display={'flex'}
                   flexDirection={'column'}
+                  overflow={{ md: 'hidden' }}
                 >
                   <Navbar />
                   <Image
                     src={BackgroundImg}
                     alt=''
                     className='home-background'
+                    priority={true}
                   />
                   <Grid
                     flexGrow={1}

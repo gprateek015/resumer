@@ -1,7 +1,7 @@
 import React from 'react';
 import { Grid, Typography } from '@mui/material';
 
-import { Heading, Option, Options, PageNavButton } from './styles';
+import { Heading, Option, Options, PageNavButton, Subheading } from './styles';
 import { PageNavPropsType } from '.';
 import PageContainer from './page-container';
 
@@ -10,7 +10,7 @@ const Degrees = ({ nextPage, prevPage }: PageNavPropsType) => {
     <PageContainer nextPage={nextPage} prevPage={prevPage}>
       <Grid>
         <Heading mb='20px'>Highest Qualification you hold?</Heading>
-        <Typography>Select even if you are enrolled.</Typography>
+        <Subheading>Select even if you are enrolled.</Subheading>
         <Options>
           <Option onClick={() => nextPage()}>
             <Typography textAlign={'center'}>Bachelor of Technology</Typography>

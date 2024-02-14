@@ -19,8 +19,6 @@ import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import PdfViewer from '@/components/pdf-viewer';
 import { useDispatch, useSelector } from '@/redux/store';
 import { generateResumeData, loadResume } from '@/actions/resume';
-import Heading from './components/heading';
-import { Righteous } from 'next/font/google';
 import PersonalOverview from './components/personal-overview';
 import { Resume } from '@/types';
 import Experiences from './components/experiences';
@@ -35,11 +33,7 @@ import AutorenewIcon from '@mui/icons-material/Autorenew';
 import { downloadPDF } from '@/utils';
 import { useRouter } from 'next/navigation';
 import InfoIcon from '@mui/icons-material/Info';
-
-const righteous = Righteous({
-  weight: ['400'],
-  subsets: ['latin']
-});
+import { righteous } from '@/font-family';
 
 const Workbench = () => {
   const dispatch = useDispatch();
@@ -52,6 +46,9 @@ const Workbench = () => {
   const [selectedTemplate, setSelectedTemplate] = useState(0);
   const prevSelectedTemplate = useRef(0);
   const resumeContainer = useRef<any>(null);
+  const [downloadResumeData, setDownloadResumeData] = useState<Blob | null>(
+    null
+  );
 
   const methods = useForm<Resume>();
 
@@ -81,18 +78,18 @@ const Workbench = () => {
       );
       if (resp.type === 'load/resume/fulfilled') {
         setPdf(resp.payload);
-        return resp.payload;
+        const pdfBlob = new Blob([resp.payload], { type: 'application/pdf' });
+        setDownloadResumeData(pdfBlob);
       }
     }
   };
 
   const reloadResume: SubmitHandler<Resume> = async data => {
-    if (data) setLoading(true);
-    console.log('data', data);
-    console.log('resumeData', resumeData);
-
-    await loadResumePdf(data, selectedTemplate);
-    setLoading(false);
+    if (data) {
+      setLoading(true);
+      await loadResumePdf(data, selectedTemplate);
+      setLoading(false);
+    }
   };
 
   const downloadResume = async () => {
@@ -100,14 +97,15 @@ const Workbench = () => {
     let { name = 'Resume' } = data;
     name = name.split(' ').join('_');
 
-    const pdfBuffer = await loadResumePdf(data, selectedTemplate);
-    downloadPDF(pdfBuffer, name);
+    if (downloadResumeData) {
+      downloadPDF({ pdfBlob: downloadResumeData, filename: name });
+    } else; // Handl error
   };
 
   useEffect(() => {
     if (Object.keys(resumeData).length === 0) {
-      routes.replace('/job-description');
-      // dispatch(generateResumeData({ jobDescription: '' }));
+      // routes.replace('/job-description');
+      dispatch(generateResumeData({ jobDescription: '' }));
     } else {
       loadResumePdf(resumeData, selectedTemplate);
       reset(resumeData);
@@ -123,7 +121,7 @@ const Workbench = () => {
 
   useEffect(() => {
     const handleSaveClick = (event: KeyboardEvent) => {
-      const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+      const isMac = navigator?.userAgent.toUpperCase().indexOf('MAC') >= 0;
 
       if (
         (isMac && event.metaKey && event.key === 's') ||

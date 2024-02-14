@@ -6,7 +6,11 @@ import { SubmitHandler, useFieldArray, useFormContext } from 'react-hook-form';
 import { Experience, ProfileLink } from '@/types';
 import EduDetailDesign from '@/components/educations/detail';
 import ProjectDetailDesign from '@/components/projects/detail';
-import { Button, FormInput } from '@/components/onboarding-questions/styles';
+import {
+  Button,
+  FormInput,
+  FormLabel
+} from '@/components/onboarding-questions/styles';
 import { firstLetterCapital } from '@/utils';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/DeleteForever';
@@ -32,28 +36,28 @@ const ProfileLinksContainer = () => {
     >
       <Typography>Profile Links for the Header Section</Typography>
       <Box>
-        <Typography>Github</Typography>
+        <FormLabel>Github</FormLabel>
         <FormInput
           {...register('github')}
           placeholder='https://github.com/username'
         />
       </Box>
       <Box>
-        <Typography>LinkedIn</Typography>
+        <FormLabel>LinkedIn</FormLabel>
         <FormInput
           {...register('linkedin')}
           placeholder='https://linkedin.com/in/username'
         />
       </Box>
       <Box>
-        <Typography>Portfolio</Typography>
+        <FormLabel>Portfolio</FormLabel>
         <FormInput
           {...register('portfolio')}
           placeholder='https://yourname.com'
         />
       </Box>
       <Box>
-        <Typography>Twitter</Typography>
+        <FormLabel>Twitter</FormLabel>
         <FormInput
           {...register('twitter')}
           placeholder='https://twitter.com/username'

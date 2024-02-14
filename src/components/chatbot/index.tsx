@@ -44,6 +44,15 @@ const Chatbot = ({ setShowQuestions }: { setShowQuestions: Function }) => {
         ]
       },
       {
+        message: 'Please help us with your name',
+        options: [
+          {
+            label: `${name}`,
+            value: 'profile_name'
+          }
+        ]
+      },
+      {
         message:
           "Perfect, Let's get the things rolling. Would you like to import your existing resume or create one from scratch",
         options: [
@@ -63,9 +72,16 @@ const Chatbot = ({ setShowQuestions }: { setShowQuestions: Function }) => {
   const handleOptionChoose = (option?: (typeof AiChats)[0]['options'][0]) => {
     switch (option?.value) {
       case 'profile_name':
+        setAiChatsInd(curr => curr + 1);
         handleClick(option.label);
         break;
       case 'new_name':
+        setChats(chats => [
+          ...chats,
+          option.label,
+          AiChats[aiChatsInd + 1]?.message
+        ]);
+        setAiChatsInd(curr => curr + 1);
         setAllowUserToType(true);
         break;
       case 'import_resume':
@@ -91,7 +107,7 @@ const Chatbot = ({ setShowQuestions }: { setShowQuestions: Function }) => {
       if (aiChatsInd + 1 >= AiChats.length) return;
       setChats(chats => [...chats, AiChats[aiChatsInd + 1]?.message]);
       setAiChatsInd(curr => curr + 1);
-    }, 1000);
+    }, 500);
   };
 
   useEffect(() => {
@@ -141,9 +157,7 @@ const Chatbot = ({ setShowQuestions }: { setShowQuestions: Function }) => {
           >
             {chats.map((chat, ind) => (
               <Box key={ind}>
-                {ind === chats.length - 1 &&
-                ind % 2 === 0 &&
-                !allowUserToType ? (
+                {ind === chats.length - 1 && ind % 2 === 0 ? (
                   <ChatTypography ind={ind} component='div'>
                     <Typewriter
                       onInit={typewriter => {

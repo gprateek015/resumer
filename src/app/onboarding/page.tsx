@@ -6,13 +6,8 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import OnboardingIcon from '@/assets/onboarding2.png';
 
-import { Righteous } from 'next/font/google';
 import OnboardingQuestions from '@/components/onboarding-questions';
-
-const righteous = Righteous({
-  weight: ['400'],
-  subsets: ['latin']
-});
+import { righteous } from '@/font-family';
 
 const Onboarding = () => {
   const [showQuestions, setShowQuestions] = useState<boolean>(false);

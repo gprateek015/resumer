@@ -28,22 +28,3 @@ export const FormLabel = styled(Typography)({
   color: 'rgba(255, 255, 255, 0.70)',
   fontSize: '1em'
 });
-
-export const FormInput = styled(TextField)({
-  '& .MuiInputBase-root': {
-    background: 'rgba(255, 255, 255, 0.10)',
-    borderRadius: '10px',
-    border: '1px solid rgba(255, 255, 255, 0.20)',
-
-    '&.Mui-focused ': {
-      border: '2px solid rgba(255, 255, 255, 0.20)'
-    },
-    '& .MuiInputBase-input': {
-      '&::-webkit-input-placeholder': {
-        color: 'rgba(255, 255, 255, 0.50)'
-      },
-      color: 'white',
-      padding: '13px 20px'
-    }
-  }
-});

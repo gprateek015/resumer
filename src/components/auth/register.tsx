@@ -2,12 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { Grid, Typography, Button, FormHelperText } from '@mui/material';
-import {
-  DividerWithText,
-  FormInput,
-  ThirdPartyBtns,
-  FormLabel
-} from './styles';
+import { DividerWithText, ThirdPartyBtns, FormLabel } from './styles';
 import { useForm } from 'react-hook-form';
 import Image from 'next/image';
 
@@ -18,6 +13,7 @@ import { loginUser, registerUser } from '@/actions/user';
 import { useSelector } from 'react-redux';
 import { changeAuthPage, resetError } from '@/redux/slice/auth';
 import PasswordField from './password-field';
+import { FormInput } from '../onboarding-questions/styles';
 
 type FormValues = {
   email: string;

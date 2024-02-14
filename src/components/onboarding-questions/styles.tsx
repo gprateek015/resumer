@@ -23,23 +23,25 @@ export const Heading = styled(Typography)({
   letterSpacing: '1.1px'
 });
 
-export const Subtitle = styled(Typography)({
+export const Subheading = styled(Typography)({
   fontSize: '16px',
   lineHeight: '26px',
-  letterSpacing: '0.12px'
+  letterSpacing: '0.12px',
+  marginBottom: '5px'
 });
 
 export const Options = styled(Grid)({
   display: 'flex',
   flexDirection: 'row',
   flexWrap: 'wrap',
-  gap: '15px'
+  gap: '15px',
+  width: '100%'
 });
 
 export const Option = styled(Box)<{ active?: string; onClick: Function }>(
   ({ theme, active = 'false' }) => ({
     display: 'flex',
-    padding: '40px 30px',
+    padding: '40px 0px',
     justifyContent: 'center',
     alignItems: 'center',
     alignSelf: 'stretch',
@@ -49,10 +51,10 @@ export const Option = styled(Box)<{ active?: string; onClick: Function }>(
     backdropFilter: 'blur(45px)',
     cursor: 'pointer',
     height: '20px',
-    width: '85px',
-    [theme.breakpoints.up('md')]: {
-      width: '110px'
-    }
+    flexGrow: 1,
+    flexBasis: '50px',
+    maxWidth: '160px',
+    minWidth: '120px'
   })
 );
 
@@ -70,7 +72,7 @@ export const PageNavButton = styled(MuiButton)({
 export const FormLabel = styled(Typography)({
   color: 'white',
   fontSize: '16px',
-  lineHeight: '20px'
+  lineHeight: '24px'
 });
 
 export const FormInput = styled(TextField)({
@@ -88,11 +90,9 @@ export const FormInput = styled(TextField)({
     padding: '12px 16px'
   },
 
-  '& input[type="date"]': {
-    paddingRight: '25px'
-  },
   '& input[type="date"]::-webkit-calendar-picker-indicator': {
-    paddingLeft: '50px'
+    paddingLeft: '10px',
+    cursor: 'pointer'
   }
 });
 

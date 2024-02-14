@@ -1,10 +1,9 @@
 import React from 'react';
-import { Grid } from '@mui/material';
+import { Box, Grid } from '@mui/material';
 import Select from 'react-select';
 import { contries } from '@/constants';
 import {
   Heading,
-  Subtitle,
   selectStyles,
   FormInput,
   FormLabel,
@@ -86,77 +85,90 @@ const ContactDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
           sx={{
             display: 'flex',
             flexDirection: 'column',
-            gap: '20px'
+            gap: '15px'
           }}
         >
-          <FormLabel>Please provide us with your phone number</FormLabel>
-          <FormInput
-            {...register('phone', { required: 'Phone Number is required' })}
-            placeholder='Enter your phone number'
-            helperText={errors?.phone?.message}
-            error={!!errors?.phone}
-          />
-          <FormLabel>Your Linkedin for the recruiters</FormLabel>
-          <FormInput
-            placeholder='https://linkedin.com/in/username'
-            {...register('linkedin', { required: false })}
-            helperText={errors?.linkedin?.message}
-            error={!!errors?.linkedin}
-          />
-          <FormLabel>Showcase all your work through your github</FormLabel>
-          <FormInput
-            placeholder='https://github.com/username'
-            {...register('github', { required: false })}
-            helperText={errors?.github?.message}
-            error={!!errors?.github}
-          />
-          <FormLabel>Lets show your twitter to everyone</FormLabel>
-          <FormInput
-            placeholder='https://twitter.com/username'
-            {...register('twitter', { required: false })}
-            helperText={errors?.twitter?.message}
-            error={!!errors?.twitter}
-          />
-          <FormLabel>
-            Do you have a personal portfolio website, if yes, please provide it
-          </FormLabel>
-          <FormInput
-            placeholder='https://your-name.com'
-            {...register('portfolio', { required: false })}
-            helperText={errors?.portfolio?.message}
-            error={!!errors?.portfolio}
-          />
-          <FormLabel>
-            Please share your current adress which you would like to include in
-            your resume
-          </FormLabel>
-          <Grid
-            sx={{
-              display: 'flex',
-              gap: '30px',
-              justifyContent: 'space-between',
-              alignItems: 'center'
-            }}
-          >
-            <Select
-              options={contriesOption}
-              styles={selectStyles}
-              placeholder='Country'
-              menuPlacement='top'
+          <Box>
+            <FormLabel>Please provide us with your phone number</FormLabel>
+            <FormInput
+              {...register('phone', { required: 'Phone Number is required' })}
+              placeholder='Enter your phone number'
+              helperText={errors?.phone?.message}
+              error={!!errors?.phone}
             />
-            <Select
-              options={statesOption}
-              styles={selectStyles}
-              placeholder='State'
-              menuPlacement='top'
+          </Box>
+          <Box>
+            <FormLabel>Your Linkedin for the recruiters</FormLabel>
+            <FormInput
+              placeholder='https://linkedin.com/in/username'
+              {...register('linkedin', { required: false })}
+              helperText={errors?.linkedin?.message}
+              error={!!errors?.linkedin}
             />
-            <Select
-              options={citiesOption}
-              styles={selectStyles}
-              placeholder='City'
-              menuPlacement='top'
+          </Box>
+          <Box>
+            <FormLabel>Showcase all your work through your github</FormLabel>
+            <FormInput
+              placeholder='https://github.com/username'
+              {...register('github', { required: false })}
+              helperText={errors?.github?.message}
+              error={!!errors?.github}
             />
-          </Grid>
+          </Box>
+          <Box>
+            <FormLabel>Lets show your twitter to everyone</FormLabel>
+            <FormInput
+              placeholder='https://twitter.com/username'
+              {...register('twitter', { required: false })}
+              helperText={errors?.twitter?.message}
+              error={!!errors?.twitter}
+            />
+          </Box>
+          <Box>
+            <FormLabel>
+              Do you have a personal portfolio website, if yes, please provide
+              it
+            </FormLabel>
+            <FormInput
+              placeholder='https://your-name.com'
+              {...register('portfolio', { required: false })}
+              helperText={errors?.portfolio?.message}
+              error={!!errors?.portfolio}
+            />
+          </Box>
+          <Box>
+            <FormLabel>
+              Please share your current adress which you would like to include
+              in your resume
+            </FormLabel>
+            <Grid
+              sx={{
+                display: 'flex',
+                gap: '30px',
+                justifyContent: 'space-between',
+                alignItems: 'center'
+              }}
+            >
+              <Select
+                options={contriesOption}
+                styles={selectStyles}
+                placeholder='Country'
+                menuPlacement='top'
+              />
+              <Select
+                options={statesOption}
+                styles={selectStyles}
+                placeholder='State'
+                menuPlacement='top'
+              />
+              <Select
+                options={citiesOption}
+                styles={selectStyles}
+                placeholder='City'
+                menuPlacement='top'
+              />
+            </Grid>
+          </Box>
         </Grid>
       </Grid>
     </PageContainer>

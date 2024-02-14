@@ -5,7 +5,8 @@ import {
   FormHelperText,
   Grid,
   IconButton,
-  Button as MuiButton
+  Button as MuiButton,
+  Typography
 } from '@mui/material';
 
 import {
@@ -80,7 +81,8 @@ const ProjectEdit = ({
     watch,
     setValue,
     setError,
-    clearErrors
+    clearErrors,
+    reset
   } = useForm();
 
   const {
@@ -135,6 +137,15 @@ const ProjectEdit = ({
   }, [project]);
 
   useEffect(() => {
+    reset({
+      description: [''],
+      ...(project && project),
+      _id: undefined,
+      user_id: undefined
+    });
+  }, [project]);
+
+  useEffect(() => {
     if (typeof apiErrors === 'string') {
       setApiError(apiErrors);
       dispatch(clearOnboardingErrors());
@@ -158,97 +169,106 @@ const ProjectEdit = ({
         gap: '15px'
       }}
     >
-      <FormLabel>Name of the project</FormLabel>
-      <FormInput
-        {...register('name', { required: 'Project Name is required!' })}
-        placeholder='Eg:- Resumer'
-      />
-      <FormLabel>Project Link</FormLabel>
-      <Grid
-        sx={{
-          display: 'flex',
-          gap: '15px'
-        }}
-      >
-        <Box sx={{ minWidth: '150px' }}>
-          <Select
-            options={projectUrlTypeOptions}
-            styles={selectStyles}
-            value={projectUrlType}
-            onChange={(val: any) => onProjectTypeChange(val)}
-            isClearable
-          />
-        </Box>
+      <Box>
+        <FormLabel>Name of the project</FormLabel>
         <FormInput
-          {...register(projectUrlType?.value || 'code_url', {
-            required: false
-          })}
-          placeholder='https://project-url.com'
+          {...register('name', { required: 'Project Name is required!' })}
+          placeholder='Eg:- Resumer'
         />
-      </Grid>
-
-      <FormLabel>Skills Required</FormLabel>
-      <SkillsInput
-        onChange={(skill: CreatableSkill) => handleSkillAppend(skill.name)}
-      />
-      <Grid
-        sx={{
-          display: 'flex',
-          gap: '10px',
-          flexWrap: 'wrap'
-        }}
-      >
-        {skillsRequired.map((skill: string, ind: number) => (
-          <Chip
-            label={skill}
-            key={ind}
-            onDelete={() => handleSkillDelete(skill)}
-            sx={{
-              color: 'white',
-              border: '1px solid white',
-              '& svg': {
-                color: '#ffffff80 !important'
-              }
-            }}
-          />
-        ))}
-      </Grid>
-      <FormLabel>Please describe your project below</FormLabel>
-      <Grid>
-        {description?.map((desc, ind: number) => (
-          <Box display={'flex'} gap='10px' key={desc.id} mb='10px'>
-            <FormInput
-              {...register(`description.${ind}`)}
-              placeholder='Tasks you did in your internship/job'
+      </Box>
+      <Box>
+        <FormLabel>Project Link</FormLabel>
+        <Grid
+          sx={{
+            display: 'flex',
+            gap: '15px'
+          }}
+        >
+          <Box sx={{ minWidth: '150px' }}>
+            <Select
+              options={projectUrlTypeOptions}
+              styles={selectStyles}
+              value={projectUrlType}
+              onChange={(val: any) => onProjectTypeChange(val)}
+              isClearable
             />
-            <IconButton
+          </Box>
+          <FormInput
+            {...register(projectUrlType?.value || 'code_url', {
+              required: false
+            })}
+            placeholder='https://project-url.com'
+          />
+        </Grid>
+      </Box>
+      <Box>
+        <FormLabel>Skills Required</FormLabel>
+        <SkillsInput
+          onChange={(skill: CreatableSkill) => handleSkillAppend(skill.name)}
+        />
+      </Box>
+      {skillsRequired?.length > 0 && (
+        <Grid
+          sx={{
+            display: 'flex',
+            gap: '10px',
+            flexWrap: 'wrap'
+          }}
+        >
+          {skillsRequired.map((skill: string, ind: number) => (
+            <Chip
+              label={skill}
+              key={ind}
+              onDelete={() => handleSkillDelete(skill)}
               sx={{
                 color: 'white',
                 border: '1px solid white',
-                borderRadius: '3px'
+                '& svg': {
+                  color: '#ffffff80 !important'
+                }
               }}
-              onClick={() => remove(ind)}
-            >
-              <DeleteIcon />
-            </IconButton>
-          </Box>
-        ))}
-        {errors?.description && (
-          <FormHelperText error>
-            {errors?.description?.message as string}
-          </FormHelperText>
-        )}
-        <Button
-          onClick={() => append('')}
-          sx={{
-            background: 'transparent'
-          }}
-          startIcon={<AddIcon />}
-          fullWidth
-        >
-          Add another point
-        </Button>
-      </Grid>
+            />
+          ))}
+        </Grid>
+      )}
+      <Box>
+        <FormLabel>Please describe your project below</FormLabel>
+        <Grid>
+          {description?.map((desc, ind: number) => (
+            <Box display={'flex'} gap='10px' key={desc.id} mb='10px'>
+              <FormInput
+                {...register(`description.${ind}`)}
+                placeholder='Tasks you did in your internship/job'
+              />
+              <IconButton
+                sx={{
+                  color: 'white',
+                  border: '1px solid white',
+                  borderRadius: '3px'
+                }}
+                onClick={() => remove(ind)}
+              >
+                <DeleteIcon />
+              </IconButton>
+            </Box>
+          ))}
+          {errors?.description && (
+            <FormHelperText error>
+              {errors?.description?.message as string}
+            </FormHelperText>
+          )}
+          <Button
+            onClick={() => append('')}
+            sx={{
+              background: 'transparent'
+            }}
+            startIcon={<AddIcon />}
+            fullWidth
+          >
+            Add another point
+          </Button>
+        </Grid>
+      </Box>
       {apiError && <FormHelperText error>{apiError}</FormHelperText>}
       <Grid
         sx={{
@@ -262,7 +282,17 @@ const ProjectEdit = ({
           Cancel
         </Button>
         <Button onClick={handleSubmit(onSubmit)} sx={{ flexBasis: '50%' }}>
-          {buttonText}
+          <Typography
+            sx={{
+              display: '-webkit-box',
+              WebkitLineClamp: '1',
+              WebkitBoxOrient: 'vertical',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis'
+            }}
+          >
+            {buttonText}
+          </Typography>
         </Button>
       </Grid>
     </Grid>

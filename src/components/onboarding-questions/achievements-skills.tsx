@@ -77,7 +77,7 @@ const AchievementsSkills = ({
       <FormProvider {...methods}>
         <Heading mb='20px'>Share your Skills & Achievements</Heading>
         <DndProvider backend={HTML5Backend}>
-          <FormLabel mb='10px'>Select Your Skills</FormLabel>
+          <FormLabel mb='5px'>Select Your Skills</FormLabel>
           <SkillsContainer />
         </DndProvider>
         <Divider
@@ -87,7 +87,7 @@ const AchievementsSkills = ({
           }}
         />
         <Grid>
-          <FormLabel mb='10px'>Add Your Achievements</FormLabel>
+          <FormLabel mb='5px'>Add Your Achievements</FormLabel>
           {achievements?.map((ach, ind: number) => (
             <Box key={ach.id} display={'flex'} gap='10px' mb='10px'>
               <FormInput
