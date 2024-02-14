@@ -278,7 +278,8 @@ const Workbench = () => {
             </Button>
             <Grid
               sx={{
-                overflow: 'auto'
+                overflow: 'auto',
+                minHeight: '400px'
               }}
             >
               <PdfViewer

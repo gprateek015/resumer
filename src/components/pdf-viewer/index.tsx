@@ -25,31 +25,7 @@ const PdfViewer = ({
   if (!pdf) return <></>;
   return (
     <Worker workerUrl='https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js'>
-      <Grid width={width}>
-        {uint8Array && (
-          <Viewer
-            fileUrl={uint8Array}
-            // plugins={[defaultLayoutPluginInstance]}
-
-            // pageLayout={{
-            //   transformSize: ({
-            //     numPages,
-            //     pageIndex,
-            //     size
-            //   }: {
-            //     numPages: number;
-            //     pageIndex: number;
-            //     size: { width: number; height: number };
-            //   }) => {
-            //     return {
-            //       ...size,
-            //       width: width as number
-            //     };
-            //   }
-            // }}
-          />
-        )}
-      </Grid>
+      <Grid width={width}>{uint8Array && <Viewer fileUrl={uint8Array} />}</Grid>
     </Worker>
   );
 };
