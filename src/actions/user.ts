@@ -32,6 +32,22 @@ export const registerUser = createAsyncThunk(
   }
 );
 
+export const sendOtp = createAsyncThunk(
+  'opt/generate',
+  async ({ email }: { email: string }) => {
+    const response = await Axios.post('/otp/generate', { email });
+    return response.data;
+  }
+);
+
+export const verifyOtp = createAsyncThunk(
+  'opt/verify',
+  async ({ email, otp }: { email: string; otp: string }) => {
+    const response = await Axios.post('/otp/verify', { email, otp });
+    return response.data;
+  }
+);
+
 export const fetchSelf = createAsyncThunk('user/self', async () => {
   const response = await Axios.get('/user');
   return response.data;

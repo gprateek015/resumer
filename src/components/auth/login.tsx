@@ -62,7 +62,7 @@ const Login = () => {
           <FormInput
             {...register('email', { required: 'Please enter your email' })}
             fullWidth
-            placeholder='janedoe@email.com'
+            placeholder='johndoe@email.com'
             helperText={errors?.email?.message as string}
             error={!!errors?.email}
           />

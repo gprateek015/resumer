@@ -30,7 +30,7 @@ const initialState: UserState = {
 
 const userDataToState = (state: UserState, action: PayloadAction<any>) => {
   state.data = action.payload?.user;
-  if (!state.authToken && action?.payload?.token) {
+  if (action?.payload?.token) {
     state.authToken = action.payload?.token;
     localStorage.setItem(AUTH_TOKEN, action.payload?.token);
   }

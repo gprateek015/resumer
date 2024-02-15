@@ -30,8 +30,9 @@ const PdfViewer = ({
           width: width,
           '& .rpv-core__inner-page': {
             width: 'fit-content !important',
+            position: 'relative !important',
             left: '50% !important',
-            transform: 'translate(-50%, 0px) !important'
+            transform: 'translateX(-50%) !important'
           }
         }}
       >

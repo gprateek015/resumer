@@ -32,16 +32,20 @@ export const UploadContainer = styled(Grid)({
   flexGrow: 1
 });
 
-export const Uploader = styled(Grid)({
+export const Uploader = styled(Grid)(({ theme }) => ({
   height: '100%',
-  padding: '25px 40px',
+  padding: '0px 40px 25px',
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',
   border: '1px solid white',
-  background: '#FFFFFF1A',
   borderRadius: '15px',
   cursor: 'pointer',
-  textAlign: 'center'
-});
+  textAlign: 'center',
+  backdropFilter: 'blur(20px)',
+
+  [theme.breakpoints.down('md')]: {
+    padding: '25px 40px'
+  }
+}));

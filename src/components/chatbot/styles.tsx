@@ -11,7 +11,8 @@ export const ChatTypography = styled(Typography)(
     maxWidth: 'calc(100% - 80px)',
     float: ind % 2 !== 0 ? 'right' : 'left',
     minHeight: '26px',
-    width: 'fit-content'
+    width: 'fit-content',
+    color: ind % 2 !== 0 ? 'black' : 'white'
   })
 );
 

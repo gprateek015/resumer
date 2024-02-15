@@ -20,8 +20,9 @@ import { fetchExperiences } from '@/actions/experience';
 import { fetchProjects } from '@/actions/project';
 import { updateUser } from '@/actions/user';
 import { Skill, User } from '@/types';
-import { Button } from '@/components/onboarding-questions/styles';
+import { Button, FormLabel } from '@/components/onboarding-questions/styles';
 import { AuthButton } from '@/components/navbar/styles';
+import CertificationsContainer from '@/components/profile-details/certifications';
 
 type ProfileUserData = User & {
   technical_skills?: { name: string }[];
@@ -191,6 +192,14 @@ const Profile = () => {
                   />
                   <Typography mb='5px'>Skills</Typography>
                   <SkillsContainer />
+                  <Divider
+                    sx={{
+                      borderColor: '#ffffff87',
+                      my: '20px'
+                    }}
+                  />
+                  <Typography mb='5px'>Certificates</Typography>
+                  <CertificationsContainer />
                   <Divider
                     sx={{
                       borderColor: '#ffffff87',

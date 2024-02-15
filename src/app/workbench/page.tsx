@@ -34,6 +34,7 @@ import { downloadPDF } from '@/utils';
 import { useRouter } from 'next/navigation';
 import InfoIcon from '@mui/icons-material/Info';
 import { righteous } from '@/font-family';
+import Certifications from './components/certifications';
 
 const Workbench = () => {
   const dispatch = useDispatch();
@@ -226,6 +227,12 @@ const Workbench = () => {
                     collapsed={expandedId !== 5}
                     toggleCollapse={() =>
                       setExpandedId(curr => (curr === 5 ? -1 : 5))
+                    }
+                  />
+                  <Certifications
+                    collapsed={expandedId !== 6}
+                    toggleCollapse={() =>
+                      setExpandedId(curr => (curr === 6 ? -1 : 6))
                     }
                   />
                 </Grid>

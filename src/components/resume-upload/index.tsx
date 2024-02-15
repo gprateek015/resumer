@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
-import { Grid, Typography, Box } from '@mui/material';
+import { Grid, Typography, Box, Button } from '@mui/material';
 
 import CloudIcon from '@/assets/upload-icon.svg';
 import Image from 'next/image';
@@ -78,88 +78,107 @@ const ResumeUpload = ({ onCompleteUpload }: { onCompleteUpload: Function }) => {
   }, [progress, resumeParseCompleted]);
 
   return (
-    <UploadContainer width={'100%'}>
-      <input
-        style={{ display: 'none' }}
-        ref={inputRef}
-        type='file'
-        accept='application/pdf'
-        onChange={handleInputChange}
-      />
-      {!files ? (
-        <Uploader
-          onClick={() => inputRef?.current?.click()}
-          onDragEnter={handleDrag}
-          onDragLeave={handleDrag}
-          onDragOver={handleDrag}
-          onDrop={handleDrop}
-        >
-          <Image src={CloudIcon} alt='cloud-icon' />
-          <Heading fontSize='32px'>Select a PDF file to upload</Heading>
-          <Typography
-            sx={{
-              color: '#FFFFFFCC',
-              fontSize: '20px',
-              fontWeight: '300'
-            }}
+    <Grid>
+      <UploadContainer width={'100%'}>
+        <input
+          style={{ display: 'none' }}
+          ref={inputRef}
+          type='file'
+          accept='application/pdf'
+          onChange={handleInputChange}
+        />
+        {!files ? (
+          <Uploader
+            onClick={() => inputRef?.current?.click()}
+            onDragEnter={handleDrag}
+            onDragLeave={handleDrag}
+            onDragOver={handleDrag}
+            onDrop={handleDrop}
           >
-            or drag and drop it here
-          </Typography>
-        </Uploader>
-      ) : (
-        <Grid
-          display={'flex'}
-          flexDirection={'column'}
-          justifyContent={'center'}
-          alignItems={'center'}
-          height={'100%'}
-          gap='20px'
-        >
-          <Typography fontWeight={'500'} fontSize={'18px'} textAlign={'center'}>
-            <Typewriter
-              onInit={typewriter => {
-                typewriter
-                  .typeString('Collecting data from your resume' + '.')
-                  .deleteChars(1)
-                  .start()
-                  .callFunction(() => {
-                    // setAllowUserToType(true);
-                    // setShowOptions(true);
-                  });
+            <Image src={CloudIcon} alt='cloud-icon' />
+            <Heading fontSize='32px'>Select a PDF file to upload</Heading>
+            <Typography
+              sx={{
+                color: '#FFFFFFCC',
+                fontSize: '20px',
+                fontWeight: '300'
               }}
-              options={{
-                cursor: '|',
-                delay: 50,
-                devMode: false
-              }}
-            />
-          </Typography>
-          <Box sx={{ display: 'flex', alignItems: 'center', width: '100%' }}>
-            <Box sx={{ width: '100%', mr: 1 }}>
-              <LinearProgress
-                variant='determinate'
-                value={progress}
-                sx={{
-                  width: '100%',
-                  height: '8px',
-                  background: '#FFFFFF33',
-                  borderRadius: '10px',
-                  '& span': {
-                    background: 'white',
-                    borderRadius: '10px'
-                  }
+            >
+              or drag and drop it here
+            </Typography>
+          </Uploader>
+        ) : (
+          <Grid
+            display={'flex'}
+            flexDirection={'column'}
+            justifyContent={'center'}
+            alignItems={'center'}
+            height={'100%'}
+            gap='20px'
+          >
+            <Typography
+              fontWeight={'500'}
+              fontSize={'18px'}
+              textAlign={'center'}
+            >
+              <Typewriter
+                onInit={typewriter => {
+                  typewriter
+                    .typeString('Collecting data from your resume' + '.')
+                    .deleteChars(1)
+                    .start()
+                    .callFunction(() => {
+                      // setAllowUserToType(true);
+                      // setShowOptions(true);
+                    });
+                }}
+                options={{
+                  cursor: '|',
+                  delay: 50,
+                  devMode: false
                 }}
               />
+            </Typography>
+            <Box sx={{ display: 'flex', alignItems: 'center', width: '100%' }}>
+              <Box sx={{ width: '100%', mr: 1 }}>
+                <LinearProgress
+                  variant='determinate'
+                  value={progress}
+                  sx={{
+                    width: '100%',
+                    height: '8px',
+                    background: '#FFFFFF33',
+                    borderRadius: '10px',
+                    '& span': {
+                      background: 'white',
+                      borderRadius: '10px'
+                    }
+                  }}
+                />
+              </Box>
+              <Box sx={{ minWidth: 35 }}>
+                <Typography variant='body2' color='white'>{`${Math.round(
+                  progress
+                )}%`}</Typography>
+              </Box>
             </Box>
-            <Box sx={{ minWidth: 35 }}>
-              <Typography variant='body2' color='white'>{`${Math.round(
-                progress
-              )}%`}</Typography>
-            </Box>
-          </Box>
-        </Grid>
-      )}
-    </UploadContainer>
+          </Grid>
+        )}
+      </UploadContainer>
+      <Typography textAlign='center' mt='5px' lineHeight={'14px'}>
+        Or{' '}
+        <Typography
+          component='span'
+          sx={{
+            textDecoration: 'underline',
+            cursor: 'pointer'
+          }}
+          onClick={() => onCompleteUpload()}
+        >
+          Create a new resume
+        </Typography>
+      </Typography>
+    </Grid>
   );
 };
 

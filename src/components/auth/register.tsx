@@ -9,17 +9,19 @@ import Image from 'next/image';
 import GoogleIcon from '@/assets/icons/google-icon.svg';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import { RootState, useDispatch } from '@/redux/store';
-import { loginUser, registerUser } from '@/actions/user';
+import { loginUser, registerUser, sendOtp, verifyOtp } from '@/actions/user';
 import { useSelector } from 'react-redux';
 import { changeAuthPage, resetError } from '@/redux/slice/auth';
 import PasswordField from './password-field';
 import { FormInput } from '../onboarding-questions/styles';
+import OTPInput from 'react-otp-input';
 
 type FormValues = {
   email: string;
   password: string;
   first_name: string;
   last_name: string;
+  otp: string;
 };
 
 const Register = () => {
@@ -28,15 +30,51 @@ const Register = () => {
     register,
     formState: { errors },
     handleSubmit,
-    setError
+    setError,
+    watch,
+    setValue
   } = useForm<FormValues>();
-  const { error: apiError } = useSelector((state: RootState) => state.auth);
+  const {
+    error: apiError,
+    userVerified,
+    otpSent
+  } = useSelector((state: RootState) => state.auth);
   const [apiErrorStr, setApiErrorStr] = useState('');
+  const [step, setStep] = useState(0);
+
+  const otp = watch('otp');
+  const email = watch('email');
 
   const onSubmit = (data: FormValues) => {
     dispatch(resetError());
-    dispatch(registerUser(data));
+    if (step === 0) {
+      dispatch(sendOtp({ email: data.email }));
+    } else if (step === 1) {
+      if (!data.otp) {
+        setError('otp', { message: 'Please enter the OTP' });
+        return;
+      }
+      dispatch(verifyOtp({ email: data.email, otp: data.otp }));
+    } else {
+      const newData = {
+        ...data,
+        otp: undefined
+      };
+      dispatch(registerUser(newData));
+    }
   };
+
+  useEffect(() => {
+    if (otpSent) {
+      setStep(curr => (curr === 0 ? 1 : curr));
+    }
+  }, [otpSent]);
+
+  useEffect(() => {
+    if (userVerified) {
+      setStep(curr => (curr <= 1 ? 2 : curr));
+    }
+  }, [userVerified]);
 
   useEffect(() => {
     if (typeof apiError === 'object') {
@@ -48,72 +86,120 @@ const Register = () => {
     }
   }, [apiError]);
 
+  // useEffect(() => {
+  //   if (!email) {
+  //     setStep(0);
+  //   }
+  // }, [email]);
+
   return (
     <>
       <Grid
         sx={{
           display: 'flex',
           flexDirection: 'column',
-          gap: '15px'
+          gap: '10px'
         }}
       >
-        <Grid
-          sx={{
-            display: 'flex',
-            gap: '20px',
-            alignItems: 'center'
-          }}
-        >
-          <Grid sx={{ flexBasis: '50%' }}>
-            <FormLabel>First name</FormLabel>
-            <FormInput
-              {...register('first_name', {
-                required: 'Please enter your first name'
-              })}
-              fullWidth
-              placeholder='John'
-              helperText={errors?.first_name?.message as string}
-              error={!!errors?.first_name}
-            />
+        {step === 0 && (
+          <Grid
+            sx={{
+              display: 'flex',
+              gap: '20px',
+              alignItems: 'center'
+            }}
+          >
+            <Grid sx={{ flexBasis: '50%' }}>
+              <FormLabel>First name</FormLabel>
+              <FormInput
+                {...register('first_name', {
+                  required: 'Please enter your first name'
+                })}
+                fullWidth
+                placeholder='John'
+                helperText={errors?.first_name?.message as string}
+                error={!!errors?.first_name}
+              />
+            </Grid>
+            <Grid sx={{ flexBasis: '50%' }}>
+              <FormLabel>Last name</FormLabel>
+              <FormInput
+                {...register('last_name', {
+                  required: 'Please enter your last name'
+                })}
+                fullWidth
+                placeholder='Doe'
+                helperText={errors?.last_name?.message as string}
+                error={!!errors?.last_name}
+              />
+            </Grid>
           </Grid>
-          <Grid sx={{ flexBasis: '50%' }}>
-            <FormLabel>Last name</FormLabel>
-            <FormInput
-              {...register('last_name', {
-                required: 'Please enter your last name'
-              })}
-              fullWidth
-              placeholder='Doe'
-              helperText={errors?.last_name?.message as string}
-              error={!!errors?.last_name}
-            />
-          </Grid>
-        </Grid>
+        )}
         <Grid>
           <FormLabel>Email</FormLabel>
           <FormInput
             {...register('email', { required: 'Please enter your email' })}
             fullWidth
-            placeholder='janedoe@email.com'
+            placeholder='johndoe@email.com'
             helperText={errors?.email?.message as string}
             error={!!errors?.email}
+            disabled={step !== 0}
+            sx={{
+              '& .Mui-disabled input': {
+                color: 'white',
+                WebkitTextFillColor: 'white'
+              }
+            }}
           />
         </Grid>
-        <Grid>
-          <FormLabel>Password</FormLabel>
+        {step === 1 && (
+          <Grid>
+            <FormLabel>OTP</FormLabel>
 
-          <PasswordField
-            {...register('password', {
-              required: 'Please enter your password'
-            })}
-            helperText={errors?.password?.message as string}
-            error={!!errors?.password}
-            fullWidth
-            placeholder='Password'
-          />
-        </Grid>
-        <FormHelperText error>{apiErrorStr}</FormHelperText>
+            <OTPInput
+              numInputs={4}
+              value={otp}
+              onChange={val => setValue('otp', val)}
+              renderSeparator={<span>&nbsp;&nbsp;</span>}
+              renderInput={props => (
+                <input
+                  {...props}
+                  style={{
+                    width: '12px',
+                    height: '20px',
+                    padding: '12px 16px',
+                    border: '1px solid #DDD',
+                    borderRadius: '4px',
+                    background: 'rgba(255, 255, 255, 0.10)',
+                    color: 'white',
+                    fontSize: '16px',
+                    outline: 0
+                  }}
+                  placeholder='0'
+                />
+              )}
+              shouldAutoFocus={true}
+            />
+            <FormHelperText error>{errors?.otp?.message}</FormHelperText>
+          </Grid>
+        )}
+        {step === 2 && (
+          <Grid>
+            <FormLabel>Password</FormLabel>
+
+            <PasswordField
+              {...register('password', {
+                required: 'Please enter your password'
+              })}
+              helperText={errors?.password?.message as string}
+              error={!!errors?.password}
+              fullWidth
+              placeholder='Password'
+            />
+          </Grid>
+        )}
         <Grid>
+          <FormHelperText error>{apiErrorStr}</FormHelperText>
           <Button
             sx={{
               borderRadius: '10px',
@@ -130,7 +216,7 @@ const Register = () => {
                 backgroundClip: 'text',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
-                fontSize: '14px',
+                fontSize: '1rem',
                 fontWeight: '600',
                 width: '135px',
                 letterSpacing: '1px'
@@ -146,7 +232,7 @@ const Register = () => {
           display: 'flex',
           gap: '5px',
           justifyContent: 'center',
-          marginTop: '40px'
+          marginTop: '15px'
         }}
       >
         <Typography

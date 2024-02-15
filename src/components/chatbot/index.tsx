@@ -72,8 +72,7 @@ const Chatbot = ({ setShowQuestions }: { setShowQuestions: Function }) => {
   const handleOptionChoose = (option?: (typeof AiChats)[0]['options'][0]) => {
     switch (option?.value) {
       case 'profile_name':
-        setAiChatsInd(curr => curr + 1);
-        handleClick(option.label);
+        handleClick(option.label, 2);
         break;
       case 'new_name':
         setChats(chats => [
@@ -94,7 +93,7 @@ const Chatbot = ({ setShowQuestions }: { setShowQuestions: Function }) => {
     setShowOptions(false);
   };
 
-  const handleClick = (optionValue?: string) => {
+  const handleClick = (optionValue?: string, nextChatInd?: number) => {
     const newMsg = optionValue || inputText;
     if (inputText) {
       dispatch(updateUser({ name: inputText }));
@@ -104,9 +103,12 @@ const Chatbot = ({ setShowQuestions }: { setShowQuestions: Function }) => {
     setAllowUserToType(false);
     setTimeout(() => {
       if (newMsg.toLowerCase() === 'import resume') setResumeUpload(true);
-      if (aiChatsInd + 1 >= AiChats.length) return;
-      setChats(chats => [...chats, AiChats[aiChatsInd + 1]?.message]);
-      setAiChatsInd(curr => curr + 1);
+      if ((nextChatInd || aiChatsInd + 1) >= AiChats.length) return;
+      setChats(chats => [
+        ...chats,
+        AiChats[nextChatInd || aiChatsInd + 1]?.message
+      ]);
+      setAiChatsInd(nextChatInd || aiChatsInd + 1);
     }, 500);
   };
 
@@ -122,7 +124,9 @@ const Chatbot = ({ setShowQuestions }: { setShowQuestions: Function }) => {
         width: { xs: '360px', md: '400px' },
         borderRadius: '20px',
         padding: { xs: '25px 15px', md: '25px 25px 0px' },
-        transform: 'translateY(8px)'
+        transform: 'translateY(8px)',
+        alignSelf: 'flex-end',
+        marginBottom: '10px'
       }}
     >
       {resumeUpload ? (

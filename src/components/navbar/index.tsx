@@ -6,33 +6,29 @@ import Image from 'next/image';
 import { NavLink, AuthButton } from './styles';
 import Link from 'next/link';
 
-import { Righteous } from 'next/font/google';
 import { useSelector } from 'react-redux';
 import { RootState, useDispatch } from '@/redux/store';
 import { changeAuthPage, logoutUser } from '@/redux/slice/auth';
 import { clearUserData } from '@/redux/slice/user';
 import { usePathname, useRouter } from 'next/navigation';
 import { signOut } from 'next-auth/react';
-
-const righteous = Righteous({
-  weight: ['400'],
-  subsets: ['latin']
-});
+import { righteous } from '@/font-family';
 
 const Navbar = () => {
   const { isLoggedIn, page } = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
-  const route = useRouter();
+  const routes = useRouter();
   const authRef = useRef<any>(null);
 
   const pathname = usePathname();
 
-  const handleClick = () => {
+  const handleClick = async () => {
     if (isLoggedIn) {
       dispatch(logoutUser());
       dispatch(clearUserData());
-      signOut();
+      await signOut();
     } else {
+      routes.replace('/');
       dispatch(changeAuthPage(page === 0 ? 1 : 0));
 
       window.scrollTo({
@@ -40,7 +36,6 @@ const Navbar = () => {
         behavior: 'smooth'
       });
     }
-    route.push('/');
   };
 
   return (
@@ -88,7 +83,7 @@ const Navbar = () => {
         </Link>
       </Grid>
       <Grid ref={authRef}>
-        <AuthButton onClick={handleClick}>
+        <AuthButton onClick={handleClick} sx={{ minWidth: '95px' }}>
           {isLoggedIn ? 'Log out' : page === 0 ? 'Sign up' : 'Sign in'}
         </AuthButton>
       </Grid>

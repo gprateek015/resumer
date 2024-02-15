@@ -54,7 +54,7 @@ export const Option = styled(Box)<{ active?: string; onClick: Function }>(
     flexGrow: 1,
     flexBasis: '50px',
     maxWidth: '160px',
-    minWidth: '120px'
+    minWidth: '140px'
   })
 );
 
