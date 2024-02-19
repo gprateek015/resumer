@@ -72,7 +72,7 @@ const Navbar = () => {
         <Link href='/'>
           <NavLink active='true'>Home</NavLink>
         </Link>
-        <Link href='/'>
+        <Link href='/about'>
           <NavLink active='false'>About Us</NavLink>
         </Link>
         <Link href='/'>

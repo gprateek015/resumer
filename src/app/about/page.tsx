@@ -11,18 +11,18 @@ const righteous = Righteous({
 const AboutUs = () => {
   return (
     <Grid
-    sx={{
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'center',
-      alignItems: 'center',
-      borderRadius: '20px',
-      padding: { xs: '20px', md: '20px 40px' },
-      width: '100%',
-      height: 'calc(100vh - 120px)',
-      maxHeight: { xs: '90%', md: '600px' }
-    }}
-    className={righteous.className}
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: '20px',
+        padding: { xs: '20px', md: '20px 40px' },
+        width: '100%',
+        height: 'calc(100vh - 120px)',
+        maxHeight: 'calc(100vh - 70px)'
+      }}
+      className={righteous.className}
     >
       <Typography
         sx={{
