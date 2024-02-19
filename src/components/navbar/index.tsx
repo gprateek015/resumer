@@ -70,16 +70,20 @@ const Navbar = () => {
         }}
       >
         <Link href='/'>
-          <NavLink active='true'>Home</NavLink>
+          <NavLink active={(pathname === '/').toString()}>Home</NavLink>
         </Link>
         <Link href='/about'>
-          <NavLink active='false'>About Us</NavLink>
+          <NavLink active={(pathname === '/about').toString()}>
+            About Us
+          </NavLink>
         </Link>
         <Link href='/'>
-          <NavLink active='false'>FAQs</NavLink>
+          <NavLink active={(pathname === '/temp1').toString()}>FAQs</NavLink>
         </Link>
         <Link href='/'>
-          <NavLink active='false'>Templates</NavLink>
+          <NavLink active={(pathname === '/temp2').toString()}>
+            Templates
+          </NavLink>
         </Link>
       </Grid>
       <Grid ref={authRef}>
