@@ -1,7 +1,14 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { Grid, Typography, Button, FormHelperText, Box } from '@mui/material';
+import {
+  Grid,
+  Typography,
+  Button,
+  FormHelperText,
+  Box,
+  Icon
+} from '@mui/material';
 import { DividerWithText, ThirdPartyBtns, FormLabel } from './styles';
 import {
   Form,
@@ -19,6 +26,7 @@ import { useSelector } from 'react-redux';
 import { changeAuthPage, resetError } from '@/redux/slice/auth';
 import PasswordField from './password-field';
 import { FormInput } from '../onboarding-questions/styles';
+import { useSnackbar } from 'notistack';
 
 type FormValues = {
   email: string;
@@ -38,6 +46,7 @@ const Login = () => {
     (state: RootState) => state.auth
   );
   const [apiErrorStr, setApiErrorStr] = useState('');
+  const { enqueueSnackbar } = useSnackbar();
 
   const onSubmit: SubmitHandler<FormValues> = data => {
     dispatch(resetError());

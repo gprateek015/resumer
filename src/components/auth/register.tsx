@@ -87,11 +87,11 @@ const Register = () => {
     }
   }, [apiError]);
 
-  // useEffect(() => {
-  //   if (!email) {
-  //     setStep(0);
-  //   }
-  // }, [email]);
+  useEffect(() => {
+    if (!email) {
+      setStep(0);
+    }
+  }, [email]);
 
   return (
     <>

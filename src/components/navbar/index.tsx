@@ -1,8 +1,7 @@
 'use client';
 
-import React, { ReactElement, ReactNode, useEffect, useRef } from 'react';
-import { Button, Grid, Typography } from '@mui/material';
-import Image from 'next/image';
+import React, { useRef } from 'react';
+import { Grid } from '@mui/material';
 import { NavLink, AuthButton } from './styles';
 import Link from 'next/link';
 
@@ -24,9 +23,9 @@ const Navbar = () => {
 
   const handleClick = async () => {
     if (isLoggedIn) {
-      dispatch(logoutUser());
-      dispatch(clearUserData());
       await signOut();
+      dispatch(clearUserData());
+      dispatch(logoutUser());
     } else {
       routes.replace('/');
       dispatch(changeAuthPage(page === 0 ? 1 : 0));
@@ -77,12 +76,14 @@ const Navbar = () => {
             About Us
           </NavLink>
         </Link>
-        <Link href='/'>
-          <NavLink active={(pathname === '/temp1').toString()}>FAQs</NavLink>
+        <Link href='/products'>
+          <NavLink active={(pathname === '/products').toString()}>
+            Products
+          </NavLink>
         </Link>
-        <Link href='/'>
-          <NavLink active={(pathname === '/temp2').toString()}>
-            Templates
+        <Link href='/suggestions'>
+          <NavLink active={(pathname === '/suggestions').toString()}>
+            Suggestions
           </NavLink>
         </Link>
       </Grid>

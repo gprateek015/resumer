@@ -15,6 +15,7 @@ import Register from './register';
 import { socialLogin } from '@/actions/user';
 import { useRouter } from 'next/navigation';
 import { clearPrevPath } from '@/redux/slice/auth';
+import { useSnackbar } from 'notistack';
 
 const AuthBox = () => {
   const dispatch = useDispatch();
@@ -22,6 +23,7 @@ const AuthBox = () => {
   const route = useRouter();
   const { page, isLoggedIn, previousPath } = useSelector(state => state.auth);
   const { data: user } = useSelector(state => state.user);
+  const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
     if (session.status === 'authenticated') {
@@ -31,6 +33,11 @@ const AuthBox = () => {
 
   useEffect(() => {
     if (isLoggedIn) {
+      enqueueSnackbar('Logged in successfully', {
+        preventDuplicate: true,
+        variant: 'success'
+      });
+
       if (!user.onboarding_completed) route.replace('/onboarding');
       else {
         route.replace(previousPath || '/profile');

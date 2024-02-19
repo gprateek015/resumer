@@ -1,12 +1,9 @@
 import Navbar from '@/components/navbar';
 import './globals.css';
-import { Grid, ThemeProvider } from '@mui/material';
-import theme from '@/theme';
+import { Grid } from '@mui/material';
 import Image from 'next/image';
 import BackgroundImg from '@/assets/home-background.png';
-import ReduxProvider from '@/components/redux-provider';
-import AuthProvider from '@/components/auth-provider';
-import ProtectedRoutes from '@/components/protected-routes';
+import Providers from '@/components/providers';
 
 export const metadata = {
   title: 'Resumer',
@@ -22,40 +19,34 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body>
-        <ReduxProvider>
-          <ThemeProvider theme={theme}>
-            <AuthProvider>
-              <ProtectedRoutes>
-                <Grid
-                  minHeight='100vh'
-                  maxHeight={{ md: '100vh' }}
-                  display={'flex'}
-                  flexDirection={'column'}
-                  overflow={{ md: 'hidden' }}
-                >
-                  <Navbar />
-                  <Image
-                    src={BackgroundImg}
-                    alt=''
-                    className='home-background'
-                    priority={true}
-                  />
-                  <Grid
-                    flexGrow={1}
-                    display={'flex'}
-                    flexDirection={'column'}
-                    sx={{
-                      overflow: 'auto',
-                      mt: '70px'
-                    }}
-                  >
-                    {children}
-                  </Grid>
-                </Grid>
-              </ProtectedRoutes>
-            </AuthProvider>
-          </ThemeProvider>
-        </ReduxProvider>
+        <Providers>
+          <Grid
+            minHeight='100vh'
+            maxHeight={{ md: '100vh' }}
+            display={'flex'}
+            flexDirection={'column'}
+            overflow={{ md: 'hidden' }}
+          >
+            <Navbar />
+            <Image
+              src={BackgroundImg}
+              alt=''
+              className='home-background'
+              priority={true}
+            />
+            <Grid
+              flexGrow={1}
+              display={'flex'}
+              flexDirection={'column'}
+              sx={{
+                overflow: 'auto',
+                mt: '70px'
+              }}
+            >
+              {children}
+            </Grid>
+          </Grid>
+        </Providers>
       </body>
     </html>
   );

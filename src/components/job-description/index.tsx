@@ -17,15 +17,14 @@ import { generateResumeData } from '@/actions/resume';
 
 const DescriptionForm = () => {
   const dispatch = useDispatch();
-  const route = useRouter();
+  const router = useRouter();
   const [jobDescription, setJobDescription] = useState('');
   const [loading, setLoading] = useState(false);
 
   const getResumeData = async () => {
     setLoading(true);
     await dispatch(generateResumeData({ jobDescription }));
-    setLoading(false);
-    route.push('/workbench');
+    router.push('/workbench');
   };
 
   return (
