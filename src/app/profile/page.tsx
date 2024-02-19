@@ -140,7 +140,12 @@ const Profile = () => {
               >
                 <Typography
                   sx={{
-                    fontSize: '18px'
+                    fontSize: '18px',
+                    background:
+                      'linear-gradient(90deg, #4ADFD5 0.42%, #7479FA 41.67%, #E92EC3 106.58%)',
+                    color: 'transparent',
+                    backgroundClip: 'text',
+                    WebkitBackgroundClip: 'text'
                   }}
                 >
                   My Profile
