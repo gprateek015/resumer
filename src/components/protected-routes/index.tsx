@@ -13,23 +13,19 @@ const ProtectedRoutes = ({ children }: { children: ReactNode }) => {
   const dispatch = useDispatch();
   const routes = useRouter();
 
-  // useEffect(() => {
-  //   if (!isLoggedIn && PROTECTED_ROUTES.includes(pathname)) {
-  //     dispatch(updatePrevPath(pathname));
-  //   }
-  // }, [isLoggedIn, pathname]);
+  useEffect(() => {
+    if (!isLoggedIn && PROTECTED_ROUTES.includes(pathname)) {
+      dispatch(updatePrevPath(pathname));
+      routes.replace('/');
+    }
+  }, [isLoggedIn, pathname]);
 
   useEffect(() => {
     dispatch(autoLogin());
   }, []);
 
   return (
-    <>{children}</>
-    // <>
-    //   {!isLoggedIn && PROTECTED_ROUTES.includes(pathname)
-    //     ? routes.replace('/')
-    //     : children}
-    // </>
+    <>{!isLoggedIn && PROTECTED_ROUTES.includes(pathname) ? null : children}</>
   );
 };
 
