@@ -6,6 +6,8 @@ import { usePathname, useRouter } from 'next/navigation';
 import { autoLogin } from '@/utils';
 import { updatePrevPath } from '@/redux/slice/auth';
 import { PROTECTED_ROUTES } from '@/constants';
+import { CircularProgress } from '@mui/material';
+import Loader from '../loader';
 
 const ProtectedRoutes = ({ children }: { children: ReactNode }) => {
   const { isLoggedIn } = useSelector(state => state.auth);
@@ -25,7 +27,13 @@ const ProtectedRoutes = ({ children }: { children: ReactNode }) => {
   }, []);
 
   return (
-    <>{!isLoggedIn && PROTECTED_ROUTES.includes(pathname) ? null : children}</>
+    <>
+      {!isLoggedIn && PROTECTED_ROUTES.includes(pathname) ? (
+        <Loader />
+      ) : (
+        children
+      )}
+    </>
   );
 };
 

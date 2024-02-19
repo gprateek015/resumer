@@ -26,7 +26,6 @@ import { useSelector } from 'react-redux';
 import { changeAuthPage, resetError } from '@/redux/slice/auth';
 import PasswordField from './password-field';
 import { FormInput } from '../onboarding-questions/styles';
-import { useSnackbar } from 'notistack';
 
 type FormValues = {
   email: string;
@@ -46,7 +45,6 @@ const Login = () => {
     (state: RootState) => state.auth
   );
   const [apiErrorStr, setApiErrorStr] = useState('');
-  const { enqueueSnackbar } = useSnackbar();
 
   const onSubmit: SubmitHandler<FormValues> = data => {
     dispatch(resetError());

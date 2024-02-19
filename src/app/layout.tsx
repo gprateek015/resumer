@@ -4,6 +4,7 @@ import { Grid } from '@mui/material';
 import Image from 'next/image';
 import BackgroundImg from '@/assets/home-background.png';
 import Providers from '@/components/providers';
+import ProtectedRoutes from '@/components/protected-routes';
 
 export const metadata = {
   title: 'Resumer',
@@ -34,17 +35,19 @@ export default function RootLayout({
               className='home-background'
               priority={true}
             />
-            <Grid
-              flexGrow={1}
-              display={'flex'}
-              flexDirection={'column'}
-              sx={{
-                overflow: 'auto',
-                mt: '70px'
-              }}
-            >
-              {children}
-            </Grid>
+            <ProtectedRoutes>
+              <Grid
+                flexGrow={1}
+                display={'flex'}
+                flexDirection={'column'}
+                sx={{
+                  overflow: 'auto',
+                  mt: '70px'
+                }}
+              >
+                {children}
+              </Grid>
+            </ProtectedRoutes>
           </Grid>
         </Providers>
       </body>

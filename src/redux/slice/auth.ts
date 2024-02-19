@@ -8,6 +8,7 @@ import {
   verifyOtp
 } from '@/actions/user';
 import { AUTH_TOKEN } from '@/constants';
+import { enqueueSnackbar } from 'notistack';
 
 const initialState = {
   isLoggedIn: false,
@@ -46,6 +47,7 @@ export const authSlice = createSlice({
         state.error = '';
       })
       .addCase(loginUser.rejected, (state, action) => {
+        enqueueSnackbar('Login failed!', { variant: 'error' });
         state.isLoggedIn = false;
 
         try {
