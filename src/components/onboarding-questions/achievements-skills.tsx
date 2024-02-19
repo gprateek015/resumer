@@ -80,12 +80,14 @@ const AchievementsSkills = ({
           <FormLabel mb='5px'>Select Your Skills</FormLabel>
           <SkillsContainer />
         </DndProvider>
+
         <Divider
           sx={{
             borderColor: '#ffffff90',
             my: '20px'
           }}
         />
+
         <Grid>
           <FormLabel mb='5px'>Add Your Achievements</FormLabel>
           {achievements?.map((ach, ind: number) => (

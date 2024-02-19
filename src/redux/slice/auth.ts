@@ -88,6 +88,9 @@ export const authSlice = createSlice({
         state.isLoggedIn = true;
         state.loading = false;
       })
+      .addCase(fetchSelf.rejected, state => {
+        state.loading = false;
+      })
       .addCase(fetchSelf.pending, state => {
         state.loading = true;
       })
@@ -97,6 +100,9 @@ export const authSlice = createSlice({
       })
       .addCase(socialLogin.pending, state => {
         state.loading = true;
+      })
+      .addCase(socialLogin.rejected, state => {
+        state.loading = false;
       })
       .addCase(sendOtp.fulfilled, (state, action) => {
         if (action.payload?.success) state.otpSent = true;

@@ -11,7 +11,7 @@ import ResumeUpload from '../resume-upload';
 import { useDispatch, useSelector } from '@/redux/store';
 import { updateUser } from '@/actions/user';
 
-const Chatbot = ({ setShowQuestions }: { setShowQuestions: Function }) => {
+const Chatbot = ({ showMoreQuestions }: { showMoreQuestions: Function }) => {
   const dispatch = useDispatch();
   const {
     data: { name, _id }
@@ -87,7 +87,7 @@ const Chatbot = ({ setShowQuestions }: { setShowQuestions: Function }) => {
         handleClick(option.label);
         break;
       case 'create_new':
-        setShowQuestions(true);
+        showMoreQuestions();
         break;
     }
     setShowOptions(false);
@@ -130,7 +130,7 @@ const Chatbot = ({ setShowQuestions }: { setShowQuestions: Function }) => {
       }}
     >
       {resumeUpload ? (
-        <ResumeUpload onCompleteUpload={() => setShowQuestions(true)} />
+        <ResumeUpload onCompleteUpload={() => showMoreQuestions()} />
       ) : (
         <Grid
           sx={{

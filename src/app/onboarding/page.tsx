@@ -10,15 +10,25 @@ import OnboardingQuestions from '@/components/onboarding-questions';
 import { righteous } from '@/font-family';
 import { useSelector } from '@/redux/store';
 import { useRouter } from 'next/navigation';
+import { ONBOARDING_STARTED } from '@/constants';
 
 const Onboarding = () => {
-  const [showQuestions, setShowQuestions] = useState<boolean>(!false);
+  const [showQuestions, setShowQuestions] = useState<boolean>(false);
   const router = useRouter();
   const { data: user } = useSelector(state => state.user);
 
-  // useEffect(() => {
-  //   if (user.onboarding_completed) router.replace('/profile');
-  // }, []);
+  useEffect(() => {
+    if (user.onboarding_completed) router.replace('/profile');
+    else {
+      const onboardingStarted = localStorage.getItem(ONBOARDING_STARTED);
+      if (onboardingStarted === 'true') setShowQuestions(true);
+    }
+  }, []);
+
+  const showMoreQuestions = () => {
+    setShowQuestions(true);
+    localStorage.setItem(ONBOARDING_STARTED, 'true');
+  };
 
   return (
     <Grid
@@ -66,7 +76,7 @@ const Onboarding = () => {
               flexDirection: { xs: 'column', md: 'row' }
             }}
           >
-            <Chatbot setShowQuestions={setShowQuestions} />
+            <Chatbot showMoreQuestions={showMoreQuestions} />
             <Grid
               sx={{
                 alignSelf: 'flex-end',

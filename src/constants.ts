@@ -1,4 +1,5 @@
 export const AUTH_TOKEN = 'auth_token';
+export const ONBOARDING_STARTED = 'onboarding_started';
 
 export const contries = ['India', 'China', 'Japan', 'Pakistan', 'Russia'];
 

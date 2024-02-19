@@ -251,7 +251,15 @@ const Register = () => {
             </Grid>
           )}
           <Grid>
-            <FormHelperText error>{apiErrorStr}</FormHelperText>
+            <FormHelperText
+              error
+              sx={{
+                mb: '5px',
+                textAlign: 'center'
+              }}
+            >
+              {apiErrorStr}
+            </FormHelperText>
             <Button
               sx={{
                 borderRadius: '10px',
