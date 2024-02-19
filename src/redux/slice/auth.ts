@@ -16,7 +16,8 @@ const initialState = {
   page: 0, // 0 -> login | 1 -> signup | 2 -> forgot password
   otpSent: false,
   userVerified: false,
-  previousPath: ''
+  previousPath: '',
+  loading: false
 };
 
 export const authSlice = createSlice({
@@ -38,6 +39,10 @@ export const authSlice = createSlice({
     },
     updatePrevPath: (state, action) => {
       state.previousPath = action.payload;
+    },
+    resetRegistrationState: state => {
+      state.otpSent = false;
+      state.userVerified = false;
     }
   },
   extraReducers: builder => {
@@ -45,10 +50,15 @@ export const authSlice = createSlice({
       .addCase(loginUser.fulfilled, state => {
         state.isLoggedIn = true;
         state.error = '';
+        state.loading = false;
+      })
+      .addCase(loginUser.pending, state => {
+        state.loading = true;
       })
       .addCase(loginUser.rejected, (state, action) => {
         enqueueSnackbar('Login failed!', { variant: 'error' });
         state.isLoggedIn = false;
+        state.loading = false;
 
         try {
           state.error = JSON.parse(action?.error?.message || '');
@@ -59,9 +69,15 @@ export const authSlice = createSlice({
       .addCase(registerUser.fulfilled, state => {
         state.isLoggedIn = true;
         state.error = '';
+        state.loading = false;
+      })
+      .addCase(registerUser.pending, state => {
+        state.loading = true;
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.isLoggedIn = false;
+        state.loading = false;
+
         try {
           state.error = JSON.parse(action?.error?.message || '');
         } catch (_) {
@@ -70,16 +86,29 @@ export const authSlice = createSlice({
       })
       .addCase(fetchSelf.fulfilled, state => {
         state.isLoggedIn = true;
+        state.loading = false;
+      })
+      .addCase(fetchSelf.pending, state => {
+        state.loading = true;
       })
       .addCase(socialLogin.fulfilled, state => {
         state.isLoggedIn = true;
+        state.loading = false;
+      })
+      .addCase(socialLogin.pending, state => {
+        state.loading = true;
       })
       .addCase(sendOtp.fulfilled, (state, action) => {
         if (action.payload?.success) state.otpSent = true;
+        state.loading = false;
+      })
+      .addCase(sendOtp.pending, (state, action) => {
+        state.loading = true;
       })
       .addCase(sendOtp.rejected, (state, action) => {
+        state.loading = false;
+
         if (action?.error?.message === 'email_already_verified') {
-          console.log('verified');
           state.userVerified = true;
         } else if (action?.error?.message === 'user_already_exist') {
           state.error = 'User already exist, please signin';
@@ -87,9 +116,14 @@ export const authSlice = createSlice({
       })
       .addCase(verifyOtp.fulfilled, (state, action) => {
         if (action.payload?.success) state.userVerified = true;
+        state.loading = false;
+      })
+      .addCase(verifyOtp.pending, (state, action) => {
+        state.loading = true;
       })
       .addCase(verifyOtp.rejected, (state, action) => {
         state.error = action?.error?.message || '';
+        state.loading = false;
       });
   }
 });
@@ -99,7 +133,8 @@ export const {
   logoutUser,
   changeAuthPage,
   clearPrevPath,
-  updatePrevPath
+  updatePrevPath,
+  resetRegistrationState
 } = authSlice.actions;
 
 export default authSlice.reducer;

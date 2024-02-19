@@ -7,7 +7,8 @@ import {
   Button,
   FormHelperText,
   Box,
-  Icon
+  Icon,
+  CircularProgress
 } from '@mui/material';
 import { DividerWithText, ThirdPartyBtns, FormLabel } from './styles';
 import {
@@ -20,9 +21,8 @@ import Image from 'next/image';
 
 import GoogleIcon from '@/assets/icons/google-icon.svg';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
-import { RootState, useDispatch } from '@/redux/store';
+import { useSelector, useDispatch } from '@/redux/store';
 import { loginUser } from '@/actions/user';
-import { useSelector } from 'react-redux';
 import { changeAuthPage, resetError } from '@/redux/slice/auth';
 import PasswordField from './password-field';
 import { FormInput } from '../onboarding-questions/styles';
@@ -41,9 +41,7 @@ const Login = () => {
     handleSubmit,
     setError
   } = useForm<FormValues>();
-  const { error: apiError = '' } = useSelector(
-    (state: RootState) => state.auth
-  );
+  const { error: apiError = '', loading } = useSelector(state => state.auth);
   const [apiErrorStr, setApiErrorStr] = useState('');
 
   const onSubmit: SubmitHandler<FormValues> = data => {
@@ -133,9 +131,21 @@ const Login = () => {
                   fontSize: '1rem',
                   fontWeight: '600',
                   width: '135px',
-                  letterSpacing: '1px'
+                  letterSpacing: '1px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '10px',
+                  justifyContent: 'center'
                 }}
               >
+                {loading && (
+                  <CircularProgress
+                    sx={{
+                      width: '20px !important',
+                      height: '20px !important'
+                    }}
+                  />
+                )}
                 Sign In
               </Typography>
             </Button>

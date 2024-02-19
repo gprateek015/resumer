@@ -68,9 +68,29 @@ const Navbar = () => {
           gap: '40px'
         }}
       >
-        <Link href='/'>
-          <NavLink active={(pathname === '/').toString()}>Home</NavLink>
-        </Link>
+        {!isLoggedIn && (
+          <Link href='/'>
+            <NavLink active={(pathname === '/').toString()}>Home</NavLink>
+          </Link>
+        )}
+        {isLoggedIn && (
+          <Link href='/profile'>
+            <NavLink active={(pathname === '/profile').toString()}>
+              Profile
+            </NavLink>
+          </Link>
+        )}
+        {isLoggedIn && (
+          <Link href='/job-description'>
+            <NavLink
+              active={['/job-description', '/workbench']
+                .includes(pathname)
+                .toString()}
+            >
+              New Resume
+            </NavLink>
+          </Link>
+        )}
         <Link href='/about'>
           <NavLink active={(pathname === '/about').toString()}>
             About Us

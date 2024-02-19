@@ -1,20 +1,33 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
-import { Grid, Typography, Button, FormHelperText } from '@mui/material';
+import React, { useEffect, useRef, useState } from 'react';
+import {
+  Grid,
+  Typography,
+  Button,
+  FormHelperText,
+  CircularProgress,
+  InputAdornment
+} from '@mui/material';
 import { DividerWithText, ThirdPartyBtns, FormLabel } from './styles';
 import { Form, useForm } from 'react-hook-form';
-import Image from 'next/image';
 
 import GoogleIcon from '@/assets/icons/google-icon.svg';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
-import { RootState, useDispatch } from '@/redux/store';
+import { RootState, useDispatch, useSelector } from '@/redux/store';
 import { loginUser, registerUser, sendOtp, verifyOtp } from '@/actions/user';
-import { useSelector } from 'react-redux';
-import { changeAuthPage, resetError } from '@/redux/slice/auth';
+import {
+  changeAuthPage,
+  resetError,
+  resetRegistrationState
+} from '@/redux/slice/auth';
 import PasswordField from './password-field';
 import { FormInput } from '../onboarding-questions/styles';
 import OTPInput from 'react-otp-input';
+import { useSnackbar } from 'notistack';
+import EditIcon from '@mui/icons-material/Edit';
+
+import './otp-input.css';
 
 type FormValues = {
   email: string;
@@ -38,10 +51,15 @@ const Register = () => {
   const {
     error: apiError,
     userVerified,
-    otpSent
-  } = useSelector((state: RootState) => state.auth);
+    otpSent,
+    loading
+  } = useSelector(state => state.auth);
   const [apiErrorStr, setApiErrorStr] = useState('');
   const [step, setStep] = useState(0);
+  const { enqueueSnackbar } = useSnackbar();
+  const [otpInputWidth, setOtpInputWidth] = useState(50);
+
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const otp = watch('otp');
   const email = watch('email');
@@ -65,15 +83,34 @@ const Register = () => {
     }
   };
 
+  const getButtonText = () => {
+    if (step === 0) return 'Send OTP';
+    else if (step === 1) return 'Verify';
+    else return 'Register';
+  };
+
+  const restartRegistration = () => {
+    setStep(0);
+    dispatch(resetRegistrationState());
+  };
+
   useEffect(() => {
     if (otpSent) {
       setStep(curr => (curr === 0 ? 1 : curr));
+      enqueueSnackbar('OTP Successfully sent!!', {
+        variant: 'success',
+        preventDuplicate: true
+      });
     }
   }, [otpSent]);
 
   useEffect(() => {
     if (userVerified) {
       setStep(curr => (curr <= 1 ? 2 : curr));
+      enqueueSnackbar('Email verified!!', {
+        variant: 'success',
+        preventDuplicate: true
+      });
     }
   }, [userVerified]);
 
@@ -89,9 +126,15 @@ const Register = () => {
 
   useEffect(() => {
     if (!email) {
-      setStep(0);
+      restartRegistration();
     }
   }, [email]);
+
+  useEffect(() => {
+    if (containerRef?.current) {
+      setOtpInputWidth((containerRef.current.offsetWidth - 53) / 6);
+    }
+  }, [containerRef]);
 
   return (
     <>
@@ -102,6 +145,7 @@ const Register = () => {
             flexDirection: 'column',
             gap: '10px'
           }}
+          ref={containerRef}
         >
           {step === 0 && (
             <Grid
@@ -152,6 +196,19 @@ const Register = () => {
                   WebkitTextFillColor: 'white'
                 }
               }}
+              InputProps={{
+                endAdornment: step === 1 && (
+                  <InputAdornment position='end'>
+                    <EditIcon
+                      sx={{
+                        cursor: 'pointer',
+                        color: 'rgba(255, 255, 255, 0.90)'
+                      }}
+                      onClick={restartRegistration}
+                    />
+                  </InputAdornment>
+                )
+              }}
             />
           </Grid>
           {step === 1 && (
@@ -159,23 +216,16 @@ const Register = () => {
               <FormLabel>OTP</FormLabel>
 
               <OTPInput
-                numInputs={4}
+                numInputs={6}
                 value={otp}
                 onChange={val => setValue('otp', val)}
                 renderSeparator={<span>&nbsp;&nbsp;</span>}
                 renderInput={props => (
                   <input
                     {...props}
+                    className='otp-input'
                     style={{
-                      width: '12px',
-                      height: '20px',
-                      padding: '12px 16px',
-                      border: '1px solid #DDD',
-                      borderRadius: '4px',
-                      background: 'rgba(255, 255, 255, 0.10)',
-                      color: 'white',
-                      fontSize: '16px',
-                      outline: 0
+                      width: otpInputWidth
                     }}
                     placeholder='0'
                   />
@@ -187,11 +237,11 @@ const Register = () => {
           )}
           {step === 2 && (
             <Grid>
-              <FormLabel>Password</FormLabel>
+              <FormLabel>Set New Password</FormLabel>
 
               <PasswordField
                 {...register('password', {
-                  required: 'Please enter your password'
+                  required: 'Set a unique password'
                 })}
                 helperText={errors?.password?.message as string}
                 error={!!errors?.password}
@@ -211,6 +261,7 @@ const Register = () => {
               }}
               onClick={handleSubmit(onSubmit)}
               type='submit'
+              disabled={loading}
             >
               <Typography
                 sx={{
@@ -222,10 +273,22 @@ const Register = () => {
                   fontSize: '1rem',
                   fontWeight: '600',
                   width: '135px',
-                  letterSpacing: '1px'
+                  letterSpacing: '1px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '10px',
+                  justifyContent: 'center'
                 }}
               >
-                Register
+                {loading && (
+                  <CircularProgress
+                    sx={{
+                      width: '20px !important',
+                      height: '20px !important'
+                    }}
+                  />
+                )}
+                {getButtonText()}
               </Typography>
             </Button>
           </Grid>

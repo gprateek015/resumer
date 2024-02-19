@@ -2,15 +2,24 @@
 
 import Chatbot from '@/components/chatbot';
 import { Grid, Typography } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import OnboardingIcon from '@/assets/onboarding2.png';
 
 import OnboardingQuestions from '@/components/onboarding-questions';
 import { righteous } from '@/font-family';
+import { useSelector } from '@/redux/store';
+import { useRouter } from 'next/navigation';
 
 const Onboarding = () => {
-  const [showQuestions, setShowQuestions] = useState<boolean>(false);
+  const [showQuestions, setShowQuestions] = useState<boolean>(!false);
+  const router = useRouter();
+  const { data: user } = useSelector(state => state.user);
+
+  // useEffect(() => {
+  //   if (user.onboarding_completed) router.replace('/profile');
+  // }, []);
+
   return (
     <Grid
       sx={{

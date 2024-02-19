@@ -1,0 +1,14 @@
+.otp-input {
+  height: 20px;
+  padding: 12px 0px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 16px;
+  outline: 0;
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+}
