@@ -24,7 +24,7 @@ const ProtectedRoutes = ({ children }: { children: ReactNode }) => {
   }, []);
 
   return (
-    <>children</>
+    <>{children}</>
     // <>
     //   {!isLoggedIn && PROTECTED_ROUTES.includes(pathname)
     //     ? routes.replace('/')
