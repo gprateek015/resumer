@@ -14,12 +14,13 @@ import Login from './login';
 import Register from './register';
 import { socialLogin } from '@/actions/user';
 import { useRouter } from 'next/navigation';
+import { clearPrevPath } from '@/redux/slice/auth';
 
 const AuthBox = () => {
   const dispatch = useDispatch();
   const session = useSession();
   const route = useRouter();
-  const { page, isLoggedIn } = useSelector(state => state.auth);
+  const { page, isLoggedIn, previousPath } = useSelector(state => state.auth);
   const { data: user } = useSelector(state => state.user);
 
   useEffect(() => {
@@ -31,7 +32,10 @@ const AuthBox = () => {
   useEffect(() => {
     if (isLoggedIn) {
       if (!user.onboarding_completed) route.replace('/onboarding');
-      else route.replace('/profile');
+      else {
+        route.replace(previousPath || '/profile');
+        dispatch(clearPrevPath());
+      }
     }
   }, [isLoggedIn]);
 

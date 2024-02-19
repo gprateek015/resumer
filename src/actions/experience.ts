@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import Axios from '.';
 import { Experience } from '@/types';
+import { RootState } from '@/redux/store';
 
 export const fetchExperiences = createAsyncThunk(
   'fetch/experience',

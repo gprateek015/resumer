@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import Axios from '.';
 import { Project } from '@/types';
+import { RootState } from '@/redux/store';
 
 export const fetchProjects = createAsyncThunk('fetch/project', async () => {
   const response = await Axios.get('/project');

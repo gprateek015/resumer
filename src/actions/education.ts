@@ -1,6 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import Axios from '.';
 import { Education } from '@/types';
+import { RootState } from '@/redux/store';
+import axios from 'axios';
 
 export const fetchEductions = createAsyncThunk('fetch/education', async () => {
   const response = await Axios.get('/education');

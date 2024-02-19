@@ -1,7 +1,7 @@
 import React, { ReactElement, useEffect, useRef, useState } from 'react';
 import { Box, FormHelperText, Grid, Typography } from '@mui/material';
 import Select from 'react-select';
-import { cgpa, educationalLevels } from '@/constants';
+import { educationalLevels } from '@/constants';
 
 import {
   FormInput,
@@ -44,11 +44,6 @@ const EducationalDetailsEdit = ({
   const dispatch = useDispatch();
   // const { errors: apiErrors } = useSelector(state => state.onboarding);
   const [apiError, setApiError] = useState<string | null>(null);
-
-  const cgpaOption = cgpa.map(cgpa => ({
-    label: cgpa,
-    value: cgpa
-  }));
 
   const levelOption = educationalLevels.map(lvl => ({
     label: firstLetterCapital(lvl.split('_').join(' ')) as string,

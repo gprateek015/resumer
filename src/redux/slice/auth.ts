@@ -14,7 +14,8 @@ const initialState = {
   error: '',
   page: 0, // 0 -> login | 1 -> signup | 2 -> forgot password
   otpSent: false,
-  userVerified: false
+  userVerified: false,
+  previousPath: ''
 };
 
 export const authSlice = createSlice({
@@ -30,6 +31,12 @@ export const authSlice = createSlice({
     },
     changeAuthPage: (state, action) => {
       state.page = action.payload;
+    },
+    clearPrevPath: state => {
+      state.previousPath = '';
+    },
+    updatePrevPath: (state, action) => {
+      state.previousPath = action.payload;
     }
   },
   extraReducers: builder => {
@@ -85,6 +92,12 @@ export const authSlice = createSlice({
   }
 });
 
-export const { resetError, logoutUser, changeAuthPage } = authSlice.actions;
+export const {
+  resetError,
+  logoutUser,
+  changeAuthPage,
+  clearPrevPath,
+  updatePrevPath
+} = authSlice.actions;
 
 export default authSlice.reducer;
