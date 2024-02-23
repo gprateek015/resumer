@@ -32,8 +32,8 @@ const WorkExpDetailDesign = ({
         gap: '15px'
       }}
     >
-      {experiences?.map?.(experience => (
-        <Box key={experience._id}>
+      {experiences?.map?.((experience, ind) => (
+        <Box key={ind}>
           {editId === experience._id ? (
             <WorkExpEdit
               handleCancel={handleCancel}

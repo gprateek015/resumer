@@ -16,6 +16,9 @@ import ProjectDetails from './project-details';
 import CodingProfiles from './coding-profile';
 import { useRouter } from 'next/navigation';
 import AchievementsSkills from './achievements-skills';
+import { useDispatch, useSelector } from '@/redux/store';
+import { updateUser } from '@/actions/user';
+import { Skill } from '@/types';
 
 const righteous = Righteous({
   weight: ['400'],
@@ -30,9 +33,41 @@ export type PageNavPropsType = {
 const OnboardingQuestions = () => {
   const route = useRouter();
   const [page, setPage] = useState<number>(0);
+  const { data } = useSelector(state => state.onboarding);
+
+  const dispatch = useDispatch();
 
   const nextPage = () => {
     if (page === 8) {
+      let skills: { name: string; type: Skill['type'] }[] = [];
+      data.skills?.technical_skills?.forEach(skill => {
+        skills.push({
+          name: skill.name,
+          type: 'technical_skills'
+        });
+      });
+      data.skills?.core_subjects?.forEach(skill => {
+        skills.push({
+          name: skill.name,
+          type: 'core_subjects'
+        });
+      });
+      data.skills?.dev_tools?.forEach(skill => {
+        skills.push({
+          name: skill.name,
+          type: 'dev_tools'
+        });
+      });
+      data.skills?.languages?.forEach(skill => {
+        skills.push({
+          name: skill.name,
+          type: 'languages'
+        });
+      });
+
+      const finalData = { ...data, skills, onboarding_completed: true };
+      dispatch(updateUser(finalData));
+
       route.push('/job-description');
       return;
     }

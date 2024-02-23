@@ -24,15 +24,18 @@ import {
 import EduDetailDesign from '../educations/detail';
 import { SubmitHandler } from 'react-hook-form';
 import { EducationData } from '../educations/edit';
+import { addEducation, updateEducationOnb } from '@/redux/slice/onboarding';
 
 const EducationalDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
   const dispatch = useDispatch();
-  const { educations } = useSelector(state => state.onboarding);
+  const {
+    data: { educations }
+  } = useSelector(state => state.onboarding);
   const [editId, setEditId] = useState<string | null>(null);
   const { errors: apiErrors } = useSelector(state => state.onboarding);
   const [apiError, setApiError] = useState<string | object | null>(null);
 
-  const onSubmit: SubmitHandler<EducationData> = async data => {
+  const onSubmit: SubmitHandler<EducationData> = data => {
     setApiError(null);
 
     const newData = {
@@ -46,8 +49,8 @@ const EducationalDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
     };
 
     if (editId && editId !== 'new')
-      await dispatch(
-        updateEducation({
+      dispatch(
+        updateEducationOnb({
           data: {
             ...newData,
             _id: undefined,
@@ -57,7 +60,7 @@ const EducationalDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
           id: editId
         })
       );
-    else await dispatch(postEducation(newData));
+    else dispatch(addEducation(newData));
   };
 
   const handleDelete = async (id?: string) => {
@@ -68,9 +71,9 @@ const EducationalDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
     setApiError(apiErrors);
   }, [apiErrors]);
 
-  useEffect(() => {
-    dispatch(fetchEductions());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(fetchEductions());
+  // }, []);
 
   useEffect(() => {
     if (educations?.length) {

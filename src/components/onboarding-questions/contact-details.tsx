@@ -16,6 +16,7 @@ import PageContainer from './page-container';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from '@/redux/store';
 import { updateUser } from '@/actions/user';
+import { updateOnboardingData } from '@/redux/slice/onboarding';
 
 type ContactDetailsType = {
   phone?: string;
@@ -32,7 +33,7 @@ const ContactDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
   const dispatch = useDispatch();
   const {
     data: { phone, linkedin, github, twitter, portfolio, country, state, city }
-  } = useSelector(state => state.user);
+  } = useSelector(state => state.onboarding);
 
   const contriesOption = contries.map(country => ({
     label: country,
@@ -64,15 +65,9 @@ const ContactDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
     }
   });
 
-  const onSubmit = async (data: ContactDetailsType) => {
-    await dispatch(
-      updateUser({
-        ...data,
-        callback: () => {
-          nextPage();
-        }
-      })
-    );
+  const onSubmit = (data: ContactDetailsType) => {
+    dispatch(updateOnboardingData(data));
+    nextPage();
   };
 
   return (

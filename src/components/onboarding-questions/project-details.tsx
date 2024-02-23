@@ -12,6 +12,7 @@ import {
 } from '@/actions/project';
 import ProjectDetailDesign from '../projects/detail';
 import { ProjectData } from '../projects/edit';
+import { addProject, updateProjectOnb } from '@/redux/slice/onboarding';
 
 const ProjectDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
   const dispatch = useDispatch();
@@ -19,20 +20,22 @@ const ProjectDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
     (state: RootState) => state.onboarding
   );
   const [apiError, setApiError] = useState<string | object | null>(null);
-  const { projects } = useSelector(state => state.onboarding);
+  const {
+    data: { projects }
+  } = useSelector(state => state.onboarding);
   const [editId, setEditId] = useState<string | null>(null);
 
-  const onSubmit = async (data: ProjectData) => {
+  const onSubmit = (data: ProjectData) => {
     setApiError(null);
 
     if (editId && editId !== 'new')
-      await dispatch(
-        updateProject({
+      dispatch(
+        updateProjectOnb({
           data: { ...data, _id: undefined, id: undefined, user_id: undefined },
           id: editId
         })
       );
-    else await dispatch(postProject(data));
+    else dispatch(addProject(data));
   };
 
   const handleDelete = async (id?: string) => {
@@ -43,9 +46,9 @@ const ProjectDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
     setApiError(apiErrors);
   }, [apiErrors]);
 
-  useEffect(() => {
-    dispatch(fetchProjects());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(fetchProjects());
+  // }, []);
 
   useEffect(() => {
     if (projects?.length) {

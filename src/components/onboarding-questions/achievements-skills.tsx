@@ -11,6 +11,7 @@ import DeleteIcon from '@mui/icons-material/DeleteForever';
 import AddIcon from '@mui/icons-material/Add';
 import { Skill } from '@/types';
 import { updateUser } from '@/actions/user';
+import { updateOnboardingData } from '@/redux/slice/onboarding';
 
 const AchievementsSkills = ({
   nextPage,
@@ -23,7 +24,7 @@ const AchievementsSkills = ({
   const dispatch = useDispatch();
   const { register, control, handleSubmit, setValue } = methods;
   const { skills, achievements: prevAchievements } = useSelector(
-    state => state.user.data
+    state => state.onboarding.data
   );
 
   const {
@@ -36,37 +37,24 @@ const AchievementsSkills = ({
   });
 
   const onSubmit = async (data: any) => {
-    let skills: { name: string; type: Skill['type'] }[] = [];
-    data.technical_skills?.forEach((skill: Skill) => {
-      skills.push({
-        name: skill.name,
-        type: 'technical_skills'
-      });
-    });
-    data.core_subjects?.forEach((skill: Skill) => {
-      skills.push({
-        name: skill.name,
-        type: 'core_subjects'
-      });
-    });
-    data.dev_tools?.forEach((skill: Skill) => {
-      skills.push({
-        name: skill.name,
-        type: 'dev_tools'
-      });
-    });
-    data.languages?.forEach((skill: Skill) => {
-      skills.push({
-        name: skill.name,
-        type: 'languages'
-      });
-    });
-    await dispatch(updateUser({ achievements: data.achievements, skills }));
+    dispatch(
+      updateOnboardingData({
+        achievements: data.achievements,
+        skills: {
+          technical_skills: data.technical_skills,
+          core_subjects: data.core_subjects,
+          dev_tools: data.dev_tools,
+          languages: data.languages
+        }
+      })
+    );
+
     nextPage();
   };
 
   useEffect(() => {
     setValue('achievements', prevAchievements);
+
     Object.keys(skills || {}).forEach((key: any) => {
       setValue(key, skills?.[key as Skill['type']]);
     });

@@ -8,12 +8,25 @@ import {
 import reducers from './slice';
 import logger from 'redux-logger';
 
+import storage from 'redux-persist/lib/storage';
+import { persistReducer } from 'redux-persist';
+import { combineReducers } from '@reduxjs/toolkit';
+
+const persistConfig = {
+  key: 'onboarding',
+  storage
+};
+
+const reducer = combineReducers(reducers);
+
+const persistedReducer = persistReducer(persistConfig, reducer);
+
 const store = configureStore({
-  reducer: reducers,
+  reducer: persistedReducer,
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: {
-        ignoredActions: ['load/resume/fulfilled']
+        ignoredActions: ['load/resume/fulfilled', 'persist/PERSIST']
       }
     }).concat(logger as any)
 });

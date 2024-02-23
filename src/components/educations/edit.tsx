@@ -141,8 +141,8 @@ const EducationalDetailsEdit = ({
       <Grid
         sx={{
           display: 'flex',
-          gap: '20px',
-          flexDirection: { xs: 'column', md: 'row' }
+          gap: '20px'
+          // flexDirection: { xs: 'column', md: 'row' }
         }}
       >
         <Box flexBasis={'50%'} flexGrow={1}>
@@ -166,6 +166,10 @@ const EducationalDetailsEdit = ({
               helperText={errors?.maximum_score?.message as string}
               error={!!errors?.maximum_score}
               placeholder='5 OR 10'
+              sx={{
+                maxWidth: (containerRef?.current?.offsetWidth || 400) / 2 - 10,
+                width: (containerRef?.current?.offsetWidth || 400) / 2 - 10
+              }}
             />
           </Box>
         )}
@@ -181,6 +185,10 @@ const EducationalDetailsEdit = ({
               helperText={errors?.degree?.message as string}
               error={!!errors.degree}
               placeholder='Bachelors of Technology'
+              sx={{
+                maxWidth: (containerRef?.current?.offsetWidth || 400) / 2 - 10,
+                width: (containerRef?.current?.offsetWidth || 400) / 2 - 10
+              }}
             />
           </>
         )}
@@ -189,8 +197,8 @@ const EducationalDetailsEdit = ({
         sx={{
           display: 'flex',
           gap: '20px',
-          justifyContent: 'space-between',
-          flexDirection: { xs: 'column', md: 'row' }
+          justifyContent: 'space-between'
+          // flexDirection: { xs: 'column', md: 'row' }
         }}
       >
         <Box>
@@ -200,8 +208,10 @@ const EducationalDetailsEdit = ({
             {...register('start_year', { required: 'Start year is required' })}
             helperText={errors.start_year?.message as string}
             error={!!errors.start_year}
+            placeholder='2020'
             sx={{
-              maxWidth: (containerRef?.current?.offsetWidth || 400) / 2 - 10
+              maxWidth: (containerRef?.current?.offsetWidth || 400) / 2 - 10,
+              width: (containerRef?.current?.offsetWidth || 400) / 2 - 10
             }}
           />
         </Box>
@@ -212,8 +222,10 @@ const EducationalDetailsEdit = ({
             {...register('end_year', { required: 'End year is required' })}
             helperText={errors.end_year?.message as string}
             error={!!errors.end_year}
+            placeholder='2024'
             sx={{
-              maxWidth: (containerRef?.current?.offsetWidth || 400) / 2 - 10
+              maxWidth: (containerRef?.current?.offsetWidth || 400) / 2 - 10,
+              width: (containerRef?.current?.offsetWidth || 400) / 2 - 10
             }}
           />
         </Box>

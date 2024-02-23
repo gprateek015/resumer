@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import Axios from '.';
-import { ProfileLink, Skill } from '@/types';
+import { Education, Experience, ProfileLink, Project, Skill } from '@/types';
 
 export const loginUser = createAsyncThunk(
   'user/login',
@@ -71,6 +71,9 @@ export const updateUser = createAsyncThunk(
       profile_links,
       onboarding_completed,
       skills,
+      experiences,
+      projects,
+      educations,
       callback
     }: {
       phone?: string;
@@ -86,6 +89,9 @@ export const updateUser = createAsyncThunk(
       profile_links?: ProfileLink[];
       onboarding_completed?: boolean;
       skills?: { name: string; type: Skill['type'] }[];
+      experiences?: Experience[];
+      projects?: Project[];
+      educations?: Education[];
       callback?: Function;
     },
     { dispatch }
@@ -111,6 +117,9 @@ export const updateUser = createAsyncThunk(
         achievements,
         onboarding_completed,
         profile_links,
+        experiences,
+        projects,
+        educations,
         skills
       },
       {

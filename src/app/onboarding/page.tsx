@@ -8,20 +8,25 @@ import OnboardingIcon from '@/assets/onboarding2.png';
 
 import OnboardingQuestions from '@/components/onboarding-questions';
 import { righteous } from '@/font-family';
-import { useSelector } from '@/redux/store';
+import { useDispatch, useSelector } from '@/redux/store';
 import { useRouter } from 'next/navigation';
 import { ONBOARDING_STARTED } from '@/constants';
+import { loadOnboardingData } from '@/redux/slice/onboarding';
 
 const Onboarding = () => {
-  const [showQuestions, setShowQuestions] = useState<boolean>(false);
+  const [showQuestions, setShowQuestions] = useState<boolean>(!false);
   const router = useRouter();
+  const dispatch = useDispatch();
   const { data: user } = useSelector(state => state.user);
 
   useEffect(() => {
     if (user.onboarding_completed) router.replace('/profile');
     else {
       const onboardingStarted = localStorage.getItem(ONBOARDING_STARTED);
-      if (onboardingStarted === 'true') setShowQuestions(true);
+      if (onboardingStarted === 'true') {
+        dispatch(loadOnboardingData());
+        setShowQuestions(true);
+      }
     }
   }, []);
 

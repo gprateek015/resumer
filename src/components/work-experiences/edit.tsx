@@ -149,7 +149,7 @@ const WorkExpEdit = ({
           sx={{
             display: 'flex',
             gap: { xs: '15px', md: '20px' },
-            flexDirection: { xs: 'column', md: 'row' },
+            // flexDirection: { xs: 'column', md: 'row' },
             overflow: 'auto'
           }}
         >

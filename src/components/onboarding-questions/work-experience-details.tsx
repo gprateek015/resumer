@@ -15,6 +15,7 @@ import { PageNavPropsType } from '.';
 import PageContainer from './page-container';
 import WorkExpDetailDesign from '../work-experiences/detail';
 import { Experience } from '@/types';
+import { addExperience, updateExperienceOnb } from '@/redux/slice/onboarding';
 
 const WorkExperienceDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
   const dispatch = useDispatch();
@@ -24,28 +25,30 @@ const WorkExperienceDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
   const [apiError, setApiError] = useState<string | object | null>(null);
   const [editId, setEditId] = useState<string | undefined | null>(null);
 
-  const { experiences } = useSelector((state: RootState) => state.onboarding);
+  const {
+    data: { experiences }
+  } = useSelector((state: RootState) => state.onboarding);
 
   const handleDelete = async (id?: string) => {
     if (id) await dispatch(deleteExperience(id));
   };
 
-  const onSubmit = async (data: Experience) => {
+  const onSubmit = (data: Experience) => {
     setApiError(null);
 
     if (editId && editId !== 'new')
-      await dispatch(
-        updateExperience({
+      dispatch(
+        updateExperienceOnb({
           data: { ...data, _id: undefined, id: undefined, user_id: undefined },
           id: editId
         })
       );
-    else await dispatch(postExperience(data));
+    else dispatch(addExperience(data));
   };
 
-  useEffect(() => {
-    dispatch(fetchExperiences());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(fetchExperiences());
+  // }, []);
 
   useEffect(() => {
     setApiError(apiErrors);

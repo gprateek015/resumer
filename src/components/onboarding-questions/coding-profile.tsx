@@ -14,6 +14,7 @@ import PageContainer from './page-container';
 import { useDispatch, useSelector } from '@/redux/store';
 import { useForm } from 'react-hook-form';
 import { updateUser } from '@/actions/user';
+import { updateOnboardingData } from '@/redux/slice/onboarding';
 
 type LinkNameType =
   | 'leetcode'
@@ -26,9 +27,10 @@ type LinkNameType =
 
 const CodingProfiles = ({ prevPage, nextPage }: PageNavPropsType) => {
   const dispatch = useDispatch();
-  const { codingProfiles, errors: apiErrors } = useSelector(
-    state => state.onboarding
-  );
+  const {
+    data: { codingProfiles },
+    errors: apiErrors
+  } = useSelector(state => state.onboarding);
 
   const {
     register,
@@ -55,10 +57,8 @@ const CodingProfiles = ({ prevPage, nextPage }: PageNavPropsType) => {
         link: data[name] as string
       }));
 
-    const resp = await dispatch(
-      updateUser({ profile_links: finalData, onboarding_completed: true })
-    );
-    if (resp.meta.requestStatus === 'fulfilled') nextPage();
+    dispatch(updateOnboardingData({ codingProfiles: finalData }));
+    nextPage();
   };
 
   useEffect(() => {
