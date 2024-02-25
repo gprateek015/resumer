@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Box, Grid, Typography } from '@mui/material';
 import Select from 'react-select';
 
@@ -24,10 +24,18 @@ import {
 import EduDetailDesign from '../educations/detail';
 import { SubmitHandler } from 'react-hook-form';
 import { EducationData } from '../educations/edit';
-import { addEducation, updateEducationOnb } from '@/redux/slice/onboarding';
+import {
+  addEducation,
+  updateEducationOnb,
+  updateOnboardingData
+} from '@/redux/slice/onboarding';
+import validateEducation from '@/schema/education';
+import { useSnackbar } from 'notistack';
+import { Education } from '@/types';
 
 const EducationalDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
   const dispatch = useDispatch();
+  const { enqueueSnackbar } = useSnackbar();
   const {
     data: { educations }
   } = useSelector(state => state.onboarding);
@@ -40,22 +48,19 @@ const EducationalDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
 
     const newData = {
       ...data,
-      start_year: data?.start_year?.split?.('-')?.[0],
-      end_year: data?.end_year?.split?.('-')?.[0],
+      start_year: data?.start_year,
+      end_year: data?.end_year,
       level: data?.edu_level?.value,
-      edu_level: undefined,
       maximum_score:
         data.scoring_type === 'percentage' ? 100 : data.maximum_score
     };
+    delete newData.edu_level;
 
     if (editId && editId !== 'new')
       dispatch(
         updateEducationOnb({
           data: {
-            ...newData,
-            _id: undefined,
-            id: undefined,
-            user_id: undefined
+            ...newData
           },
           id: editId
         })
@@ -65,6 +70,45 @@ const EducationalDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
 
   const handleDelete = async (id?: string) => {
     if (id) await dispatch(deleteEducation(id));
+  };
+
+  const errors = useMemo(() => {
+    const data: any = {};
+    educations.forEach(education => {
+      const resp = validateEducation(education);
+      if (resp.error?.details) {
+        const errors: any = {};
+        resp.error.details.forEach(
+          (err: any) =>
+            (errors[err.path[0]] = { message: err.message, type: err.type })
+        );
+        data[education._id as string] = errors;
+      }
+    });
+    return data;
+  }, [educations]);
+
+  const onNext = () => {
+    const errorIds = Object.keys(errors);
+    if (errorIds.length !== 0) {
+      enqueueSnackbar({
+        message: 'Error in work experiences',
+        variant: 'error',
+        preventDuplicate: true
+      });
+    } else if (editId !== null) {
+      enqueueSnackbar({
+        message: 'Either cancel or save the changes',
+        variant: 'warning',
+        preventDuplicate: true
+      });
+    } else {
+      nextPage();
+    }
+  };
+
+  const updateEducations = (educations: Education[]) => {
+    dispatch(updateOnboardingData({ educations }));
   };
 
   useEffect(() => {
@@ -77,14 +121,14 @@ const EducationalDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
 
   useEffect(() => {
     if (educations?.length) {
-      setEditId('');
+      setEditId(null);
     } else {
       setEditId('new');
     }
   }, [educations]);
 
   return (
-    <PageContainer nextPage={nextPage} prevPage={prevPage}>
+    <PageContainer nextPage={onNext} prevPage={prevPage}>
       <Grid>
         <Heading mb='20px'>
           Kindly provide us the following details regarding your education
@@ -95,7 +139,7 @@ const EducationalDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
           setEditId={setEditId}
           handleDelete={handleDelete}
           onSubmit={onSubmit}
-          apiError={apiError}
+          errors={errors}
         />
       </Grid>
     </PageContainer>

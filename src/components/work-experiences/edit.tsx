@@ -76,9 +76,7 @@ const WorkExpEdit = ({
         end_date: moment(new Date(experience.end_date ?? '')).format(
           'YYYY-MM-DD'
         )
-      }),
-      _id: undefined,
-      user_id: undefined
+      })
     });
   }, [experience]);
 
@@ -104,7 +102,10 @@ const WorkExpEdit = ({
         sx={{
           display: 'flex',
           flexDirection: 'column',
-          gap: '15px'
+          gap: '15px',
+          padding: '10px',
+          border: '1px solid white',
+          borderRadius: '5px'
         }}
         ref={containerRef}
       >

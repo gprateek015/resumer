@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 import { Heading } from './styles';
 import { PageNavPropsType } from '.';
@@ -12,10 +12,18 @@ import {
 } from '@/actions/project';
 import ProjectDetailDesign from '../projects/detail';
 import { ProjectData } from '../projects/edit';
-import { addProject, updateProjectOnb } from '@/redux/slice/onboarding';
+import {
+  addProject,
+  updateOnboardingData,
+  updateProjectOnb
+} from '@/redux/slice/onboarding';
+import validateProject from '@/schema/project';
+import { useSnackbar } from 'notistack';
+import { Project } from '@/types';
 
 const ProjectDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
   const dispatch = useDispatch();
+  const { enqueueSnackbar } = useSnackbar();
   const { errors: apiErrors } = useSelector(
     (state: RootState) => state.onboarding
   );
@@ -31,7 +39,7 @@ const ProjectDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
     if (editId && editId !== 'new')
       dispatch(
         updateProjectOnb({
-          data: { ...data, _id: undefined, id: undefined, user_id: undefined },
+          data: { ...data },
           id: editId
         })
       );
@@ -40,6 +48,45 @@ const ProjectDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
 
   const handleDelete = async (id?: string) => {
     if (id) await dispatch(deleteProject(id));
+  };
+
+  const errors = useMemo(() => {
+    const data: any = {};
+    projects.forEach(project => {
+      const resp = validateProject(project);
+      if (resp.error?.details) {
+        const errors: any = {};
+        resp.error.details.forEach(
+          (err: any) =>
+            (errors[err.path[0]] = { message: err.message, type: err.type })
+        );
+        data[project._id as string] = errors;
+      }
+    });
+    return data;
+  }, [projects]);
+
+  const onNext = () => {
+    const errorIds = Object.keys(errors);
+    if (errorIds.length !== 0) {
+      enqueueSnackbar({
+        message: 'Error in work experiences',
+        variant: 'error',
+        preventDuplicate: true
+      });
+    } else if (editId !== null) {
+      enqueueSnackbar({
+        message: 'Either cancel or save the changes',
+        variant: 'warning',
+        preventDuplicate: true
+      });
+    } else {
+      nextPage();
+    }
+  };
+
+  const updateProjects = (projects: Project[]) => {
+    dispatch(updateOnboardingData({ projects }));
   };
 
   useEffect(() => {
@@ -59,14 +106,14 @@ const ProjectDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
   }, [projects]);
 
   return (
-    <PageContainer nextPage={nextPage} prevPage={prevPage}>
+    <PageContainer nextPage={onNext} prevPage={prevPage}>
       <Heading mb='20px'>Please provide us with your projects</Heading>
       <ProjectDetailDesign
         projects={projects}
         editId={editId}
         setEditId={setEditId}
         handleDelete={handleDelete}
-        apiError={apiError}
+        errors={errors}
         onSubmit={onSubmit}
       />
     </PageContainer>

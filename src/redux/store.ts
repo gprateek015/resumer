@@ -12,17 +12,21 @@ import storage from 'redux-persist/lib/storage';
 import { persistReducer } from 'redux-persist';
 import { combineReducers } from '@reduxjs/toolkit';
 
-const persistConfig = {
+const onboardingPersistConfig = {
   key: 'onboarding',
-  storage
+  storage,
+  whitelist: ['data']
 };
 
-const reducer = combineReducers(reducers);
+const reducer = combineReducers({
+  ...reducers,
+  onboarding: persistReducer(onboardingPersistConfig, reducers.onboarding)
+});
 
-const persistedReducer = persistReducer(persistConfig, reducer);
+// const persistedReducer = persistReducer(onboardingPersistConfig, reducer);
 
 const store = configureStore({
-  reducer: persistedReducer,
+  reducer: reducer,
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: {

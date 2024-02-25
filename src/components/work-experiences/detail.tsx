@@ -1,9 +1,15 @@
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Experience } from '@/types';
-import { Box, Grid, Typography } from '@mui/material';
-import React, { useEffect, useState } from 'react';
-import { Button } from '../onboarding-questions/styles';
+import { Box, Grid, Icon, Typography } from '@mui/material';
 import { SubmitHandler } from 'react-hook-form';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import { Button } from '../onboarding-questions/styles';
 import WorkExpEdit from './edit';
+import validateExperience from '@/schema/experience';
+
+import DragableExperience from './dragable';
+import ExperienceBox from './experience-box';
 
 const WorkExpDetailDesign = ({
   experiences = [],
@@ -11,18 +17,39 @@ const WorkExpDetailDesign = ({
   editId,
   setEditId,
   onSubmit,
-  apiError
+  updateExperiences,
+  apiError,
+  errors = {}
 }: {
   experiences: Experience[];
   handleDelete: Function;
   editId?: string | null;
   setEditId: Function;
   onSubmit: SubmitHandler<Experience>;
+  updateExperiences?: (exps: Experience[]) => void;
   apiError?: string | object | null;
+  errors?: any;
 }) => {
+  const errorIds = Object.keys(errors);
+
   const handleCancel = () => {
     setEditId(null);
   };
+  const handleEdit = (id: string) => {
+    setEditId(id);
+  };
+
+  const moveExperience = useCallback(
+    (dragIndex: number, hoverIndex: number) => {
+      let updatedList = [...experiences];
+      const [movedItem] = updatedList.splice(dragIndex, 1);
+      updatedList.splice(hoverIndex, 0, movedItem);
+
+      updateExperiences?.(updatedList);
+      return;
+    },
+    [experiences]
+  );
 
   return (
     <Grid
@@ -39,81 +66,36 @@ const WorkExpDetailDesign = ({
               handleCancel={handleCancel}
               onSubmit={onSubmit}
               buttonText='Save'
-              apiError={apiError}
+              apiError={
+                errorIds.includes(experience._id as string)
+                  ? errors[experience._id as string]
+                  : apiError
+              }
               experience={experience}
             />
+          ) : updateExperiences ? (
+            <DndProvider backend={HTML5Backend}>
+              <DragableExperience
+                index={ind}
+                moveObject={moveExperience}
+                renderItem={ref => (
+                  <ExperienceBox
+                    ref={ref}
+                    experience={experience}
+                    errorIds={errorIds}
+                    handleDelete={handleDelete}
+                    handleEdit={handleEdit}
+                  />
+                )}
+              />
+            </DndProvider>
           ) : (
-            <Grid
-              sx={{
-                border: '1px solid white',
-                p: '10px',
-                borderRadius: '5px'
-              }}
-            >
-              <Grid
-                sx={{
-                  display: 'flex',
-                  flexWrap: 'wrap',
-                  justifyContent: 'space-between',
-                  alignItems: 'center'
-                }}
-              >
-                <Typography
-                  mr='20px'
-                  sx={{
-                    fontSize: '16px'
-                  }}
-                >
-                  {experience.company_name}
-                </Typography>
-                <Typography
-                  sx={{
-                    fontSize: '12px'
-                  }}
-                >
-                  {experience.start_date}&nbsp;-&nbsp;
-                  {experience.end_date}
-                </Typography>
-              </Grid>
-              <Grid
-                sx={{
-                  display: 'flex',
-                  flexWrap: 'wrap',
-                  justifyContent: 'space-between'
-                }}
-              >
-                <Typography
-                  mr='20px'
-                  sx={{
-                    fontSize: '12px'
-                  }}
-                >
-                  {experience.position}
-                </Typography>
-                <Typography
-                  sx={{
-                    fontSize: '12px'
-                  }}
-                >
-                  {experience.mode}
-                  {experience.mode === 'onsite' && `- ${experience.location}`}
-                </Typography>
-              </Grid>
-              <Grid display={'flex'} gap='20px' mt='10px'>
-                <Button
-                  sx={{ flexBasis: '50%' }}
-                  onClick={() => setEditId(experience._id)}
-                >
-                  Edit
-                </Button>
-                <Button
-                  sx={{ flexBasis: '50%' }}
-                  onClick={() => handleDelete(experience._id)}
-                >
-                  Delete
-                </Button>
-              </Grid>
-            </Grid>
+            <ExperienceBox
+              experience={experience}
+              errorIds={errorIds}
+              handleDelete={handleDelete}
+              handleEdit={handleEdit}
+            />
           )}
         </Box>
       ))}
@@ -126,7 +108,7 @@ const WorkExpDetailDesign = ({
         />
       )}
       {editId !== 'new' && (
-        <Button onClick={() => setEditId('new')}>Add New Experience</Button>
+        <Button onClick={() => handleEdit('new')}>Add New Experience</Button>
       )}
     </Grid>
   );

@@ -1,9 +1,11 @@
 import { Education } from '@/types';
-import { Box, Grid, Typography } from '@mui/material';
-import React, { useEffect } from 'react';
+import { Box, Grid, Icon, Typography } from '@mui/material';
+import React, { useEffect, useMemo } from 'react';
 import { Button } from '../onboarding-questions/styles';
 import EducationalDetailsEdit, { EducationData } from './edit';
 import { SubmitHandler } from 'react-hook-form';
+import validateEducation from '@/schema/education';
+import ErrorIcon from '@mui/icons-material/Error';
 
 const EduDetailDesign = ({
   educations = [],
@@ -11,7 +13,8 @@ const EduDetailDesign = ({
   setEditId,
   handleDelete,
   onSubmit,
-  apiError
+  apiError,
+  errors = {}
 }: {
   educations: Education[];
   editId: string | null;
@@ -19,8 +22,11 @@ const EduDetailDesign = ({
   handleDelete: Function;
   onSubmit: SubmitHandler<EducationData>;
   apiError?: string | object | null;
+  errors?: any;
 }) => {
   const handleCancel = () => setEditId(null);
+
+  const errorIds = Object.keys(errors);
 
   return (
     <Grid
@@ -38,16 +44,36 @@ const EduDetailDesign = ({
               education={education}
               onSubmit={onSubmit}
               buttonText='Save'
-              apiError={apiError}
+              apiError={
+                errorIds.includes(education._id as string)
+                  ? errors[education._id as string]
+                  : apiError
+              }
             />
           ) : (
             <Grid
               sx={{
                 border: '1px solid white',
                 p: '10px',
-                borderRadius: '5px'
+                borderRadius: '5px',
+                position: 'relative',
+                borderColor: errorIds.includes(education._id as string)
+                  ? '#7e73f6'
+                  : 'white'
               }}
             >
+              {errorIds.includes(education._id as string) && (
+                <Icon
+                  sx={{
+                    position: 'absolute',
+                    top: '-10px',
+                    left: '-10px',
+                    color: '#669ced'
+                  }}
+                >
+                  <ErrorIcon />
+                </Icon>
+              )}
               <Grid
                 sx={{
                   display: 'flex',

@@ -1,28 +1,23 @@
 import DescriptionForm from '@/components/job-description';
+import { righteous } from '@/font-family';
 import { Grid, Typography } from '@mui/material';
-import { Righteous } from 'next/font/google';
 import React from 'react';
-
-const righteous = Righteous({
-  weight: ['400'],
-  subsets: ['latin']
-});
 
 const JobDescription = () => {
   return (
     <Grid
-    sx={{
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'center',
-      alignItems: 'center',
-      borderRadius: '20px',
-      padding: { xs: '20px', md: '20px 40px' },
-      width: '100%',
-      height: 'calc(100vh - 120px)',
-      maxHeight: { xs: '90%', md: '600px' }
-    }}
-    className={righteous.className}
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: '20px',
+        padding: { xs: '20px', md: '20px 40px' },
+        width: '100%',
+        height: 'calc(100vh - 120px)',
+        maxHeight: { xs: '90%', md: '600px' }
+      }}
+      className={righteous.className}
     >
       <Typography
         sx={{

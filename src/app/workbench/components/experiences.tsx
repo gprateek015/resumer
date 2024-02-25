@@ -43,6 +43,10 @@ const Experiences = ({
     handleSubmit(reloadResume)();
   };
 
+  const updateExperiences = (experiences: Experience[]) => {
+    setValue('experiences', experiences);
+  };
+
   const handleDelete = (id: string) => {
     setValue(
       'experiences',
@@ -82,6 +86,7 @@ const Experiences = ({
             editId={editId}
             setEditId={setEditId}
             onSubmit={onSubmit}
+            updateExperiences={updateExperiences}
           />
         </Grid>
       )}

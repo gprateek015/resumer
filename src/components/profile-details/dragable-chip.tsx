@@ -83,6 +83,7 @@ const DraggableChip = ({
     })
   }));
   drag(drop(ref));
+
   return (
     <Chip
       ref={ref}
@@ -91,7 +92,7 @@ const DraggableChip = ({
       sx={{
         color: 'white',
         border: '1px solid white',
-        opacity: isDragging ? 0.4 : 1,
+        // opacity: isDragging ? 0.4 : 1,
         '& svg': {
           color: '#ffffff80 !important'
         }

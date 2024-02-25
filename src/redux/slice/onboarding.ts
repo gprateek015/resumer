@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { fetchSelf, loginUser, registerUser } from '@/actions/user';
-import { AUTH_TOKEN, ONBOARDING_DATA } from '@/constants';
+import { AUTH_TOKEN } from '@/constants';
 import { generateResumeData, loadResume, uploadResume } from '@/actions/resume';
 import {
   User,
@@ -67,12 +67,6 @@ export const onboardingSlice = createSlice({
   reducers: {
     clearOnboardingErrors: state => {
       state.errors = null;
-    },
-    loadOnboardingData: state => {
-      const onboardingData = JSON.parse(
-        localStorage.getItem(ONBOARDING_DATA) || ''
-      );
-      state.data = onboardingData;
     },
     addExperience: (state, action) => {
       state.data.experiences = [
@@ -164,13 +158,13 @@ export const onboardingSlice = createSlice({
       // })
       .addCase(uploadResume.fulfilled, (state, action) => {
         state.resumeParseCompleted = action.payload.success;
+        state.data = { ...state.data, ...action.payload.data };
       });
   }
 });
 
 export const {
   clearOnboardingErrors,
-  loadOnboardingData,
   addExperience,
   updateExperienceOnb,
   addProject,

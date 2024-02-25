@@ -11,7 +11,6 @@ import { righteous } from '@/font-family';
 import { useDispatch, useSelector } from '@/redux/store';
 import { useRouter } from 'next/navigation';
 import { ONBOARDING_STARTED } from '@/constants';
-import { loadOnboardingData } from '@/redux/slice/onboarding';
 
 const Onboarding = () => {
   const [showQuestions, setShowQuestions] = useState<boolean>(!false);
@@ -19,16 +18,15 @@ const Onboarding = () => {
   const dispatch = useDispatch();
   const { data: user } = useSelector(state => state.user);
 
-  useEffect(() => {
-    if (user.onboarding_completed) router.replace('/profile');
-    else {
-      const onboardingStarted = localStorage.getItem(ONBOARDING_STARTED);
-      if (onboardingStarted === 'true') {
-        dispatch(loadOnboardingData());
-        setShowQuestions(true);
-      }
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (user.onboarding_completed) router.replace('/profile');
+  //   else {
+  //     const onboardingStarted = localStorage.getItem(ONBOARDING_STARTED);
+  //     if (onboardingStarted === 'true') {
+  //       setShowQuestions(true);
+  //     }
+  //   }
+  // }, []);
 
   const showMoreQuestions = () => {
     setShowQuestions(true);
@@ -45,6 +43,7 @@ const Onboarding = () => {
         justifyContent: 'center',
         alignItems: 'center'
       }}
+      className={righteous.className}
     >
       {!showQuestions ? (
         <Grid
@@ -60,14 +59,11 @@ const Onboarding = () => {
             maxHeight: 'calc(100vh - 100px)',
             borderRadius: '20px',
             padding: { xs: '10px', md: '20px 30px 20px 10px' },
-            position: 'relative'
+            position: 'relative',
+            maxWidth: { xs: '380px', md: '1000px' }
           }}
         >
-          <Typography
-            fontSize={'1.5rem'}
-            fontWeight={'400'}
-            className={righteous.className}
-          >
+          <Typography fontSize={'1.5rem'} fontWeight={'400'}>
             Welcome to Resumer!
           </Typography>
           <Grid
@@ -93,7 +89,8 @@ const Onboarding = () => {
                 transform: {
                   xs: 'translate(-50%, -50%)',
                   md: 'translateY(53px)'
-                }
+                },
+                opacity: { xs: '0.3', md: 1 }
               }}
             >
               <Image
