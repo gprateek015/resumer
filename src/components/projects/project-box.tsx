@@ -118,4 +118,6 @@ const ProjectBox = React.forwardRef<HTMLDivElement, Props>(
   }
 );
 
+ProjectBox.displayName = 'ProjectBox';
+
 export default ProjectBox;

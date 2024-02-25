@@ -119,4 +119,6 @@ const EducationBox = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   );
 });
 
+EducationBox.displayName = 'EducationBox';
+
 export default EducationBox;
