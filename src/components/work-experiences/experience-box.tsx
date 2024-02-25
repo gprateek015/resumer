@@ -109,4 +109,6 @@ const ExperienceBox = React.forwardRef<HTMLDivElement, Props>(
   }
 );
 
+ExperienceBox.displayName = 'ExperienceBox';
+
 export default ExperienceBox;
