@@ -165,7 +165,7 @@ const Chatbot = ({ showMoreQuestions }: { showMoreQuestions: Function }) => {
             {chats.map((chat, ind) => (
               <Box key={ind}>
                 {ind === chats.length - 1 && ind % 2 === 0 ? (
-                  <ChatTypography ind={ind} component='div'>
+                  <ChatTypography ind={ind}>
                     <Typewriter
                       onInit={typewriter => {
                         typewriter
@@ -182,7 +182,9 @@ const Chatbot = ({ showMoreQuestions }: { showMoreQuestions: Function }) => {
                     />
                   </ChatTypography>
                 ) : (
-                  <ChatTypography ind={ind}>{chat}</ChatTypography>
+                  <ChatTypography ind={ind} component='p'>
+                    {chat}
+                  </ChatTypography>
                 )}
               </Box>
             ))}

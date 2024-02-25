@@ -19,7 +19,6 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { firstLetterCapital } from '@/utils';
 import { postEducation, updateEducation } from '@/actions/education';
 import { clearOnboardingErrors } from '@/redux/slice/onboarding';
-import moment from 'moment';
 
 export type EducationData = Education & {
   edu_level?: {

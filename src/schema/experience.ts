@@ -4,7 +4,7 @@ import Joi from 'joi';
 const experienceSchema = Joi.object({
   company_name: Joi.string().required(),
   position: Joi.string().required(),
-  start_date: Joi.date().min('1-1-1900').max(new Date()).required(),
+  start_date: Joi.date().min(new Date('1-1-1900')).max(new Date()).required(),
   end_date: Joi.date().greater(Joi.ref('start_date')).max(new Date()),
   description: Joi.array().items(Joi.string()),
   mode: Joi.string().valid('onsite', 'remote').required(),

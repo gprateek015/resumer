@@ -70,10 +70,10 @@ const WorkExpEdit = ({
       description: [''],
       ...(experience && {
         ...experience,
-        start_date: moment(new Date(experience.start_date ?? '')).format(
+        start_date: moment(experience.start_date ?? '', 'DD-MM-YYYY').format(
           'YYYY-MM-DD'
         ),
-        end_date: moment(new Date(experience.end_date ?? '')).format(
+        end_date: moment(experience.end_date ?? '', 'DD-MM-YYYY').format(
           'YYYY-MM-DD'
         )
       })
