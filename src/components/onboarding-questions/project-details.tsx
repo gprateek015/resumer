@@ -66,7 +66,7 @@ const ProjectDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
     return data;
   }, [projects]);
 
-  const onNext = () => {
+  const onNavigation = (navigate: Function) => {
     const errorIds = Object.keys(errors);
     if (errorIds.length !== 0) {
       enqueueSnackbar({
@@ -81,7 +81,7 @@ const ProjectDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
         preventDuplicate: true
       });
     } else {
-      nextPage();
+      navigate();
     }
   };
 
@@ -106,13 +106,17 @@ const ProjectDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
   }, [projects]);
 
   return (
-    <PageContainer nextPage={onNext} prevPage={prevPage}>
+    <PageContainer
+      nextPage={() => onNavigation(nextPage)}
+      prevPage={() => onNavigation(prevPage)}
+    >
       <Heading mb='20px'>Please provide us with your projects</Heading>
       <ProjectDetailDesign
         projects={projects}
         editId={editId}
         setEditId={setEditId}
         handleDelete={handleDelete}
+        updateProjects={updateProjects}
         errors={errors}
         onSubmit={onSubmit}
       />

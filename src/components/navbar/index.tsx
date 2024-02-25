@@ -101,11 +101,6 @@ const Navbar = () => {
             Products
           </NavLink>
         </Link>
-        <Link href='/suggestions'>
-          <NavLink active={(pathname === '/suggestions').toString()}>
-            Suggestions
-          </NavLink>
-        </Link>
       </Grid>
       <Grid ref={authRef}>
         <AuthButton onClick={handleClick} sx={{ minWidth: '95px' }}>

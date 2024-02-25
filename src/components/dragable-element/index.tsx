@@ -1,23 +1,18 @@
 import React, { ReactNode, Ref, useRef } from 'react';
-import { Experience } from '@/types';
-import { Grid, Icon, Typography } from '@mui/material';
-
-import { Button } from '../onboarding-questions/styles';
 import { XYCoord, useDrag, useDrop } from 'react-dnd';
-import ExperienceBox from './experience-box';
 
 type DragableExp = {
   index: number;
 };
 
-const DragableExperience = ({
+const DragableElement = ({
   index,
   moveObject,
   renderItem
 }: {
   index: number;
   moveObject: (dragIndex: number, hoverIndex: number) => void;
-  renderItem: (ref: Ref<HTMLDivElement>) => ReactNode;
+  renderItem: (ref: Ref<HTMLDivElement>, isDragging?: boolean) => ReactNode;
 }) => {
   const ref = useRef(null);
 
@@ -40,8 +35,8 @@ const DragableExperience = ({
       // Determine rectangle on screen
       const hoverBoundingRect = (ref.current as any)?.getBoundingClientRect();
       // Get vertical middle
-      const hoverFifthY =
-        (hoverBoundingRect.bottom - hoverBoundingRect.top) / 5;
+      const hoverForthY =
+        (hoverBoundingRect.bottom - hoverBoundingRect.top) / 4;
       // Determine mouse position
       const clientOffset = monitor.getClientOffset();
       // Get pixels above
@@ -51,11 +46,11 @@ const DragableExperience = ({
       // When dragging down, only move when the cursor is below 50%
       // When dragging up, only move when the cursor is above 50%
       // Dragging down
-      if (dragIndex < hoverIndex && hoverClientY < hoverFifthY) {
+      if (dragIndex < hoverIndex && hoverClientY < hoverForthY) {
         return;
       }
       // Dragging up
-      if (dragIndex > hoverIndex && hoverClientY > hoverFifthY) {
+      if (dragIndex > hoverIndex && hoverClientY > hoverForthY) {
         return;
       }
 
@@ -79,7 +74,7 @@ const DragableExperience = ({
   });
   drag(drop(ref));
 
-  return renderItem(ref);
+  return renderItem(ref, isDragging);
 };
 
-export default DragableExperience;
+export default DragableElement;

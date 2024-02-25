@@ -1,27 +1,26 @@
-import { Experience } from '@/types';
-import { Grid, Icon, Typography } from '@mui/material';
+import { Project } from '@/types';
+import { Chip, Grid, Icon, Typography } from '@mui/material';
 import React from 'react';
 import ErrorIcon from '@mui/icons-material/Error';
 import { Button } from '../onboarding-questions/styles';
 
 type Props = {
-  experience: Experience;
+  project: Project;
   errorIds: string[];
   handleEdit: (id: string) => void;
   handleDelete: Function;
   grabbing?: boolean;
 };
 
-const ExperienceBox = React.forwardRef<HTMLDivElement, Props>(
+const ProjectBox = React.forwardRef<HTMLDivElement, Props>(
   (props: Props, ref) => {
     const {
-      experience,
+      project,
       errorIds,
-      handleEdit,
       handleDelete,
+      handleEdit,
       grabbing = false
     } = props;
-
     return (
       <Grid
         sx={{
@@ -29,14 +28,14 @@ const ExperienceBox = React.forwardRef<HTMLDivElement, Props>(
           p: '10px',
           borderRadius: '5px',
           position: 'relative',
-          borderColor: errorIds.includes(experience._id as string)
+          borderColor: errorIds.includes(project._id as string)
             ? '#7e73f6'
             : 'white',
           cursor: grabbing ? 'grabbing' : 'grab'
         }}
         ref={ref}
       >
-        {errorIds.includes(experience._id as string) && (
+        {errorIds.includes(project._id as string) && (
           <Icon
             sx={{
               position: 'absolute',
@@ -62,51 +61,54 @@ const ExperienceBox = React.forwardRef<HTMLDivElement, Props>(
               fontSize: '16px'
             }}
           >
-            {experience.company_name}
+            {project.name}
           </Typography>
           <Typography
             sx={{
-              fontSize: '12px'
+              fontSize: '12px',
+              textDecoration: 'underline',
+              cursor: 'pointer'
             }}
+            onClick={() =>
+              window.open(
+                project.code_url || project.live_url || project.video_url
+              )
+            }
           >
-            {experience.start_date}&nbsp;-&nbsp;
-            {experience.end_date}
+            {project.code_url && 'Code Url'}
+            {project.live_url && 'Live Url'}
+            {project.video_url && 'Video Url'}
           </Typography>
         </Grid>
         <Grid
           sx={{
             display: 'flex',
             flexWrap: 'wrap',
-            justifyContent: 'space-between'
+            gap: '10px',
+            my: '10px'
           }}
         >
-          <Typography
-            mr='20px'
-            sx={{
-              fontSize: '12px'
-            }}
-          >
-            {experience.position}
-          </Typography>
-          <Typography
-            sx={{
-              fontSize: '12px'
-            }}
-          >
-            {experience.mode}
-            {experience.mode === 'onsite' && `- ${experience.location}`}
-          </Typography>
+          {project.skills_required?.map((skill, ind) => (
+            <Chip
+              label={skill}
+              key={ind}
+              sx={{
+                color: 'white',
+                border: '1px solid white'
+              }}
+            />
+          ))}
         </Grid>
         <Grid display={'flex'} gap='20px' mt='10px'>
           <Button
             sx={{ flexBasis: '50%' }}
-            onClick={() => handleEdit(experience._id as string)}
+            onClick={() => handleEdit(project._id as string)}
           >
             Edit
           </Button>
           <Button
             sx={{ flexBasis: '50%' }}
-            onClick={() => handleDelete(experience._id)}
+            onClick={() => handleDelete(project._id)}
           >
             Delete
           </Button>
@@ -116,6 +118,4 @@ const ExperienceBox = React.forwardRef<HTMLDivElement, Props>(
   }
 );
 
-ExperienceBox.displayName = 'ExperienceBox';
-
-export default ExperienceBox;
+export default ProjectBox;

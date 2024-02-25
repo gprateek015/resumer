@@ -167,7 +167,7 @@ const EducationalDetailsEdit = ({
           />
         </Box>
         {scoringType === 'cgpa' && (
-          <Box flexBasis={'50%'}>
+          <Box flexBasis={'50%'} flexGrow={1}>
             <FormLabel>Maximum Score</FormLabel>
             <FormInput
               type='number'
@@ -177,10 +177,6 @@ const EducationalDetailsEdit = ({
               helperText={errors?.maximum_score?.message as string}
               error={!!errors?.maximum_score}
               placeholder='5 OR 10'
-              sx={{
-                maxWidth: (containerRef?.current?.offsetWidth || 400) / 2 - 10,
-                width: (containerRef?.current?.offsetWidth || 400) / 2 - 10
-              }}
             />
           </Box>
         )}
@@ -203,12 +199,12 @@ const EducationalDetailsEdit = ({
       <Grid
         sx={{
           display: 'flex',
-          gap: '20px',
-          justifyContent: 'space-between'
+          gap: '20px'
+          // justifyContent: 'space-between'
           // flexDirection: { xs: 'column', md: 'row' }
         }}
       >
-        <Box>
+        <Box flexBasis={'50%'} flexGrow={1}>
           <FormLabel>Start Year</FormLabel>
           <FormInput
             type='number'
@@ -216,13 +212,9 @@ const EducationalDetailsEdit = ({
             helperText={errors.start_year?.message as string}
             error={!!errors.start_year}
             placeholder='2020'
-            sx={{
-              maxWidth: (containerRef?.current?.offsetWidth || 400) / 2 - 10,
-              width: (containerRef?.current?.offsetWidth || 400) / 2 - 10
-            }}
           />
         </Box>
-        <Box>
+        <Box flexBasis={'50%'} flexGrow={1}>
           <FormLabel>End Year</FormLabel>
           <FormInput
             type='number'
@@ -230,10 +222,6 @@ const EducationalDetailsEdit = ({
             helperText={errors.end_year?.message as string}
             error={!!errors.end_year}
             placeholder='2024'
-            sx={{
-              maxWidth: (containerRef?.current?.offsetWidth || 400) / 2 - 10,
-              width: (containerRef?.current?.offsetWidth || 400) / 2 - 10
-            }}
           />
         </Box>
       </Grid>

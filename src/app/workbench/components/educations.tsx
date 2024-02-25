@@ -58,6 +58,10 @@ const Educations = ({
     );
   };
 
+  const updateEducations = (educations: Education[]) => {
+    setValue('educations', educations);
+  };
+
   useEffect(() => {
     if (educations?.length) {
       setEditId('');
@@ -90,6 +94,7 @@ const Educations = ({
             editId={editId}
             setEditId={setEditId}
             onSubmit={onSubmit}
+            updateEducations={updateEducations}
           />
         </Grid>
       )}

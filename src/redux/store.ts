@@ -32,7 +32,7 @@ const store = configureStore({
       serializableCheck: {
         ignoredActions: ['load/resume/fulfilled', 'persist/PERSIST']
       }
-    }).concat(logger as any)
+    }).concat(process.env.NODE_ENV === 'development' && (logger as any))
 });
 
 export type RootState = ReturnType<typeof store.getState>;

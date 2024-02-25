@@ -13,20 +13,20 @@ import { useRouter } from 'next/navigation';
 import { ONBOARDING_STARTED } from '@/constants';
 
 const Onboarding = () => {
-  const [showQuestions, setShowQuestions] = useState<boolean>(!false);
+  const [showQuestions, setShowQuestions] = useState<boolean>(false);
   const router = useRouter();
   const dispatch = useDispatch();
   const { data: user } = useSelector(state => state.user);
 
-  // useEffect(() => {
-  //   if (user.onboarding_completed) router.replace('/profile');
-  //   else {
-  //     const onboardingStarted = localStorage.getItem(ONBOARDING_STARTED);
-  //     if (onboardingStarted === 'true') {
-  //       setShowQuestions(true);
-  //     }
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (user.onboarding_completed) router.replace('/job-description');
+    else {
+      const onboardingStarted = localStorage.getItem(ONBOARDING_STARTED);
+      if (onboardingStarted === 'true') {
+        setShowQuestions(true);
+      }
+    }
+  }, []);
 
   const showMoreQuestions = () => {
     setShowQuestions(true);

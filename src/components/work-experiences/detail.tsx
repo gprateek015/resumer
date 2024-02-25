@@ -8,8 +8,8 @@ import { Button } from '../onboarding-questions/styles';
 import WorkExpEdit from './edit';
 import validateExperience from '@/schema/experience';
 
-import DragableExperience from './dragable';
 import ExperienceBox from './experience-box';
+import DragableElement from '../dragable-element';
 
 const WorkExpDetailDesign = ({
   experiences = [],
@@ -75,16 +75,17 @@ const WorkExpDetailDesign = ({
             />
           ) : updateExperiences ? (
             <DndProvider backend={HTML5Backend}>
-              <DragableExperience
+              <DragableElement
                 index={ind}
                 moveObject={moveExperience}
-                renderItem={ref => (
+                renderItem={(ref, grabbing) => (
                   <ExperienceBox
                     ref={ref}
                     experience={experience}
                     errorIds={errorIds}
                     handleDelete={handleDelete}
                     handleEdit={handleEdit}
+                    grabbing={grabbing}
                   />
                 )}
               />

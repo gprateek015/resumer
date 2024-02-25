@@ -69,7 +69,7 @@ const WorkExperienceDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
     else dispatch(addExperience(data));
   };
 
-  const onNext = () => {
+  const onNavigation = (navigate: Function) => {
     const errorIds = Object.keys(errors);
     if (errorIds.length !== 0) {
       enqueueSnackbar({
@@ -84,7 +84,7 @@ const WorkExperienceDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
         preventDuplicate: true
       });
     } else {
-      nextPage();
+      navigate();
     }
   };
 
@@ -109,7 +109,10 @@ const WorkExperienceDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
   }, [experiences]);
 
   return (
-    <PageContainer nextPage={onNext} prevPage={prevPage}>
+    <PageContainer
+      nextPage={() => onNavigation(nextPage)}
+      prevPage={() => onNavigation(prevPage)}
+    >
       <Heading mb='20px'>
         Share your internship / work experience with us
       </Heading>

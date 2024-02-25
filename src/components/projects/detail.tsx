@@ -1,11 +1,15 @@
 import { Project } from '@/types';
-import React, { useEffect, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import { Box, Chip, Grid, Icon, Typography } from '@mui/material';
 import { Button } from '../onboarding-questions/styles';
 import ProjectEdit, { ProjectData } from './edit';
 import { SubmitHandler } from 'react-hook-form';
 import validateProject from '@/schema/project';
 import ErrorIcon from '@mui/icons-material/Error';
+import ProjectBox from './project-box';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import DragableElement from '../dragable-element';
 
 const ProjectDetailDesign = ({
   projects = [],
@@ -13,6 +17,7 @@ const ProjectDetailDesign = ({
   setEditId,
   handleDelete,
   onSubmit,
+  updateProjects,
   apiError,
   errors = {}
 }: {
@@ -21,14 +26,30 @@ const ProjectDetailDesign = ({
   setEditId: Function;
   handleDelete: Function;
   onSubmit: SubmitHandler<ProjectData>;
+  updateProjects?: Function;
   apiError?: string | object | null;
   errors?: any;
 }) => {
   const handleCancel = () => {
     setEditId(null);
   };
+  const handleEdit = (id: string) => {
+    setEditId(id);
+  };
 
   const errorIds = Object.keys(errors);
+
+  const moveProject = useCallback(
+    (dragIndex: number, hoverIndex: number) => {
+      let updatedList = [...projects];
+      const [movedItem] = updatedList.splice(dragIndex, 1);
+      updatedList.splice(hoverIndex, 0, movedItem);
+
+      updateProjects?.(updatedList);
+      return;
+    },
+    [projects]
+  );
 
   return (
     <Grid
@@ -38,7 +59,7 @@ const ProjectDetailDesign = ({
         gap: '15px'
       }}
     >
-      {projects.map(project => (
+      {projects.map((project, ind) => (
         <Box key={project._id}>
           {project._id === editId ? (
             <ProjectEdit
@@ -52,97 +73,30 @@ const ProjectDetailDesign = ({
                   : apiError
               }
             />
-          ) : (
-            <Grid
-              sx={{
-                border: '1px solid white',
-                p: '10px',
-                borderRadius: '5px',
-                position: 'relative',
-                borderColor: errorIds.includes(project._id as string)
-                  ? '#7e73f6'
-                  : 'white'
-              }}
-            >
-              {errorIds.includes(project._id as string) && (
-                <Icon
-                  sx={{
-                    position: 'absolute',
-                    top: '-10px',
-                    left: '-10px',
-                    color: '#669ced'
-                  }}
-                >
-                  <ErrorIcon />
-                </Icon>
-              )}
-              <Grid
-                sx={{
-                  display: 'flex',
-                  flexWrap: 'wrap',
-                  justifyContent: 'space-between',
-                  alignItems: 'center'
-                }}
-              >
-                <Typography
-                  mr='20px'
-                  sx={{
-                    fontSize: '16px'
-                  }}
-                >
-                  {project.name}
-                </Typography>
-                <Typography
-                  sx={{
-                    fontSize: '12px',
-                    textDecoration: 'underline',
-                    cursor: 'pointer'
-                  }}
-                  onClick={() =>
-                    window.open(
-                      project.code_url || project.live_url || project.video_url
-                    )
-                  }
-                >
-                  {project.code_url && 'Code Url'}
-                  {project.live_url && 'Live Url'}
-                  {project.video_url && 'Video Url'}
-                </Typography>
-              </Grid>
-              <Grid
-                sx={{
-                  display: 'flex',
-                  flexWrap: 'wrap',
-                  gap: '10px',
-                  my: '10px'
-                }}
-              >
-                {project.skills_required?.map((skill, ind) => (
-                  <Chip
-                    label={skill}
-                    key={ind}
-                    sx={{
-                      color: 'white',
-                      border: '1px solid white'
-                    }}
+          ) : updateProjects ? (
+            <DndProvider backend={HTML5Backend}>
+              <DragableElement
+                index={ind}
+                moveObject={moveProject}
+                renderItem={(ref, grabbing) => (
+                  <ProjectBox
+                    ref={ref}
+                    project={project}
+                    errorIds={errorIds}
+                    handleDelete={handleDelete}
+                    handleEdit={handleEdit}
+                    grabbing={grabbing}
                   />
-                ))}
-              </Grid>
-              <Grid display={'flex'} gap='20px' mt='10px'>
-                <Button
-                  sx={{ flexBasis: '50%' }}
-                  onClick={() => setEditId(project._id)}
-                >
-                  Edit
-                </Button>
-                <Button
-                  sx={{ flexBasis: '50%' }}
-                  onClick={() => handleDelete(project._id)}
-                >
-                  Delete
-                </Button>
-              </Grid>
-            </Grid>
+                )}
+              />
+            </DndProvider>
+          ) : (
+            <ProjectBox
+              project={project}
+              errorIds={errorIds}
+              handleDelete={handleDelete}
+              handleEdit={handleEdit}
+            />
           )}
         </Box>
       ))}

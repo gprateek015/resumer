@@ -52,6 +52,10 @@ const Projects = ({
     );
   };
 
+  const updateProjects = (projects: Project[]) => {
+    setValue('projects', projects);
+  };
+
   useEffect(() => {
     if (projects?.length) {
       setEditId(null);
@@ -84,6 +88,7 @@ const Projects = ({
             editId={editId}
             setEditId={setEditId}
             onSubmit={onSubmit}
+            updateProjects={updateProjects}
           />
         </Grid>
       )}

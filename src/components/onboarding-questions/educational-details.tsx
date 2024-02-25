@@ -88,7 +88,7 @@ const EducationalDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
     return data;
   }, [educations]);
 
-  const onNext = () => {
+  const onNavigation = (navigate: Function) => {
     const errorIds = Object.keys(errors);
     if (errorIds.length !== 0) {
       enqueueSnackbar({
@@ -103,7 +103,7 @@ const EducationalDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
         preventDuplicate: true
       });
     } else {
-      nextPage();
+      navigate();
     }
   };
 
@@ -128,7 +128,10 @@ const EducationalDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
   }, [educations]);
 
   return (
-    <PageContainer nextPage={onNext} prevPage={prevPage}>
+    <PageContainer
+      nextPage={() => onNavigation(nextPage)}
+      prevPage={() => onNavigation(prevPage)}
+    >
       <Grid>
         <Heading mb='20px'>
           Kindly provide us the following details regarding your education
@@ -139,6 +142,7 @@ const EducationalDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
           setEditId={setEditId}
           handleDelete={handleDelete}
           onSubmit={onSubmit}
+          updateEducations={updateEducations}
           errors={errors}
         />
       </Grid>
