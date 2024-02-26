@@ -2,7 +2,7 @@ import Navbar from '@/components/navbar';
 import './globals.css';
 import { Grid } from '@mui/material';
 import Image from 'next/image';
-import BackgroundImg from '@/assets/home-background.png';
+import BackgroundImg from '@/assets/test.png';
 import Providers from '@/components/providers';
 import ProtectedRoutes from '@/components/protected-routes';
 
