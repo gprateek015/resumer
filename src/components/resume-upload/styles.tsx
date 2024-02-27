@@ -29,7 +29,8 @@ export const UploadContainer = styled(Grid)({
   height: '100%',
   display: 'flex',
   flexDirection: 'column',
-  flexGrow: 1
+  flexGrow: 1,
+  padding: '0px 12px'
 });
 
 export const Uploader = styled(Grid)(({ theme }) => ({

@@ -3,7 +3,6 @@
 import React, { useState } from 'react';
 import { Box, Button, Grid, Typography } from '@mui/material';
 import Image from 'next/image';
-import { Righteous } from 'next/font/google';
 
 import OnboardingIcon from '@/assets/onboarding2.png';
 import WorkExperience from './work-experience';
@@ -19,11 +18,7 @@ import AchievementsSkills from './achievements-skills';
 import { useDispatch, useSelector } from '@/redux/store';
 import { updateUser } from '@/actions/user';
 import { Skill } from '@/types';
-
-const righteous = Righteous({
-  weight: ['400'],
-  subsets: ['latin']
-});
+import { righteous } from '@/font-family';
 
 export type PageNavPropsType = {
   nextPage: Function;
@@ -38,7 +33,7 @@ const OnboardingQuestions = () => {
   const dispatch = useDispatch();
 
   const nextPage = () => {
-    if (page === 8) {
+    if (page === 7) {
       let skills: { name: string; type: Skill['type'] }[] = [];
       data.skills?.technical_skills?.forEach(skill => {
         skills.push({
@@ -80,27 +75,28 @@ const OnboardingQuestions = () => {
   const OnboardingPage = () => {
     switch (page) {
       case 0:
-        return <WorkExperience nextPage={nextPage} prevPage={prevPage} />;
+        // return <WorkExperience nextPage={nextPage} prevPage={prevPage} />;
+        return <HighestEducation nextPage={nextPage} prevPage={prevPage} />;
       case 1:
         return (
           <WorkExperienceDetails nextPage={nextPage} prevPage={prevPage} />
         );
       case 2:
         return <ContactDetails nextPage={nextPage} prevPage={prevPage} />;
+      // case 3:
+      //   return <HighestEducation nextPage={nextPage} prevPage={prevPage} />;
       case 3:
-        return <HighestEducation nextPage={nextPage} prevPage={prevPage} />;
-      case 4:
         return <Degrees nextPage={nextPage} prevPage={prevPage} />;
-      case 5:
+      case 4:
         return <EducationalDetails nextPage={nextPage} prevPage={prevPage} />;
-      case 6:
+      case 5:
         return <ProjectDetails nextPage={nextPage} prevPage={prevPage} />;
-      case 7:
+      case 6:
         return <AchievementsSkills nextPage={nextPage} prevPage={prevPage} />;
-      case 8:
+      case 7:
         return <CodingProfiles nextPage={nextPage} prevPage={prevPage} />;
       default:
-        return <WorkExperience nextPage={nextPage} prevPage={prevPage} />;
+        return <CodingProfiles nextPage={nextPage} prevPage={prevPage} />;
     }
   };
 

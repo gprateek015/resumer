@@ -26,8 +26,8 @@ const Educations = ({
   const onSubmit: SubmitHandler<EducationData> = data => {
     const newData = {
       ...data,
-      start_year: data?.start_year?.split?.('-')?.[0],
-      end_year: data?.end_year?.split?.('-')?.[0],
+      start_year: data?.start_year,
+      end_year: data?.end_year,
       level: data?.edu_level?.value,
       edu_level: undefined,
       maximum_score:
@@ -56,6 +56,10 @@ const Educations = ({
       'educations',
       educations.filter((exp: Experience) => exp._id !== id)
     );
+  };
+
+  const updateEducations = (educations: Education[]) => {
+    setValue('educations', educations);
   };
 
   useEffect(() => {
@@ -90,6 +94,7 @@ const Educations = ({
             editId={editId}
             setEditId={setEditId}
             onSubmit={onSubmit}
+            updateEducations={updateEducations}
           />
         </Grid>
       )}

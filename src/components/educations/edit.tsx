@@ -19,7 +19,6 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { firstLetterCapital } from '@/utils';
 import { postEducation, updateEducation } from '@/actions/education';
 import { clearOnboardingErrors } from '@/redux/slice/onboarding';
-import moment from 'moment';
 
 export type EducationData = Education & {
   edu_level?: {
@@ -72,9 +71,7 @@ const EducationalDetailsEdit = ({
       ...(education && {
         ...education,
         edu_level: levelOption.find(opt => opt.value === education.level)
-      }),
-      _id: undefined,
-      user_id: undefined
+      })
     });
   }, [education]);
 
@@ -84,7 +81,9 @@ const EducationalDetailsEdit = ({
       dispatch(clearOnboardingErrors());
     } else if (apiErrors) {
       Object.keys(apiErrors || {}).forEach((error: any) => {
-        setError(error, { message: (apiErrors as any)[error].message });
+        setError(error === 'level' ? 'edu_level' : error, {
+          message: (apiErrors as any)[error].message
+        });
       });
       dispatch(clearOnboardingErrors());
     }
@@ -95,7 +94,10 @@ const EducationalDetailsEdit = ({
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        gap: '15px'
+        gap: '15px',
+        padding: '10px',
+        border: '1px solid white',
+        borderRadius: '5px'
       }}
       ref={containerRef}
     >
@@ -106,8 +108,16 @@ const EducationalDetailsEdit = ({
           styles={selectStyles}
           placeholder='Graduation'
           value={eduLevel}
-          onChange={(opt: any) => setValue('edu_level', opt)}
+          onChange={(opt: any) => {
+            setValue('edu_level', opt);
+            clearErrors('edu_level');
+          }}
         />
+        {errors?.edu_level && (
+          <FormHelperText error>
+            {errors?.edu_level?.message as string}
+          </FormHelperText>
+        )}
       </Box>
       <Box>
         <FormLabel>Institue / College name</FormLabel>
@@ -156,7 +166,7 @@ const EducationalDetailsEdit = ({
           />
         </Box>
         {scoringType === 'cgpa' && (
-          <Box flexBasis={'50%'}>
+          <Box flexBasis={'50%'} flexGrow={1}>
             <FormLabel>Maximum Score</FormLabel>
             <FormInput
               type='number'
@@ -166,10 +176,6 @@ const EducationalDetailsEdit = ({
               helperText={errors?.maximum_score?.message as string}
               error={!!errors?.maximum_score}
               placeholder='5 OR 10'
-              sx={{
-                maxWidth: (containerRef?.current?.offsetWidth || 400) / 2 - 10,
-                width: (containerRef?.current?.offsetWidth || 400) / 2 - 10
-              }}
             />
           </Box>
         )}
@@ -185,10 +191,6 @@ const EducationalDetailsEdit = ({
               helperText={errors?.degree?.message as string}
               error={!!errors.degree}
               placeholder='Bachelors of Technology'
-              sx={{
-                maxWidth: (containerRef?.current?.offsetWidth || 400) / 2 - 10,
-                width: (containerRef?.current?.offsetWidth || 400) / 2 - 10
-              }}
             />
           </>
         )}
@@ -196,12 +198,12 @@ const EducationalDetailsEdit = ({
       <Grid
         sx={{
           display: 'flex',
-          gap: '20px',
-          justifyContent: 'space-between'
+          gap: '20px'
+          // justifyContent: 'space-between'
           // flexDirection: { xs: 'column', md: 'row' }
         }}
       >
-        <Box>
+        <Box flexBasis={'50%'} flexGrow={1}>
           <FormLabel>Start Year</FormLabel>
           <FormInput
             type='number'
@@ -209,13 +211,9 @@ const EducationalDetailsEdit = ({
             helperText={errors.start_year?.message as string}
             error={!!errors.start_year}
             placeholder='2020'
-            sx={{
-              maxWidth: (containerRef?.current?.offsetWidth || 400) / 2 - 10,
-              width: (containerRef?.current?.offsetWidth || 400) / 2 - 10
-            }}
           />
         </Box>
-        <Box>
+        <Box flexBasis={'50%'} flexGrow={1}>
           <FormLabel>End Year</FormLabel>
           <FormInput
             type='number'
@@ -223,10 +221,6 @@ const EducationalDetailsEdit = ({
             helperText={errors.end_year?.message as string}
             error={!!errors.end_year}
             placeholder='2024'
-            sx={{
-              maxWidth: (containerRef?.current?.offsetWidth || 400) / 2 - 10,
-              width: (containerRef?.current?.offsetWidth || 400) / 2 - 10
-            }}
           />
         </Box>
       </Grid>

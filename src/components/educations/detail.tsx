@@ -1,9 +1,15 @@
 import { Education } from '@/types';
-import { Box, Grid, Typography } from '@mui/material';
-import React, { useEffect } from 'react';
+import { Box, Grid, Icon, Typography } from '@mui/material';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import { Button } from '../onboarding-questions/styles';
 import EducationalDetailsEdit, { EducationData } from './edit';
 import { SubmitHandler } from 'react-hook-form';
+import validateEducation from '@/schema/education';
+import ErrorIcon from '@mui/icons-material/Error';
+import EducationBox from './education-box';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import DragableElement from '../dragable-element';
 
 const EduDetailDesign = ({
   educations = [],
@@ -11,16 +17,35 @@ const EduDetailDesign = ({
   setEditId,
   handleDelete,
   onSubmit,
-  apiError
+  updateEducations,
+  apiError,
+  errors = {}
 }: {
   educations: Education[];
   editId: string | null;
   setEditId: Function;
   handleDelete: Function;
   onSubmit: SubmitHandler<EducationData>;
+  updateEducations?: Function;
   apiError?: string | object | null;
+  errors?: any;
 }) => {
   const handleCancel = () => setEditId(null);
+  const handelEdit = (id: string) => setEditId(id);
+
+  const errorIds = Object.keys(errors);
+
+  const moveEducation = useCallback(
+    (dragIndex: number, hoverIndex: number) => {
+      let updatedList = [...educations];
+      const [movedItem] = updatedList.splice(dragIndex, 1);
+      updatedList.splice(hoverIndex, 0, movedItem);
+
+      updateEducations?.(updatedList);
+      return;
+    },
+    [educations]
+  );
 
   return (
     <Grid
@@ -30,7 +55,7 @@ const EduDetailDesign = ({
         gap: '15px'
       }}
     >
-      {educations.map(education => (
+      {educations.map((education, ind) => (
         <Box key={education._id}>
           {editId === education._id ? (
             <EducationalDetailsEdit
@@ -38,87 +63,36 @@ const EduDetailDesign = ({
               education={education}
               onSubmit={onSubmit}
               buttonText='Save'
-              apiError={apiError}
+              apiError={
+                errorIds.includes(education._id as string)
+                  ? errors[education._id as string]
+                  : apiError
+              }
             />
+          ) : updateEducations ? (
+            <DndProvider backend={HTML5Backend}>
+              <DragableElement
+                index={ind}
+                moveObject={moveEducation}
+                renderItem={(ref, grabbing) => (
+                  <EducationBox
+                    ref={ref}
+                    education={education}
+                    errorIds={errorIds}
+                    handleDelete={handleDelete}
+                    handleEdit={handelEdit}
+                    grabbing={grabbing}
+                  />
+                )}
+              />
+            </DndProvider>
           ) : (
-            <Grid
-              sx={{
-                border: '1px solid white',
-                p: '10px',
-                borderRadius: '5px'
-              }}
-            >
-              <Grid
-                sx={{
-                  display: 'flex',
-                  flexWrap: 'wrap',
-                  justifyContent: 'space-between',
-                  alignItems: 'center'
-                }}
-              >
-                <Typography
-                  mr='20px'
-                  sx={{
-                    fontSize: '16px'
-                  }}
-                >
-                  {education.institute_name}
-                </Typography>
-                <Typography
-                  sx={{
-                    fontSize: '12px'
-                  }}
-                >
-                  {education.start_year as string}&nbsp;-&nbsp;
-                  {education.end_year as string}
-                </Typography>
-              </Grid>
-              <Grid
-                sx={{
-                  display: 'flex',
-                  flexWrap: 'wrap',
-                  justifyContent: 'space-between'
-                }}
-              >
-                <Typography
-                  sx={{
-                    fontSize: '12px'
-                  }}
-                >
-                  {['graduation', 'post_graduation'].includes(
-                    education.level as string
-                  )
-                    ? education.degree
-                    : education.level}
-                  {[
-                    'senior_secondary',
-                    'diploma',
-                    'graduation',
-                    'post_graduation'
-                  ].includes(education?.level as string) &&
-                    `- ${education.specialisation}`}
-                </Typography>
-                <Typography>
-                  {education.scoring_type}&nbsp;{education.score}
-                  &nbsp;/&nbsp;
-                  {education.maximum_score}
-                </Typography>
-              </Grid>
-              <Grid display={'flex'} gap='20px' mt='10px'>
-                <Button
-                  sx={{ flexBasis: '50%' }}
-                  onClick={() => setEditId(education._id)}
-                >
-                  Edit
-                </Button>
-                <Button
-                  sx={{ flexBasis: '50%' }}
-                  onClick={() => handleDelete(education._id)}
-                >
-                  Delete
-                </Button>
-              </Grid>
-            </Grid>
+            <EducationBox
+              education={education}
+              errorIds={errorIds}
+              handleDelete={handleDelete}
+              handleEdit={handelEdit}
+            />
           )}
         </Box>
       ))}

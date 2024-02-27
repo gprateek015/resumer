@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   Box,
   Chip,
@@ -15,7 +15,7 @@ import {
   FormLabel,
   selectStyles
 } from '../onboarding-questions/styles';
-import { Project } from '@/types';
+import { Project, Skill } from '@/types';
 import { useDispatch, useSelector } from '@/redux/store';
 import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form';
 import { postProject, updateProject } from '@/actions/project';
@@ -24,6 +24,7 @@ import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/DeleteForever';
 import Select from 'react-select';
 import SkillsInput, { CreatableSkill } from '../skills-input';
+import DraggableChip from '../profile-details/dragable-chip';
 
 export type ProjectData = Project & {
   url?: string;
@@ -82,7 +83,8 @@ const ProjectEdit = ({
     setValue,
     setError,
     clearErrors,
-    reset
+    reset,
+    getValues
   } = useForm();
 
   const {
@@ -115,6 +117,15 @@ const ProjectEdit = ({
       setValue('skills_required', [...skillsRequired, skill]);
   };
 
+  const moveCard = useCallback((dragIndex: number, hoverIndex: number) => {
+    const updatedList = getValues()['skills_required'];
+    const [movedItem] = updatedList.splice(dragIndex, 1);
+    updatedList.splice(hoverIndex, 0, movedItem);
+
+    setValue('skills_required', updatedList);
+    return;
+  }, []);
+
   useEffect(() => {
     if (project) {
       (Object.keys(project || {}) as Array<keyof Project>).forEach(key => {
@@ -139,9 +150,7 @@ const ProjectEdit = ({
   useEffect(() => {
     reset({
       description: [''],
-      ...(project && project),
-      _id: undefined,
-      user_id: undefined
+      ...(project && project)
     });
   }, [project]);
 
@@ -166,7 +175,10 @@ const ProjectEdit = ({
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        gap: '15px'
+        gap: '15px',
+        padding: '10px',
+        border: '1px solid white',
+        borderRadius: '5px'
       }}
     >
       <Box>
@@ -216,17 +228,13 @@ const ProjectEdit = ({
           }}
         >
           {skillsRequired.map((skill: string, ind: number) => (
-            <Chip
+            <DraggableChip
               label={skill}
               key={ind}
               onDelete={() => handleSkillDelete(skill)}
-              sx={{
-                color: 'white',
-                border: '1px solid white',
-                '& svg': {
-                  color: '#ffffff80 !important'
-                }
-              }}
+              moveCard={moveCard}
+              skillType={'technical_skills'}
+              index={ind}
             />
           ))}
         </Grid>

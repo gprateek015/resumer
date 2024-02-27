@@ -70,15 +70,13 @@ const WorkExpEdit = ({
       description: [''],
       ...(experience && {
         ...experience,
-        start_date: moment(new Date(experience.start_date ?? '')).format(
+        start_date: moment(experience.start_date ?? '', 'DD-MM-YYYY').format(
           'YYYY-MM-DD'
         ),
-        end_date: moment(new Date(experience.end_date ?? '')).format(
+        end_date: moment(experience.end_date ?? '', 'DD-MM-YYYY').format(
           'YYYY-MM-DD'
         )
-      }),
-      _id: undefined,
-      user_id: undefined
+      })
     });
   }, [experience]);
 
@@ -104,7 +102,10 @@ const WorkExpEdit = ({
         sx={{
           display: 'flex',
           flexDirection: 'column',
-          gap: '15px'
+          gap: '15px',
+          padding: '10px',
+          border: '1px solid white',
+          borderRadius: '5px'
         }}
         ref={containerRef}
       >

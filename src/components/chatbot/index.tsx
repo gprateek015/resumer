@@ -10,6 +10,8 @@ import { ChatTypography, OptionTypography } from './styles';
 import ResumeUpload from '../resume-upload';
 import { useDispatch, useSelector } from '@/redux/store';
 import { updateUser } from '@/actions/user';
+import { poppins } from '@/font-family';
+import { AuthButton } from '../navbar/styles';
 
 const Chatbot = ({ showMoreQuestions }: { showMoreQuestions: Function }) => {
   const dispatch = useDispatch();
@@ -128,6 +130,7 @@ const Chatbot = ({ showMoreQuestions }: { showMoreQuestions: Function }) => {
         alignSelf: 'flex-end',
         marginBottom: '10px'
       }}
+      className={poppins.className}
     >
       {resumeUpload ? (
         <ResumeUpload onCompleteUpload={() => showMoreQuestions()} />
@@ -162,7 +165,7 @@ const Chatbot = ({ showMoreQuestions }: { showMoreQuestions: Function }) => {
             {chats.map((chat, ind) => (
               <Box key={ind}>
                 {ind === chats.length - 1 && ind % 2 === 0 ? (
-                  <ChatTypography ind={ind} component='div'>
+                  <ChatTypography ind={ind}>
                     <Typewriter
                       onInit={typewriter => {
                         typewriter
@@ -179,7 +182,9 @@ const Chatbot = ({ showMoreQuestions }: { showMoreQuestions: Function }) => {
                     />
                   </ChatTypography>
                 ) : (
-                  <ChatTypography ind={ind}>{chat}</ChatTypography>
+                  <ChatTypography ind={ind} component='p'>
+                    {chat}
+                  </ChatTypography>
                 )}
               </Box>
             ))}
@@ -192,11 +197,20 @@ const Chatbot = ({ showMoreQuestions }: { showMoreQuestions: Function }) => {
                 }}
               >
                 {AiChats[aiChatsInd]?.options?.map((option, ind: number) => (
-                  <OptionTypography
-                    label={option.label}
+                  <AuthButton
+                    // label={option.label}
                     onClick={() => handleOptionChoose(option)}
                     key={ind}
-                  />
+                    sx={{
+                      borderRadius: '20px',
+                      boxShadow:
+                        '0px 0px 8px 0px rgba(244, 244, 244, 0.48) inset'
+                    }}
+                  >
+                    <Typography textTransform='none' fontSize={'0.8rem'}>
+                      {option.label}
+                    </Typography>
+                  </AuthButton>
                 ))}
               </Grid>
             )}
@@ -212,7 +226,9 @@ const Chatbot = ({ showMoreQuestions }: { showMoreQuestions: Function }) => {
           >
             <TextField
               fullWidth
-              placeholder={!allowUserToType ? 'Disabled...' : 'Type here...'}
+              placeholder={
+                !allowUserToType ? 'Disabled...' : 'Type your name...'
+              }
               inputProps={{
                 sx: {
                   background: 'white',
@@ -248,6 +264,7 @@ const Chatbot = ({ showMoreQuestions }: { showMoreQuestions: Function }) => {
                 handleClick();
                 setShowOptions(false);
               }}
+              disabled={!allowUserToType}
             >
               <Image src={SendIcon} alt='sned-icon' />
             </IconButton>

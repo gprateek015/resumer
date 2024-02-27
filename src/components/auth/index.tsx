@@ -40,7 +40,7 @@ const AuthBox = () => {
 
       if (!user.onboarding_completed) route.replace('/onboarding');
       else {
-        route.replace(previousPath || '/profile');
+        route.replace(previousPath || '/job-description');
         dispatch(clearPrevPath());
       }
     }

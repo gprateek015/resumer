@@ -1,12 +1,7 @@
 import About from '@/components/about';
+import { righteous } from '@/font-family';
 import { Grid, Typography } from '@mui/material';
-import { Righteous } from 'next/font/google';
 import React from 'react';
-
-const righteous = Righteous({
-  weight: ['400'],
-  subsets: ['latin']
-});
 
 const AboutUs = () => {
   return (

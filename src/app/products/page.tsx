@@ -1,13 +1,9 @@
 import About from '@/components/about';
 import Product from '@/components/product';
+import { righteous } from '@/font-family';
 import { Grid, Typography } from '@mui/material';
-import { Righteous } from 'next/font/google';
-import React from 'react';
 
-const righteous = Righteous({
-  weight: ['400'],
-  subsets: ['latin']
-});
+import React from 'react';
 
 const Products = () => {
   return (
@@ -27,7 +23,7 @@ const Products = () => {
     >
       <Typography
         sx={{
-            background:
+          background:
             'linear-gradient(90deg, #4ADFD5 0.42%, #7479FA 41.67%, #E92EC3 106.58%)',
           color: 'transparent',
           backgroundClip: 'text',

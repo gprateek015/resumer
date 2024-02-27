@@ -13,7 +13,8 @@ export const AuthButton = styled(Button)(({ sx }: { sx?: CSSProperties }) => ({
   // border: '2px solid transparent',
   position: 'relative',
   padding: '8px 20px',
-  boxShadow: '0px 0px 15px 0px rgba(244, 244, 244, 0.48) inset',
+  boxShadow:
+    sx?.boxShadow || '0px 0px 15px 0px rgba(244, 244, 244, 0.48) inset',
 
   '&::before': {
     content: "''",
