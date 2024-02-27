@@ -27,6 +27,14 @@ a {
   width: 100vw;
 }
 
+@media (max-width: 600px) {
+  .home-background {
+    width: 150vw;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
 body {
   scrollbar-width: thin;
   scrollbar-color: transparent transparent;
