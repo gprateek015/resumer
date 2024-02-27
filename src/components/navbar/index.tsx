@@ -44,9 +44,9 @@ const Navbar = () => {
         justifyContent: 'space-between',
         padding: { xs: '15px 25px', md: '15px 80px' },
         alignItems: 'center',
-        background:
-          'linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0%, rgba(51, 50, 50, 0.12) 113.38%)',
-        // background: 'transparent'
+        // background:
+        //   'linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0%, rgba(51, 50, 50, 0.12) 113.38%)',
+        background: 'transparent',
         // background: 'black',
         backdropFilter: 'blur(20px)',
         position: 'fixed',
