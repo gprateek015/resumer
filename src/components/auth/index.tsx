@@ -16,6 +16,7 @@ import { socialLogin } from '@/actions/user';
 import { useRouter } from 'next/navigation';
 import { clearPrevPath } from '@/redux/slice/auth';
 import { useSnackbar } from 'notistack';
+import { righteous } from '@/font-family';
 
 const AuthBox = () => {
   const dispatch = useDispatch();
@@ -35,7 +36,12 @@ const AuthBox = () => {
     if (isLoggedIn) {
       enqueueSnackbar('Logged in successfully', {
         preventDuplicate: true,
-        variant: 'success'
+        variant: 'success',
+        style: {
+          background:
+            'linear-gradient(90deg, #4ADFD5 0.42%, #7479FA 41.67%, #E92EC3 106.58%)',
+          fontFamily: righteous.style.fontFamily
+        }
       });
 
       if (!user.onboarding_completed) route.replace('/onboarding');

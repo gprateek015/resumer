@@ -3,13 +3,14 @@ import './globals.css';
 import { Grid } from '@mui/material';
 import Image from 'next/image';
 import BackgroundImg from '@/assets/home-background.png';
+import BackgroundImg1 from '@/assets/test.png';
 import Providers from '@/components/providers';
 import ProtectedRoutes from '@/components/protected-routes';
 
 export const metadata = {
   title: 'Resumer',
   description:
-    'Get you resume specially talored for you and specific Job description'
+    'Get you resume specially tailored for you and specific Job description'
 };
 
 export default function RootLayout({
@@ -30,7 +31,7 @@ export default function RootLayout({
           >
             <Navbar />
             <Image
-              src={BackgroundImg}
+              src={BackgroundImg1}
               alt=''
               className='home-background'
               priority={true}

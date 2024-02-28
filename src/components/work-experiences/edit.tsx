@@ -105,7 +105,8 @@ const WorkExpEdit = ({
           gap: '15px',
           padding: '10px',
           border: '1px solid white',
-          borderRadius: '5px'
+          borderRadius: '5px',
+          backdropFilter: 'blur(20px)'
         }}
         ref={containerRef}
       >

@@ -29,9 +29,7 @@ a {
 
 @media (max-width: 600px) {
   .home-background {
-    width: 150vw;
-    left: 50%;
-    transform: translateX(-50%);
+    width: 400vw;
   }
 }
 
