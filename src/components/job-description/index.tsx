@@ -42,10 +42,11 @@ const DescriptionForm = () => {
       <Grid
         sx={{
           width: { xs: '360px', md: '900px' },
+          minHeight: '350px',
           borderRadius: '20px',
           background: 'rgba(255, 255, 255, 0.10)',
           backdropFilter: 'blur(20px)',
-          padding: '26px',
+          padding: '10px 20px',
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
@@ -58,23 +59,15 @@ const DescriptionForm = () => {
           scrollbarWidth: 'none'
         }}
       >
-        <Grid
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center'
+        <Image
+          src={icon}
+          alt='icon'
+          style={{
+            height: '250px',
+            width: '250px'
           }}
-        >
-          <Image
-            src={icon}
-            alt='icon'
-            style={{
-              height: '250px',
-              width: '250px'
-            }}
-            priority={true}
-          />
-        </Grid>
+          priority={true}
+        />
         <Grid
           sx={{
             width: { xs: '360px', md: '100%' },
@@ -89,7 +82,6 @@ const DescriptionForm = () => {
             fullWidth
             multiline
             rows={9}
-            // hidden
             placeholder='Start typing in here'
             inputProps={{
               sx: {
