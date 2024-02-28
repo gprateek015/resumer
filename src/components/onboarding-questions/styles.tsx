@@ -27,7 +27,7 @@ export const Subheading = styled(Typography)({
   fontSize: '16px',
   lineHeight: '26px',
   letterSpacing: '0.12px',
-  marginBottom: '5px'
+  marginBottom: '10px'
 });
 
 export const Options = styled(Grid)({
@@ -72,13 +72,14 @@ export const PageNavButton = styled(MuiButton)({
 export const FormLabel = styled(Typography)({
   color: 'white',
   fontSize: '16px',
-  lineHeight: '24px'
+  lineHeight: '24px',
+  marginBottom: '6px'
 });
 
 export const FormInput = styled(TextField)({
   width: '100%',
   '& .MuiInputBase-root': {
-    border: '1px solid #DDD',
+    border: '1px solid #ffffff87',
     borderRadius: '4px',
     background: 'rgba(255, 255, 255, 0.10)',
     colorScheme: 'dark'
@@ -124,7 +125,7 @@ export const selectStyles: StylesConfig<any> = {
 
 export const Button = styled(MuiButton)({
   color: 'white',
-  border: '1px solid white',
+  border: '1px solid #ffffff87',
   borderRadius: '3px',
   background: 'rgba(255, 255, 255, 0.10)'
 });

@@ -18,12 +18,6 @@ export const Heading = styled(Typography)({
   fontWeight: '600'
 });
 
-export const SubHeading = styled(Typography)({
-  color: 'white',
-  fontWeight: '500',
-  fontSize: '32px'
-});
-
 export const UploadContainer = styled(Grid)({
   width: '100%',
   height: '100%',

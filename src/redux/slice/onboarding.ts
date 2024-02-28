@@ -126,15 +126,15 @@ export const onboardingSlice = createSlice({
           skills: state.data.skills
         };
       })
-      // .addCase(fetchExperiences.fulfilled, (state, action) => {
-      //   state.data.experiences = action?.payload?.experiences;
-      // })
-      // .addCase(fetchEductions.fulfilled, (state, action) => {
-      //   state.data.educations = action?.payload?.educations;
-      // })
-      // .addCase(fetchProjects.fulfilled, (state, action) => {
-      //   state.data.projects = action?.payload?.projects;
-      // })
+      .addCase(fetchExperiences.fulfilled, (state, action) => {
+        state.data.experiences = action?.payload?.experiences;
+      })
+      .addCase(fetchEductions.fulfilled, (state, action) => {
+        state.data.educations = action?.payload?.educations;
+      })
+      .addCase(fetchProjects.fulfilled, (state, action) => {
+        state.data.projects = action?.payload?.projects;
+      })
       // .addCase(postExperience.rejected, (state, action) => {
       //   try {
       //     state.errors = JSON.parse(action?.error?.message || '');

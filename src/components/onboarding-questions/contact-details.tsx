@@ -76,11 +76,16 @@ const ContactDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
         <Heading mb='20px'>
           Let's start with some of your contact details
         </Heading>
+
         <Grid
           sx={{
+            gap: '15px',
+            backdropFilter: 'blur(20px)',
+            p: '20px',
+            borderRadius: '20px',
+            border: '1px solid #ffffff87',
             display: 'flex',
-            flexDirection: 'column',
-            gap: '15px'
+            flexDirection: 'column'
           }}
         >
           <Box>

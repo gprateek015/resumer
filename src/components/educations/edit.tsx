@@ -96,8 +96,8 @@ const EducationalDetailsEdit = ({
         flexDirection: 'column',
         gap: '15px',
         padding: '10px',
-        border: '1px solid white',
         borderRadius: '5px'
+        // backdropFilter: 'blur(20px)'
       }}
       ref={containerRef}
     >
@@ -127,7 +127,7 @@ const EducationalDetailsEdit = ({
           })}
           helperText={errors?.institute_name?.message as string}
           error={!!errors?.institute_name}
-          placeholder='IIT Mumbai'
+          placeholder='Jabalpur Engineering College'
         />
       </Box>
       <Box>
@@ -180,21 +180,19 @@ const EducationalDetailsEdit = ({
           </Box>
         )}
       </Grid>
-      <Box>
-        {['graduation', 'post_graduation'].includes(
-          eduLevel?.value as string
-        ) && (
-          <>
-            <FormLabel>Degree</FormLabel>
-            <FormInput
-              {...register('degree', { required: 'Degree is required' })}
-              helperText={errors?.degree?.message as string}
-              error={!!errors.degree}
-              placeholder='Bachelors of Technology'
-            />
-          </>
-        )}
-      </Box>
+      {['graduation', 'post_graduation'].includes(
+        eduLevel?.value as string
+      ) && (
+        <Box>
+          <FormLabel>Degree</FormLabel>
+          <FormInput
+            {...register('degree', { required: 'Degree is required' })}
+            helperText={errors?.degree?.message as string}
+            error={!!errors.degree}
+            placeholder='Bachelors of Technology'
+          />
+        </Box>
+      )}
       <Grid
         sx={{
           display: 'flex',
@@ -224,24 +222,23 @@ const EducationalDetailsEdit = ({
           />
         </Box>
       </Grid>
-      <Box>
-        {[
-          'senior_secondary',
-          'diploma',
-          'graduation',
-          'post_graduation'
-        ].includes(eduLevel?.value as string) && (
-          <>
-            <FormLabel>Specialization</FormLabel>
-            <FormInput
-              {...register('specialisation', { required: true })}
-              helperText={errors.specialisation?.message as string}
-              error={!!errors.specialisation}
-              placeholder='Computer Science and Engineering'
-            />
-          </>
-        )}
-      </Box>
+
+      {[
+        'senior_secondary',
+        'diploma',
+        'graduation',
+        'post_graduation'
+      ].includes(eduLevel?.value as string) && (
+        <Box>
+          <FormLabel>Specialization</FormLabel>
+          <FormInput
+            {...register('specialisation', { required: true })}
+            helperText={errors.specialisation?.message as string}
+            error={!!errors.specialisation}
+            placeholder='Computer Science and Engineering'
+          />
+        </Box>
+      )}
       {apiError && <FormHelperText error>{apiError}</FormHelperText>}
       <Grid
         sx={{

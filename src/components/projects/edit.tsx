@@ -177,15 +177,15 @@ const ProjectEdit = ({
         flexDirection: 'column',
         gap: '15px',
         padding: '10px',
-        border: '1px solid white',
         borderRadius: '5px'
+        // backdropFilter: 'blur(20px)'
       }}
     >
       <Box>
         <FormLabel>Name of the project</FormLabel>
         <FormInput
           {...register('name', { required: 'Project Name is required!' })}
-          placeholder='Eg:- Resumer'
+          placeholder='Enter your project name'
         />
       </Box>
       <Box>
@@ -251,7 +251,7 @@ const ProjectEdit = ({
               <IconButton
                 sx={{
                   color: 'white',
-                  border: '1px solid white',
+                  border: '1px solid #ffffff87',
                   borderRadius: '3px'
                 }}
                 onClick={() => remove(ind)}

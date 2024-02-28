@@ -56,7 +56,8 @@ const WorkExpDetailDesign = ({
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        gap: '15px'
+        gap: '15px',
+        width: '100%'
       }}
     >
       {experiences?.map?.((experience, ind) => (

@@ -16,14 +16,7 @@ import { useForm } from 'react-hook-form';
 import { updateUser } from '@/actions/user';
 import { updateOnboardingData } from '@/redux/slice/onboarding';
 
-type LinkNameType =
-  | 'leetcode'
-  | 'codeforces'
-  | 'geeksforgeeks'
-  | 'hackerrank'
-  | 'hackerearth'
-  | 'atcoder'
-  | 'codechef';
+type LinkNameType = 'leetcode' | 'codeforces' | 'geeksforgeeks' | 'codechef';
 
 const CodingProfiles = ({ prevPage, nextPage }: PageNavPropsType) => {
   const dispatch = useDispatch();
@@ -42,9 +35,6 @@ const CodingProfiles = ({ prevPage, nextPage }: PageNavPropsType) => {
       leetcode: '',
       codeforces: '',
       geeksforgeeks: '',
-      hackerrank: '',
-      hackerearth: '',
-      atcoder: '',
       codechef: ''
     }
   });
@@ -75,7 +65,11 @@ const CodingProfiles = ({ prevPage, nextPage }: PageNavPropsType) => {
           sx={{
             display: 'flex',
             flexDirection: 'column',
-            gap: '15px'
+            gap: '15px',
+            backdropFilter: 'blur(20px)',
+            p: '20px',
+            borderRadius: '20px',
+            border: '1px solid #ffffff87'
           }}
         >
           <Box>
@@ -103,33 +97,6 @@ const CodingProfiles = ({ prevPage, nextPage }: PageNavPropsType) => {
               {...register('geeksforgeeks', { required: false })}
               helperText={errors?.geeksforgeeks?.message}
               error={!!errors?.geeksforgeeks}
-            />
-          </Box>
-          <Box>
-            <FormLabel>HackerRank</FormLabel>
-            <FormInput
-              placeholder='https://hackerrank.com/username'
-              {...register('hackerrank', { required: false })}
-              helperText={errors?.hackerrank?.message}
-              error={!!errors?.hackerrank}
-            />
-          </Box>
-          <Box>
-            <FormLabel>HackerEarth</FormLabel>
-            <FormInput
-              placeholder='https://hackerearth.com/username'
-              {...register('hackerearth', { required: false })}
-              helperText={errors?.hackerearth?.message}
-              error={!!errors?.hackerearth}
-            />
-          </Box>
-          <Box>
-            <FormLabel>AtCoder</FormLabel>
-            <FormInput
-              placeholder='https://atcoder.com/username'
-              {...register('atcoder', { required: false })}
-              helperText={errors?.atcoder?.message}
-              error={!!errors?.atcoder}
             />
           </Box>
           <Box>

@@ -22,6 +22,7 @@ import {
 } from '@/redux/slice/onboarding';
 import validateExperience from '@/schema/experience';
 import { useSnackbar } from 'notistack';
+import { Grid } from '@mui/material';
 
 const WorkExperienceDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
   const dispatch = useDispatch();
@@ -92,9 +93,9 @@ const WorkExperienceDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
     dispatch(updateOnboardingData({ experiences }));
   };
 
-  // useEffect(() => {
-  //   dispatch(fetchExperiences());
-  // }, []);
+  useEffect(() => {
+    dispatch(fetchExperiences());
+  }, []);
 
   // useEffect(() => {
   //   setApiError(apiErrors);
@@ -103,9 +104,10 @@ const WorkExperienceDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
   useEffect(() => {
     if (experiences?.length) {
       setEditId(null);
-    } else {
-      setEditId('new');
     }
+    //  else {
+    //   setEditId('new');
+    // }
   }, [experiences]);
 
   return (
@@ -117,15 +119,27 @@ const WorkExperienceDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
         Share your internship / work experience with us
       </Heading>
 
-      <WorkExpDetailDesign
-        experiences={experiences}
-        handleDelete={handleDelete}
-        editId={editId}
-        setEditId={setEditId}
-        onSubmit={onSubmit}
-        updateExperiences={updateExperiences}
-        errors={errors}
-      />
+      <Grid
+        sx={{
+          backdropFilter: 'blur(20px)',
+          p: '20px',
+          borderRadius: '20px',
+          border: '1px solid #ffffff87',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center'
+        }}
+      >
+        <WorkExpDetailDesign
+          experiences={experiences}
+          handleDelete={handleDelete}
+          editId={editId}
+          setEditId={setEditId}
+          onSubmit={onSubmit}
+          updateExperiences={updateExperiences}
+          errors={errors}
+        />
+      </Grid>
     </PageContainer>
   );
 };

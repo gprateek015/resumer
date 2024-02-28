@@ -109,7 +109,8 @@ const SkillsContainer = () => {
   return (
     <Grid
       sx={{
-        zIndex: 10
+        zIndex: 10,
+        width: '100%'
       }}
     >
       <SkillsInput onChange={onChange} />

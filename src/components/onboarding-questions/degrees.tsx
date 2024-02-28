@@ -8,26 +8,48 @@ import PageContainer from './page-container';
 const Degrees = ({ nextPage, prevPage }: PageNavPropsType) => {
   return (
     <PageContainer nextPage={nextPage} prevPage={prevPage}>
-      <Grid>
+      <Grid
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          height: '100%'
+        }}
+      >
         <Heading mb='20px'>Highest Qualification you hold?</Heading>
-        <Subheading>Select even if you are enrolled.</Subheading>
-        <Options>
-          <Option onClick={() => nextPage()}>
-            <Typography textAlign={'center'}>Bachelor of Technology</Typography>
-          </Option>
-          <Option onClick={() => nextPage()}>
-            <Typography textAlign={'center'}>Master of Technology</Typography>
-          </Option>
-          <Option onClick={() => nextPage()}>
-            <Typography textAlign={'center'}>Master in Science</Typography>
-          </Option>
-          <Option onClick={() => nextPage()}>
-            <Typography>Diploma</Typography>
-          </Option>
-          <Option onClick={() => nextPage()}>
-            <Typography>Other</Typography>
-          </Option>
-        </Options>
+
+        <Grid
+          flexGrow={1}
+          sx={{
+            backdropFilter: 'blur(20px)',
+            p: '20px',
+            borderRadius: '20px',
+            border: '1px solid #ffffff87',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center'
+          }}
+        >
+          <Subheading>Select even if you are enrolled.</Subheading>
+          <Options>
+            <Option onClick={() => nextPage()}>
+              <Typography textAlign={'center'}>
+                Bachelor of Technology
+              </Typography>
+            </Option>
+            <Option onClick={() => nextPage()}>
+              <Typography textAlign={'center'}>Master of Technology</Typography>
+            </Option>
+            <Option onClick={() => nextPage()}>
+              <Typography textAlign={'center'}>Master in Science</Typography>
+            </Option>
+            <Option onClick={() => nextPage()}>
+              <Typography>Diploma</Typography>
+            </Option>
+            <Option onClick={() => nextPage()}>
+              <Typography>Other</Typography>
+            </Option>
+          </Options>
+        </Grid>
       </Grid>
     </PageContainer>
   );

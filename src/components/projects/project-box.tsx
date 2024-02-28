@@ -24,13 +24,13 @@ const ProjectBox = React.forwardRef<HTMLDivElement, Props>(
     return (
       <Grid
         sx={{
-          border: '1px solid white',
+          border: '1px solid #ffffff87',
           p: '10px',
           borderRadius: '5px',
           position: 'relative',
           borderColor: errorIds.includes(project._id as string)
             ? '#7e73f6'
-            : 'white',
+            : '#ffffff87',
           cursor: grabbing ? 'grabbing' : 'grab'
         }}
         ref={ref}

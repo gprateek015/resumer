@@ -35,6 +35,7 @@ import { useRouter } from 'next/navigation';
 import InfoIcon from '@mui/icons-material/Info';
 import { righteous } from '@/font-family';
 import Certifications from './components/certifications';
+import { AuthButton } from '@/components/navbar/styles';
 
 const Workbench = () => {
   const dispatch = useDispatch();
@@ -154,7 +155,8 @@ const Workbench = () => {
           height: '100%',
           flexGrow: 1,
           display: 'flex',
-          position: 'relative'
+          position: 'relative',
+          overflowX: 'hidden'
         }}
         className={righteous.className}
       >
@@ -255,32 +257,15 @@ const Workbench = () => {
               height: '100%',
               display: 'flex',
               maxHeight: 'calc(100vh - 150px)',
-              overflowY: 'auto',
-              minWidth: { xs: 'calc(100vw - 30px)', md: '450px' },
-              width: { xs: 'calc(100vw - 30px)', sm: '450px' },
-              flexDirection: { xs: 'column-reverse', md: 'column' },
+              overflowY: 'hidden',
+              minWidth: { xs: 'calc(100vw - 30px)', md: '500px' },
+              width: { xs: 'calc(100vw - 30px)', md: '500px' },
+              flexDirection: { xs: 'column', md: 'column' },
               justifyContent: { xs: 'center' },
               margin: { xs: '0px 15px', md: '0px' }
             }}
             ref={resumeContainer}
           >
-            <Button
-              sx={{
-                alignSelf: { xs: 'center', md: 'flex-end' },
-                color: 'white',
-                borderColor: '#ffffff91',
-                '&:hover': {
-                  borderColor: '#ffffff'
-                },
-                mb: '10px',
-                mt: { xs: '10px', md: '0px' },
-                padding: '2px 15px'
-              }}
-              variant='outlined'
-              onClick={() => downloadResume()}
-            >
-              Download
-            </Button>
             <Grid
               sx={{
                 overflow: 'auto',
@@ -292,6 +277,18 @@ const Workbench = () => {
                 width={resumeContainer?.current?.offsetWidth}
               />
             </Grid>
+            <AuthButton
+              sx={{
+                mt: '10px',
+                borderRadius: '20px',
+                width: 'fit-content',
+                alignSelf: 'center'
+              }}
+              variant='outlined'
+              onClick={() => downloadResume()}
+            >
+              Download
+            </AuthButton>
           </Grid>
         </Grid>
         <Typography

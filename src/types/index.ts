@@ -12,14 +12,7 @@ export type Skill = {
 
 export type ProfileLink = {
   _id?: string;
-  name:
-    | 'leetcode'
-    | 'codeforces'
-    | 'geeksforgeeks'
-    | 'hackerrank'
-    | 'hackerearth'
-    | 'atcoder'
-    | 'codechef';
+  name: 'leetcode' | 'codeforces' | 'geeksforgeeks' | 'codechef';
   link?: string;
 };
 

@@ -27,6 +27,7 @@ const PdfViewer = ({
     <Worker workerUrl='https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.min.js'>
       <Grid
         sx={{
+          height: '100%',
           width: width,
           '& .rpv-core__inner-page': {
             width: 'fit-content !important',
