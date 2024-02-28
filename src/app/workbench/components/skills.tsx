@@ -42,7 +42,7 @@ const Skills = ({
   const [newSkills, setNewSkills] = useState<string[]>([]);
 
   const isAlreadyAdded = (curr: any[], newVal: OnChangeValueType) => {
-    const item = curr.find(skill => skill.value === newVal.name);
+    const item = curr?.find(skill => skill.value === newVal.name);
     return item !== undefined;
   };
 
