@@ -64,48 +64,60 @@ const AchievementsSkills = ({
     <PageContainer nextPage={handleSubmit(onSubmit)} prevPage={prevPage}>
       <FormProvider {...methods}>
         <Heading mb='20px'>Share your Skills & Achievements</Heading>
-        <DndProvider backend={HTML5Backend}>
-          <FormLabel mb='5px'>Select Your Skills</FormLabel>
-          <SkillsContainer />
-        </DndProvider>
 
-        <Divider
+        <Grid
           sx={{
-            borderColor: '#ffffff90',
-            my: '20px'
+            backdropFilter: 'blur(20px)',
+            p: '20px',
+            borderRadius: '20px',
+            border: '1px solid #ffffff87',
+            display: 'flex',
+            flexDirection: 'column'
           }}
-        />
+        >
+          <DndProvider backend={HTML5Backend}>
+            <FormLabel mb='5px'>Select Your Skills</FormLabel>
+            <SkillsContainer />
+          </DndProvider>
 
-        <Grid>
-          <FormLabel mb='5px'>Add Your Achievements</FormLabel>
-          {achievements?.map((ach, ind: number) => (
-            <Box key={ach.id} display={'flex'} gap='10px' mb='10px'>
-              <FormInput
-                {...register(`achievements.${ind}`)}
-                placeholder='Tasks you did in your internship/job'
-              />
-              <IconButton
-                sx={{
-                  color: 'white',
-                  border: '1px solid white',
-                  borderRadius: '3px'
-                }}
-                onClick={() => remove(ind)}
-              >
-                <DeleteIcon />
-              </IconButton>
-            </Box>
-          ))}
-          <Button
-            onClick={() => append('')}
+          <Divider
             sx={{
-              background: 'transparent'
+              borderColor: '#ffffff87',
+              my: '20px'
             }}
-            startIcon={<AddIcon />}
-            fullWidth
-          >
-            Add another point
-          </Button>
+          />
+
+          <Grid>
+            <FormLabel mb='5px'>Add Your Achievements</FormLabel>
+            {achievements?.map((ach, ind: number) => (
+              <Box key={ach.id} display={'flex'} gap='10px' mb='10px'>
+                <FormInput
+                  {...register(`achievements.${ind}`)}
+                  placeholder='Tasks you did in your internship/job'
+                />
+                <IconButton
+                  sx={{
+                    color: 'white',
+                    border: '1px solid white',
+                    borderRadius: '3px'
+                  }}
+                  onClick={() => remove(ind)}
+                >
+                  <DeleteIcon />
+                </IconButton>
+              </Box>
+            ))}
+            <Button
+              onClick={() => append('')}
+              sx={{
+                background: 'transparent'
+              }}
+              startIcon={<AddIcon />}
+              fullWidth
+            >
+              Add another point
+            </Button>
+          </Grid>
         </Grid>
       </FormProvider>
     </PageContainer>

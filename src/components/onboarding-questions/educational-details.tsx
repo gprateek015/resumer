@@ -91,17 +91,23 @@ const EducationalDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
   const onNavigation = (navigate: Function) => {
     const errorIds = Object.keys(errors);
     if (errorIds.length !== 0) {
-      enqueueSnackbar({
-        message: 'Error in work experiences',
-        variant: 'error',
-        preventDuplicate: true
-      });
-    } else if (editId !== null) {
-      enqueueSnackbar({
-        message: 'Either cancel or save the changes',
-        variant: 'warning',
-        preventDuplicate: true
-      });
+      //   enqueueSnackbar({
+      //     message: 'Error in an education',
+      //     variant: 'error',
+      //     preventDuplicate: true
+      //   });
+      // } else if (editId !== null) {
+      //   enqueueSnackbar({
+      //     message: 'Either cancel or save the changes',
+      //     variant: 'warning',
+      //     preventDuplicate: true
+      //   });
+      // } else if (!educations?.length) {
+      //   enqueueSnackbar({
+      //     message: 'Minimum one education is required',
+      //     variant: 'warning',
+      //     preventDuplicate: true
+      //   });
     } else {
       navigate();
     }
@@ -136,15 +142,28 @@ const EducationalDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
         <Heading mb='20px'>
           Kindly provide us the following details regarding your education
         </Heading>
-        <EduDetailDesign
-          educations={educations}
-          editId={editId}
-          setEditId={setEditId}
-          handleDelete={handleDelete}
-          onSubmit={onSubmit}
-          updateEducations={updateEducations}
-          errors={errors}
-        />
+
+        <Grid
+          sx={{
+            backdropFilter: 'blur(20px)',
+            p: '20px',
+            borderRadius: '20px',
+            border: '1px solid #ffffff87',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center'
+          }}
+        >
+          <EduDetailDesign
+            educations={educations}
+            editId={editId}
+            setEditId={setEditId}
+            handleDelete={handleDelete}
+            onSubmit={onSubmit}
+            updateEducations={updateEducations}
+            errors={errors}
+          />
+        </Grid>
       </Grid>
     </PageContainer>
   );

@@ -89,15 +89,16 @@ const DescriptionForm = () => {
             fullWidth
             multiline
             rows={9}
-            hidden
+            // hidden
             placeholder='Start typing in here'
             inputProps={{
               sx: {
-                background: 'white',
+                background: 'transparent',
                 padding: '7px 10px',
                 border: '1px solid #E9E9E9',
                 borderRadius: '4px',
-                lineHeight: '20px'
+                lineHeight: '20px',
+                color: 'white'
               }
             }}
             onChange={e => setJobDescription(e.target.value)}

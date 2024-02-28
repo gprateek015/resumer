@@ -140,7 +140,7 @@ const Profile = () => {
               >
                 <Typography
                   sx={{
-                    fontSize: '18px',
+                    fontSize: '1.5rem',
                     background:
                       'linear-gradient(90deg, #4ADFD5 0.42%, #7479FA 41.67%, #E92EC3 106.58%)',
                     color: 'transparent',
@@ -164,7 +164,8 @@ const Profile = () => {
               <Grid
                 sx={{
                   borderRadius: '24px',
-                  background: 'rgba(255, 255, 255, 0.10)',
+                  // background: 'rgba(255, 255, 255, 0.10)',
+                  border: '1px solid #ffffff87',
                   backdropFilter: 'blur(20px)',
                   display: 'flex',
                   width: '100%',
@@ -178,7 +179,7 @@ const Profile = () => {
                     flexBasis: '50%',
                     padding: '15px 25px 25px',
                     overflow: { xs: 'visible', md: 'auto' },
-                    borderRight: '1px solid rgba(255, 255, 255, 0.14)',
+                    borderRight: '1px solid #ffffff87',
                     borderWidth: { xs: '0px', md: '1px' },
 
                     '&::-webkit-scrollbar': {

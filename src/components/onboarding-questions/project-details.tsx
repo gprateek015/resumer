@@ -20,6 +20,7 @@ import {
 import validateProject from '@/schema/project';
 import { useSnackbar } from 'notistack';
 import { Project } from '@/types';
+import { Grid } from '@mui/material';
 
 const ProjectDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
   const dispatch = useDispatch();
@@ -100,9 +101,10 @@ const ProjectDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
   useEffect(() => {
     if (projects?.length) {
       setEditId(null);
-    } else {
-      setEditId('new');
     }
+    // else {
+    //   setEditId('new');
+    // }
   }, [projects]);
 
   return (
@@ -111,15 +113,28 @@ const ProjectDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
       prevPage={() => onNavigation(prevPage)}
     >
       <Heading mb='20px'>Please provide us with your projects</Heading>
-      <ProjectDetailDesign
-        projects={projects}
-        editId={editId}
-        setEditId={setEditId}
-        handleDelete={handleDelete}
-        updateProjects={updateProjects}
-        errors={errors}
-        onSubmit={onSubmit}
-      />
+
+      <Grid
+        sx={{
+          backdropFilter: 'blur(20px)',
+          p: '20px',
+          borderRadius: '20px',
+          border: '1px solid #ffffff87',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center'
+        }}
+      >
+        <ProjectDetailDesign
+          projects={projects}
+          editId={editId}
+          setEditId={setEditId}
+          handleDelete={handleDelete}
+          updateProjects={updateProjects}
+          errors={errors}
+          onSubmit={onSubmit}
+        />
+      </Grid>
     </PageContainer>
   );
 };

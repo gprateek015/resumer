@@ -95,7 +95,7 @@ const ProfileLinksContainer = () => {
           <IconButton
             sx={{
               color: 'white',
-              border: '1px solid white',
+              border: '1px solid #ffffff87',
               borderRadius: '3px'
             }}
             onClick={() => remove(ind)}

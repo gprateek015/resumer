@@ -36,7 +36,7 @@ const SkillsContainer = () => {
   const [newSkills, setNewSkills] = useState<string[]>([]);
 
   const isAlreadyAdded = (curr: any[], newVal: OnChangeValueType) => {
-    const item = curr.find(skill => skill.name === newVal.name);
+    const item = curr?.find(skill => skill.name === newVal.name);
     return item !== undefined;
   };
 
@@ -109,7 +109,8 @@ const SkillsContainer = () => {
   return (
     <Grid
       sx={{
-        zIndex: 10
+        zIndex: 10,
+        width: '100%'
       }}
     >
       <SkillsInput onChange={onChange} />
