@@ -29,7 +29,8 @@ a {
 
 @media (max-width: 600px) {
   .home-background {
-    width: 400vw;
+    width: 1900px;
+    left: -1270px;
   }
 }
 
