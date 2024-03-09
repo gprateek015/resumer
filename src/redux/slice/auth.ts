@@ -7,7 +7,7 @@ import {
   socialLogin,
   verifyOtp
 } from '@/actions/user';
-import { AUTH_TOKEN } from '@/constants';
+import { AUTH_TOKEN, ONBOARDING_STARTED } from '@/constants';
 import { enqueueSnackbar } from 'notistack';
 
 const initialState = {
@@ -30,6 +30,7 @@ export const authSlice = createSlice({
     logoutUser: state => {
       state.isLoggedIn = false;
       localStorage.removeItem(AUTH_TOKEN);
+      localStorage.removeItem(ONBOARDING_STARTED);
     },
     changeAuthPage: (state, action) => {
       state.page = action.payload;

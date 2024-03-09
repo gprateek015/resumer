@@ -11,6 +11,7 @@ Axios.interceptors.request.use(
     if (userToken) {
       config.headers['authorization'] = `${userToken}`;
     }
+    config.withCredentials = true;
     return config;
   },
   error => {
