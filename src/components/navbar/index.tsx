@@ -106,7 +106,7 @@ const Navbar = () => {
         </Link>
       </Grid>
       <Grid ref={authRef}>
-        <AuthButton onClick={handleClick} sx={{ minWidth: '95px' }}>
+        <AuthButton onClick={handleClick} sx={{ minWidth: '95px', fontFamily: righteous.style.fontFamily }}>
           {isLoggedIn ? 'Log out' : page === 0 ? 'Sign up' : 'Sign in'}
         </AuthButton>
       </Grid>

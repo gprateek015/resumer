@@ -10,7 +10,7 @@ import ProtectedRoutes from '@/components/protected-routes';
 export const metadata = {
   title: 'Resumer',
   description:
-    'Get you resume specially tailored for you and specific Job description'
+    'Get your resume customized for specific job descriptions'
 };
 
 export default function RootLayout({
