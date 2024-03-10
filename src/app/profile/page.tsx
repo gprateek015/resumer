@@ -156,7 +156,12 @@ const Profile = () => {
                   onClick={handleSubmit(onSave)}
                   sx={{
                     padding: '4px 20px',
-                    borderRadius: '20px'
+                    borderRadius: '20px',
+                    boxShadow: '',
+                    '&:hover': {
+                      boxShadow:
+                        '0px 0px 15px 0px rgba(244, 244, 244, 0.48) inset'
+                    }
                   }}
                 >
                   Save

@@ -10,6 +10,7 @@ import validateExperience from '@/schema/experience';
 
 import ExperienceBox from './experience-box';
 import DragableElement from '../dragable-element';
+import { space_grotest } from '@/font-family';
 
 const WorkExpDetailDesign = ({
   experiences = [],
@@ -59,6 +60,7 @@ const WorkExpDetailDesign = ({
         gap: '15px',
         width: '100%'
       }}
+      className={space_grotest.className}
     >
       {experiences?.map?.((experience, ind) => (
         <Box key={ind}>

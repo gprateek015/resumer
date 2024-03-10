@@ -138,7 +138,13 @@ const EducationalDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
       nextPage={() => onNavigation(nextPage)}
       prevPage={() => onNavigation(prevPage)}
     >
-      <Grid>
+      <Grid
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          height: '100%'
+        }}
+      >
         <Heading mb='20px'>
           Kindly provide us the following details regarding your education
         </Heading>
@@ -151,7 +157,8 @@ const EducationalDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
             border: '1px solid #ffffff87',
             display: 'flex',
             flexDirection: 'column',
-            alignItems: 'center'
+            alignItems: 'center',
+            flexGrow: 1
           }}
         >
           <EduDetailDesign

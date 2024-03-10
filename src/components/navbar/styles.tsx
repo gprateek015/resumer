@@ -9,12 +9,11 @@ export const AuthButton = styled(Button)(({ sx }: { sx?: CSSProperties }) => ({
   color: 'transparent',
   backgroundClip: 'text',
   WebkitBackgroundClip: 'text',
-  borderRadius: sx?.borderRadius || '20px 20px 20px 0px',
+  borderRadius: '20px 20px 20px 0px',
   // border: '2px solid transparent',
   position: 'relative',
   padding: '8px 20px',
-  boxShadow:
-    sx?.boxShadow || '0px 0px 15px 0px rgba(244, 244, 244, 0.48) inset',
+  boxShadow: '0px 0px 15px 0px rgba(244, 244, 244, 0.48) inset',
 
   '&::before': {
     content: "''",
@@ -27,7 +26,9 @@ export const AuthButton = styled(Button)(({ sx }: { sx?: CSSProperties }) => ({
     WebkitMask:
       'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
     WebkitMaskComposite: 'xor'
-  }
+  },
+
+  ...sx
 }));
 
 export const NavLink = styled(Typography)(({ active }: { active: string }) => ({

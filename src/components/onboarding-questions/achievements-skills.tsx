@@ -12,6 +12,7 @@ import AddIcon from '@mui/icons-material/Add';
 import { Skill } from '@/types';
 import { updateUser } from '@/actions/user';
 import { updateOnboardingData } from '@/redux/slice/onboarding';
+import { space_grotest } from '@/font-family';
 
 const AchievementsSkills = ({
   nextPage,
@@ -74,6 +75,7 @@ const AchievementsSkills = ({
             display: 'flex',
             flexDirection: 'column'
           }}
+          className={space_grotest.className}
         >
           <DndProvider backend={HTML5Backend}>
             <FormLabel mb='5px'>Select Your Skills</FormLabel>

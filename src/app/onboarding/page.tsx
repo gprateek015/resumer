@@ -13,7 +13,7 @@ import { useRouter } from 'next/navigation';
 import { ONBOARDING_STARTED } from '@/constants';
 
 const Onboarding = () => {
-  const [showQuestions, setShowQuestions] = useState<boolean>(false);
+  const [showQuestions, setShowQuestions] = useState<boolean>(!false);
   const router = useRouter();
   const dispatch = useDispatch();
   const { data: user } = useSelector(state => state.user);

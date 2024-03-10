@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from '@/redux/store';
 import { useForm } from 'react-hook-form';
 import { updateUser } from '@/actions/user';
 import { updateOnboardingData } from '@/redux/slice/onboarding';
+import { space_grotest } from '@/font-family';
 
 type LinkNameType = 'leetcode' | 'codeforces' | 'geeksforgeeks' | 'codechef';
 
@@ -71,6 +72,7 @@ const CodingProfiles = ({ prevPage, nextPage }: PageNavPropsType) => {
             borderRadius: '20px',
             border: '1px solid #ffffff87'
           }}
+          className={space_grotest.className}
         >
           <Box>
             <FormLabel>Leetcode</FormLabel>

@@ -112,28 +112,37 @@ const ProjectDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
       nextPage={() => onNavigation(nextPage)}
       prevPage={() => onNavigation(prevPage)}
     >
-      <Heading mb='20px'>Please provide us with your projects</Heading>
-
       <Grid
         sx={{
-          backdropFilter: 'blur(20px)',
-          p: '20px',
-          borderRadius: '20px',
-          border: '1px solid #ffffff87',
           display: 'flex',
           flexDirection: 'column',
-          alignItems: 'center'
+          height: '100%'
         }}
       >
-        <ProjectDetailDesign
-          projects={projects}
-          editId={editId}
-          setEditId={setEditId}
-          handleDelete={handleDelete}
-          updateProjects={updateProjects}
-          errors={errors}
-          onSubmit={onSubmit}
-        />
+        <Heading mb='20px'>Please provide us with your projects</Heading>
+
+        <Grid
+          sx={{
+            backdropFilter: 'blur(20px)',
+            p: '20px',
+            borderRadius: '20px',
+            border: '1px solid #ffffff87',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            flexGrow: 1
+          }}
+        >
+          <ProjectDetailDesign
+            projects={projects}
+            editId={editId}
+            setEditId={setEditId}
+            handleDelete={handleDelete}
+            updateProjects={updateProjects}
+            errors={errors}
+            onSubmit={onSubmit}
+          />
+        </Grid>
       </Grid>
     </PageContainer>
   );

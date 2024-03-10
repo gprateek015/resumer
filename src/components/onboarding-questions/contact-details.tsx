@@ -17,6 +17,7 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from '@/redux/store';
 import { updateUser } from '@/actions/user';
 import { updateOnboardingData } from '@/redux/slice/onboarding';
+import { space_grotest } from '@/font-family';
 
 type ContactDetailsType = {
   phone?: string;
@@ -72,7 +73,7 @@ const ContactDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
 
   return (
     <PageContainer nextPage={handleSubmit(onSubmit)} prevPage={prevPage}>
-      <Grid>
+      <Grid className={space_grotest.className}>
         <Heading mb='20px'>
           Let's start with some of your contact details
         </Heading>

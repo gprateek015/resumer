@@ -10,6 +10,7 @@ import ProjectBox from './project-box';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import DragableElement from '../dragable-element';
+import { space_grotest } from '@/font-family';
 
 const ProjectDetailDesign = ({
   projects = [],
@@ -59,6 +60,7 @@ const ProjectDetailDesign = ({
         gap: '15px',
         width: '100%'
       }}
+      className={space_grotest.className}
     >
       {projects.map((project, ind) => (
         <Box key={project._id}>

@@ -10,6 +10,7 @@ import EducationBox from './education-box';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import DragableElement from '../dragable-element';
+import { space_grotest } from '@/font-family';
 
 const EduDetailDesign = ({
   educations = [],
@@ -55,6 +56,7 @@ const EduDetailDesign = ({
         gap: '15px',
         width: '100%'
       }}
+      className={space_grotest.className}
     >
       {educations.map((education, ind) => (
         <Box key={education._id}>

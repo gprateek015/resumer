@@ -4,6 +4,7 @@ import { Grid, Typography } from '@mui/material';
 import { Heading, Option, Options, PageNavButton, Subheading } from './styles';
 import { PageNavPropsType } from '.';
 import PageContainer from './page-container';
+import { space_grotest } from '@/font-family';
 
 const Degrees = ({ nextPage, prevPage }: PageNavPropsType) => {
   return (
@@ -28,6 +29,7 @@ const Degrees = ({ nextPage, prevPage }: PageNavPropsType) => {
             flexDirection: 'column',
             alignItems: 'center'
           }}
+          className={space_grotest.className}
         >
           <Subheading>Select even if you are enrolled.</Subheading>
           <Options>

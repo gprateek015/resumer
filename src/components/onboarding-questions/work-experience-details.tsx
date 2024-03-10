@@ -119,30 +119,39 @@ const WorkExperienceDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
       nextPage={() => onNavigation(nextPage)}
       prevPage={() => onNavigation(prevPage)}
     >
-      <Heading mb='20px'>
-        Share your internship / work experience with us
-      </Heading>
-
       <Grid
         sx={{
-          backdropFilter: 'blur(20px)',
-          p: '20px',
-          borderRadius: '20px',
-          border: '1px solid #ffffff87',
           display: 'flex',
           flexDirection: 'column',
-          alignItems: 'center'
+          height: '100%'
         }}
       >
-        <WorkExpDetailDesign
-          experiences={experiences}
-          handleDelete={handleDelete}
-          editId={editId}
-          setEditId={setEditId}
-          onSubmit={onSubmit}
-          updateExperiences={updateExperiences}
-          errors={errors}
-        />
+        <Heading mb='20px'>
+          Share your internship / work experience with us
+        </Heading>
+
+        <Grid
+          sx={{
+            backdropFilter: 'blur(20px)',
+            p: '20px',
+            borderRadius: '20px',
+            border: '1px solid #ffffff87',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            flexGrow: '1'
+          }}
+        >
+          <WorkExpDetailDesign
+            experiences={experiences}
+            handleDelete={handleDelete}
+            editId={editId}
+            setEditId={setEditId}
+            onSubmit={onSubmit}
+            updateExperiences={updateExperiences}
+            errors={errors}
+          />
+        </Grid>
       </Grid>
     </PageContainer>
   );
