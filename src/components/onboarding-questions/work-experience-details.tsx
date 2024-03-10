@@ -60,6 +60,10 @@ const WorkExperienceDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
   const onSubmit = (data: Experience) => {
     // setApiError(null);
 
+    if (data.location === '') {
+      delete data.location;
+    }
+
     if (editId && editId !== 'new')
       dispatch(
         updateExperienceOnb({

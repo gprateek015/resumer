@@ -1,8 +1,9 @@
 import { deleteProject, postProject, updateProject } from '@/actions/project';
 import ProjectDetailDesign from '@/components/projects/detail';
 import { ProjectData } from '@/components/projects/edit';
-import { useDispatch } from '@/redux/store';
-import React, { useEffect, useState } from 'react';
+import { clearError } from '@/redux/slice/user';
+import { useDispatch, useSelector } from '@/redux/store';
+import React, { useEffect, useMemo, useState } from 'react';
 import { SubmitHandler, useFormContext } from 'react-hook-form';
 
 const ProfileProjects = () => {
@@ -10,6 +11,17 @@ const ProfileProjects = () => {
   const { setValue, watch } = useFormContext();
   const dispatch = useDispatch();
   const projects = watch('projects');
+  const { error } = useSelector(state => state.user);
+
+  const apiError = useMemo(() => {
+    let apierror;
+    try {
+      apierror = JSON.parse(error || '');
+    } catch (_) {
+      apierror = error;
+    }
+    return apierror;
+  }, [error]);
 
   const onSubmit: SubmitHandler<ProjectData> = async data => {
     if (editId && editId !== 'new')
@@ -20,6 +32,7 @@ const ProfileProjects = () => {
         })
       );
     else await dispatch(postProject(data));
+    dispatch(clearError());
   };
 
   const handleDelete = (id: string) => {
@@ -41,6 +54,7 @@ const ProfileProjects = () => {
       editId={editId}
       setEditId={setEditId}
       onSubmit={onSubmit}
+      apiError={apiError}
     />
   );
 };

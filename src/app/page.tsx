@@ -2,7 +2,7 @@ import React from 'react';
 import { Grid, Typography, Box } from '@mui/material';
 
 import AuthBox from '@/components/auth';
-import { poppins, righteous } from '@/font-family';
+import { poppins, righteous, space_grotest } from '@/font-family';
 
 export default function Home() {
   return (
@@ -10,7 +10,7 @@ export default function Home() {
       display={'flex'}
       alignItems={'center'}
       flexGrow={1}
-      className={righteous.className}
+      className={space_grotest.className}
     >
       <Grid
         sx={{
@@ -41,6 +41,7 @@ export default function Home() {
               fontSize={{ xs: '2rem', sm: '3rem' }}
               lineHeight={'1.2em'}
               marginBottom={{ xs: '15px', sm: '30px' }}
+              fontWeight='700'
             >
               Improve your Resume ATS score Using AI
             </Typography>
@@ -51,6 +52,7 @@ export default function Home() {
               sx={{
                 display: { xs: 'none', sm: 'block' }
               }}
+              fontWeight='600'
             >
               Let AI do the heavy lifting for you in optimizing your resumes
               when you apply for various job roles
@@ -63,6 +65,7 @@ export default function Home() {
               gap: { xs: '30px', sm: '60px' },
               marginTop: { sm: '20%' }
             }}
+            className={righteous.className}
           >
             <Box>
               <Typography

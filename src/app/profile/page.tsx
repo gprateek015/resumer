@@ -14,15 +14,15 @@ import ProfileEducations from './components/educations';
 import ProfileExperiences from './components/experiences';
 import ProfileProjects from './components/projects';
 import ProfileLinksContainer from '@/components/profile-details/profile-links';
-import { righteous } from '@/font-family';
+import { righteous, space_grotest } from '@/font-family';
 import { fetchEductions } from '@/actions/education';
 import { fetchExperiences } from '@/actions/experience';
 import { fetchProjects } from '@/actions/project';
 import { updateUser } from '@/actions/user';
 import { Skill, User } from '@/types';
-import { Button, FormLabel } from '@/components/onboarding-questions/styles';
 import { AuthButton } from '@/components/navbar/styles';
 import CertificationsContainer from '@/components/profile-details/certifications';
+import { FormLabel } from '@/components/onboarding-questions/styles';
 
 type ProfileUserData = User & {
   technical_skills?: { name: string }[];
@@ -120,7 +120,7 @@ const Profile = () => {
               px: { xs: '20px', sm: '100px', lg: '200px' },
               width: '100%'
             }}
-            className={righteous.className}
+            className={space_grotest.className}
           >
             <Grid
               sx={{
@@ -145,7 +145,8 @@ const Profile = () => {
                       'linear-gradient(90deg, #4ADFD5 0.42%, #7479FA 41.67%, #E92EC3 106.58%)',
                     color: 'transparent',
                     backgroundClip: 'text',
-                    WebkitBackgroundClip: 'text'
+                    WebkitBackgroundClip: 'text',
+                    fontFamily: righteous.style.fontFamily
                   }}
                 >
                   My Profile
@@ -229,14 +230,14 @@ const Profile = () => {
                     scrollbarWidth: 'none'
                   }}
                 >
-                  <Typography
+                  <FormLabel
                     sx={{
                       fontSize: '18px',
                       mb: '10px'
                     }}
                   >
                     Educations
-                  </Typography>
+                  </FormLabel>
                   <ProfileEducations />
                   <Divider
                     sx={{
@@ -244,14 +245,14 @@ const Profile = () => {
                       my: '20px'
                     }}
                   />
-                  <Typography
+                  <FormLabel
                     sx={{
                       fontSize: '18px',
                       mb: '10px'
                     }}
                   >
                     Experiences
-                  </Typography>
+                  </FormLabel>
                   <ProfileExperiences />
                   <Divider
                     sx={{
@@ -259,14 +260,14 @@ const Profile = () => {
                       my: '20px'
                     }}
                   />
-                  <Typography
+                  <FormLabel
                     sx={{
                       fontSize: '18px',
                       mb: '10px'
                     }}
                   >
                     Projects
-                  </Typography>
+                  </FormLabel>
                   <ProfileProjects />
                 </Grid>
               </Grid>

@@ -70,12 +70,8 @@ const WorkExpEdit = ({
       description: [''],
       ...(experience && {
         ...experience,
-        start_date: moment(experience.start_date ?? '', 'DD-MM-YYYY').format(
-          'YYYY-MM-DD'
-        ),
-        end_date: moment(experience.end_date ?? '', 'DD-MM-YYYY').format(
-          'YYYY-MM-DD'
-        )
+        start_date: moment(experience.start_date ?? '').format('YYYY-MM-DD'),
+        end_date: moment(experience.end_date ?? '').format('YYYY-MM-DD')
       })
     });
   }, [experience]);
@@ -194,7 +190,9 @@ const WorkExpEdit = ({
             <>
               <FormLabel>Location</FormLabel>
               <FormInput
-                {...register('location', { required: 'Location is required' })}
+                {...register('location', {
+                  required: 'Location is required'
+                })}
                 placeholder='Type in your work location'
                 helperText={errors?.location?.message as any}
                 error={!!errors?.location?.message}

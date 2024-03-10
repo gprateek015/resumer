@@ -11,7 +11,7 @@ import { changeAuthPage, logoutUser } from '@/redux/slice/auth';
 import { clearUserData } from '@/redux/slice/user';
 import { usePathname, useRouter } from 'next/navigation';
 import { signOut } from 'next-auth/react';
-import { righteous } from '@/font-family';
+import { righteous, space_grotest } from '@/font-family';
 
 const Navbar = () => {
   const { isLoggedIn, page } = useSelector((state: RootState) => state.auth);
@@ -55,10 +55,13 @@ const Navbar = () => {
         zIndex: '100',
         height: '70px'
       }}
-      className={righteous.className}
+      className={space_grotest.className}
     >
       <Link href='/'>
-        <NavLink active='true' sx={{ fontSize: '22px' }}>
+        <NavLink
+          active='true'
+          sx={{ fontSize: '22px', fontFamily: righteous.style.fontFamily }}
+        >
           Resumer
         </NavLink>
       </Link>

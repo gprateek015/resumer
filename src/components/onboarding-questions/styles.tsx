@@ -73,7 +73,8 @@ export const FormLabel = styled(Typography)({
   color: 'white',
   fontSize: '16px',
   lineHeight: '24px',
-  marginBottom: '6px'
+  marginBottom: '6px',
+  fontWeight: '700'
 });
 
 export const FormInput = styled(TextField)({

@@ -6,11 +6,18 @@ import {
   socialLogin
 } from '@/actions/user';
 import { AUTH_TOKEN } from '@/constants';
-import { generateResumeData, loadResume } from '@/actions/resume';
 import { Education, Experience, Project, User } from '@/types';
-import { fetchEductions } from '@/actions/education';
-import { fetchExperiences } from '@/actions/experience';
-import { fetchProjects } from '@/actions/project';
+import {
+  fetchEductions,
+  postEducation,
+  updateEducation
+} from '@/actions/education';
+import {
+  fetchExperiences,
+  postExperience,
+  updateExperience
+} from '@/actions/experience';
+import { fetchProjects, postProject, updateProject } from '@/actions/project';
 
 export type UserState = {
   authToken: string;
@@ -18,6 +25,7 @@ export type UserState = {
   educations: Education[];
   experiences: Experience[];
   projects: Project[];
+  error: string;
 };
 
 const initialState: UserState = {
@@ -25,7 +33,8 @@ const initialState: UserState = {
   data: {},
   educations: [],
   experiences: [],
-  projects: []
+  projects: [],
+  error: ''
 };
 
 const userDataToState = (state: UserState, action: PayloadAction<any>) => {
@@ -46,6 +55,9 @@ export const userSlice = createSlice({
     },
     addAuthToken: (state, action) => {
       state.authToken = action.payload || '';
+    },
+    clearError: state => {
+      state.error = '';
     }
   },
   extraReducers: builder => {
@@ -70,10 +82,28 @@ export const userSlice = createSlice({
       })
       .addCase(fetchProjects.fulfilled, (state, action) => {
         state.projects = action.payload.projects;
+      })
+      .addCase(postEducation.rejected, (state, action) => {
+        state.error = action?.error?.message || '';
+      })
+      .addCase(postExperience.rejected, (state, action) => {
+        state.error = action?.error?.message || '';
+      })
+      .addCase(postProject.rejected, (state, action) => {
+        state.error = action?.error?.message || '';
+      })
+      .addCase(updateEducation.rejected, (state, action) => {
+        state.error = action?.error?.message || '';
+      })
+      .addCase(updateExperience.rejected, (state, action) => {
+        state.error = action?.error?.message || '';
+      })
+      .addCase(updateProject.rejected, (state, action) => {
+        state.error = action?.error?.message || '';
       });
   }
 });
 
-export const { clearUserData, addAuthToken } = userSlice.actions;
+export const { clearUserData, addAuthToken, clearError } = userSlice.actions;
 
 export default userSlice.reducer;

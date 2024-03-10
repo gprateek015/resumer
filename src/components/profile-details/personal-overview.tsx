@@ -10,11 +10,11 @@ import {
   TextField,
   Typography
 } from '@mui/material';
-import { FormLabel, InputContainer, Row } from './styles';
+import { InputContainer, Row } from './styles';
 import DeleteIcon from '@mui/icons-material/DeleteForever';
 import AddIcon from '@mui/icons-material/Add';
 import { useFieldArray, useFormContext } from 'react-hook-form';
-import { Button, FormInput } from '../onboarding-questions/styles';
+import { Button, FormInput, FormLabel } from '../onboarding-questions/styles';
 
 const PersonalOverviewContainer = () => {
   const { register } = useFormContext();

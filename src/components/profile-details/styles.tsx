@@ -1,8 +1,4 @@
-import { Box, Grid, TextField, styled } from '@mui/material';
-
-export const FormLabel = styled(Box)({
-  marginBottom: '10px'
-});
+import { Box, Grid, TextField, Typography, styled } from '@mui/material';
 
 export const Row = styled(Grid)({
   display: 'flex',

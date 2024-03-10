@@ -4,9 +4,10 @@ import {
   updateExperience
 } from '@/actions/experience';
 import WorkExpDetailDesign from '@/components/work-experiences/detail';
-import { useDispatch } from '@/redux/store';
+import { clearError } from '@/redux/slice/user';
+import { useDispatch, useSelector } from '@/redux/store';
 import { Experience } from '@/types';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { SubmitHandler, useFormContext } from 'react-hook-form';
 
 const ProfileExperiences = () => {
@@ -14,6 +15,17 @@ const ProfileExperiences = () => {
   const { watch } = useFormContext();
   const dispatch = useDispatch();
   const experiences = watch('experiences');
+  const { error } = useSelector(state => state.user);
+
+  const apiError = useMemo(() => {
+    let apierror;
+    try {
+      apierror = JSON.parse(error || '');
+    } catch (_) {
+      apierror = error;
+    }
+    return apierror;
+  }, [error]);
 
   const onSubmit: SubmitHandler<Experience> = async data => {
     if (editId && editId !== 'new')
@@ -24,6 +36,8 @@ const ProfileExperiences = () => {
         })
       );
     else await dispatch(postExperience(data));
+
+    dispatch(clearError());
   };
 
   const handleDelete = (id: string) => {
@@ -45,6 +59,7 @@ const ProfileExperiences = () => {
       editId={editId}
       setEditId={setEditId}
       onSubmit={onSubmit}
+      apiError={apiError}
     />
   );
 };

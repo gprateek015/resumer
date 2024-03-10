@@ -5,8 +5,9 @@ import {
 } from '@/actions/education';
 import EduDetailDesign from '@/components/educations/detail';
 import { EducationData } from '@/components/educations/edit';
-import { useDispatch } from '@/redux/store';
-import React, { useEffect, useState } from 'react';
+import { clearError } from '@/redux/slice/user';
+import { useDispatch, useSelector } from '@/redux/store';
+import React, { useEffect, useMemo, useState } from 'react';
 import { SubmitHandler, useFormContext } from 'react-hook-form';
 
 const ProfileEducations = () => {
@@ -14,6 +15,17 @@ const ProfileEducations = () => {
   const { watch } = useFormContext();
   const educations = watch('educations');
   const dispatch = useDispatch();
+  const { error } = useSelector(state => state.user);
+
+  const apiError = useMemo(() => {
+    let apierror;
+    try {
+      apierror = JSON.parse(error || '');
+    } catch (_) {
+      apierror = error;
+    }
+    return apierror;
+  }, [error]);
 
   const onSubmit: SubmitHandler<EducationData> = async data => {
     const newData = {
@@ -39,6 +51,8 @@ const ProfileEducations = () => {
         })
       );
     else await dispatch(postEducation(newData));
+
+    dispatch(clearError());
   };
 
   const handleDelete = (id: string) => {
@@ -60,6 +74,7 @@ const ProfileEducations = () => {
       editId={editId}
       setEditId={setEditId}
       onSubmit={onSubmit}
+      apiError={apiError}
     />
   );
 };

@@ -25,6 +25,8 @@ import DeleteIcon from '@mui/icons-material/DeleteForever';
 import Select from 'react-select';
 import SkillsInput, { CreatableSkill } from '../skills-input';
 import DraggableChip from '../profile-details/dragable-chip';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 export type ProjectData = Project & {
   url?: string;
@@ -227,16 +229,18 @@ const ProjectEdit = ({
             flexWrap: 'wrap'
           }}
         >
-          {skillsRequired.map((skill: string, ind: number) => (
-            <DraggableChip
-              label={skill}
-              key={ind}
-              onDelete={() => handleSkillDelete(skill)}
-              moveCard={moveCard}
-              skillType={'technical_skills'}
-              index={ind}
-            />
-          ))}
+          <DndProvider backend={HTML5Backend}>
+            {skillsRequired.map((skill: string, ind: number) => (
+              <DraggableChip
+                label={skill}
+                key={ind}
+                onDelete={() => handleSkillDelete(skill)}
+                moveCard={moveCard}
+                skillType={'technical_skills'}
+                index={ind}
+              />
+            ))}
+          </DndProvider>
         </Grid>
       )}
       <Box>
