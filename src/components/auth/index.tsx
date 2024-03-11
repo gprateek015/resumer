@@ -69,7 +69,7 @@ const AuthBox = () => {
         You Must Sign in to join
       </Typography>
       <Typography fontWeight={'300'} fontSize={'0.8em'}>
-        We&apos;re a team that guides each other
+        We&apos;re a team that crafts your success
       </Typography>
       <Grid
         sx={{

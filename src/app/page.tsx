@@ -43,7 +43,7 @@ export default function Home() {
               marginBottom={{ xs: '15px', sm: '30px' }}
               fontWeight='700'
             >
-              Improve your Resume ATS score Using AI
+              Improve Your Resume ATS Score Using AI
             </Typography>
             <Typography
               fontSize='1.4rem'
