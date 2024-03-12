@@ -81,6 +81,12 @@ export const onboardingSlice = createSlice({
         return exp;
       });
     },
+    deleteExperience: (state, action) => {
+      const { id } = action.payload;
+      state.data.experiences = state.data.experiences.filter(
+        exp => exp._id !== id
+      );
+    },
     addProject: (state, action) => {
       state.data.projects = [...(state.data.projects || []), action.payload];
     },
@@ -90,6 +96,10 @@ export const onboardingSlice = createSlice({
         if (project._id === id) return action.payload.data;
         return project;
       });
+    },
+    deleteProject: (state, action) => {
+      const { id } = action.payload;
+      state.data.projects = state.data.projects.filter(exp => exp._id !== id);
     },
     addEducation: (state, action) => {
       state.data.educations = [
@@ -103,6 +113,12 @@ export const onboardingSlice = createSlice({
         if (edu._id === id) return action.payload.data;
         return edu;
       });
+    },
+    deleteEducation: (state, action) => {
+      const { id } = action.payload;
+      state.data.educations = state.data.educations.filter(
+        exp => exp._id !== id
+      );
     },
     updateOnboardingData: (state, action) => {
       state.data = { ...state.data, ...action.payload };
@@ -171,7 +187,10 @@ export const {
   updateProjectOnb,
   addEducation,
   updateEducationOnb,
-  updateOnboardingData
+  updateOnboardingData,
+  deleteExperience,
+  deleteProject,
+  deleteEducation
 } = onboardingSlice.actions;
 
 export default onboardingSlice.reducer;

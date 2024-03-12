@@ -20,16 +20,18 @@ const WorkExpDetailDesign = ({
   onSubmit,
   updateExperiences,
   apiError,
-  errors = {}
+  errors = {},
+  trySaving
 }: {
   experiences: Experience[];
-  handleDelete: Function;
+  handleDelete: (id: string) => void;
   editId?: string | null;
   setEditId: Function;
   onSubmit: SubmitHandler<Experience>;
   updateExperiences?: (exps: Experience[]) => void;
   apiError?: string | object | null;
   errors?: any;
+  trySaving?: boolean;
 }) => {
   const errorIds = Object.keys(errors);
 
@@ -75,6 +77,7 @@ const WorkExpDetailDesign = ({
                   : apiError
               }
               experience={experience}
+              trySaving={trySaving}
             />
           ) : updateExperiences ? (
             <DndProvider backend={HTML5Backend}>
@@ -109,6 +112,7 @@ const WorkExpDetailDesign = ({
           onSubmit={onSubmit}
           buttonText='Add experience'
           apiError={apiError}
+          trySaving={trySaving}
         />
       )}
       {editId !== 'new' && (

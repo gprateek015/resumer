@@ -62,13 +62,15 @@ const ProjectEdit = ({
   project,
   onSubmit,
   buttonText,
-  apiError: apiErrors
+  apiError: apiErrors,
+  trySaving
 }: {
   handleCancel: Function;
   project?: Project;
   onSubmit: SubmitHandler<ProjectData>;
   buttonText: string;
   apiError?: string | object | null;
+  trySaving?: boolean;
 }) => {
   const dispatch = useDispatch();
   const [apiError, setApiError] = useState<string | null>(null);
@@ -171,6 +173,12 @@ const ProjectEdit = ({
       }, 2000);
     }
   }, [apiErrors]);
+
+  useEffect(() => {
+    if (trySaving) {
+      handleSubmit(onSubmit)();
+    }
+  }, [trySaving]);
 
   return (
     <Grid

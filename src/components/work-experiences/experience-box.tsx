@@ -9,7 +9,7 @@ type Props = {
   experience: Experience;
   errorIds: string[];
   handleEdit: (id: string) => void;
-  handleDelete: Function;
+  handleDelete: (id: string) => void;
   grabbing?: boolean;
 };
 
@@ -71,7 +71,7 @@ const ExperienceBox = React.forwardRef<HTMLDivElement, Props>(
             }}
           >
             {experience.start_date}&nbsp;-&nbsp;
-            {experience.end_date}
+            {experience.end_date ?? 'Present'}
           </Typography>
         </Grid>
         <Grid

@@ -81,45 +81,6 @@ const AchievementsSkills = ({
             <FormLabel mb='5px'>Select Your Skills</FormLabel>
             <SkillsContainer />
           </DndProvider>
-
-          <Divider
-            sx={{
-              borderColor: '#ffffff87',
-              my: '20px'
-            }}
-          />
-
-          <Grid>
-            <FormLabel mb='5px'>Add Your Achievements</FormLabel>
-            {achievements?.map((ach, ind: number) => (
-              <Box key={ach.id} display={'flex'} gap='10px' mb='10px'>
-                <FormInput
-                  {...register(`achievements.${ind}`)}
-                  placeholder='Tasks you did in your internship/job'
-                />
-                <IconButton
-                  sx={{
-                    color: 'white',
-                    border: '1px solid white',
-                    borderRadius: '3px'
-                  }}
-                  onClick={() => remove(ind)}
-                >
-                  <DeleteIcon />
-                </IconButton>
-              </Box>
-            ))}
-            <Button
-              onClick={() => append('')}
-              sx={{
-                background: 'transparent'
-              }}
-              startIcon={<AddIcon />}
-              fullWidth
-            >
-              Add another point
-            </Button>
-          </Grid>
         </Grid>
       </FormProvider>
     </PageContainer>

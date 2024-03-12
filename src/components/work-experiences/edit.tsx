@@ -6,14 +6,10 @@ import {
   Option,
   Options
 } from '../onboarding-questions/styles';
-import {
-  SubmitHandler,
-  useFieldArray,
-  useForm,
-  useFormContext
-} from 'react-hook-form';
+import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form';
 import {
   Box,
+  Checkbox,
   FormHelperText,
   Grid,
   IconButton,
@@ -31,16 +27,19 @@ const WorkExpEdit = ({
   onSubmit,
   buttonText,
   apiError: apiErrors,
-  experience
+  experience,
+  trySaving
 }: {
   handleCancel: Function;
   onSubmit: SubmitHandler<any>;
   buttonText: string;
   apiError?: string | object | null;
   experience?: Experience;
+  trySaving?: boolean;
 }) => {
   const dispatch = useDispatch();
   const [apiError, setApiError] = useState('');
+  const [workingHere, setWorkingHere] = useState(false);
   const {
     control,
     register,
@@ -65,6 +64,13 @@ const WorkExpEdit = ({
     control
   });
 
+  const onToggleWorkingHere = (value: boolean) => {
+    setWorkingHere(value);
+    if (value) {
+      setValue('end_date', null);
+    }
+  };
+
   useEffect(() => {
     reset({
       description: [''],
@@ -74,6 +80,7 @@ const WorkExpEdit = ({
         end_date: moment(experience.end_date ?? '').format('YYYY-MM-DD')
       })
     });
+    setWorkingHere(!experience?.end_date && !!experience?.start_date);
   }, [experience]);
 
   useEffect(() => {
@@ -92,6 +99,12 @@ const WorkExpEdit = ({
     }
   }, [apiErrors]);
 
+  useEffect(() => {
+    if (trySaving) {
+      handleSubmit(onSubmit)();
+    }
+  }, [trySaving]);
+
   return (
     <>
       <Grid
@@ -101,7 +114,6 @@ const WorkExpEdit = ({
           gap: '15px',
           padding: '10px',
           borderRadius: '5px'
-          // backdropFilter: 'blur(20px)'
         }}
         ref={containerRef}
       >
@@ -142,47 +154,82 @@ const WorkExpEdit = ({
             </Option>
           </Options>
         </Box>
-        <Grid
-          sx={{
-            display: 'flex',
-            gap: { xs: '15px', md: '20px' },
-            // flexDirection: { xs: 'column', md: 'row' },
-            overflow: 'auto'
-          }}
-        >
+        <Grid>
           <Grid
             sx={{
-              flexBasis: '40%',
-              flexGrow: 1
+              display: 'flex',
+              alignItems: 'center'
             }}
           >
-            <FormLabel>Start Date</FormLabel>
-            <FormInput
-              type='date'
-              {...register('start_date', { required: true })}
-              helperText={errors?.start_date?.message as any}
-              error={!!errors?.start_date?.message}
+            <Checkbox
               sx={{
-                maxWidth: (containerRef?.current?.offsetWidth || 400) / 2 - 11
+                color: 'white',
+                pl: '0px',
+                '&.Mui-checked': {
+                  color: 'white'
+                }
               }}
+              checked={workingHere}
+              onClick={() => onToggleWorkingHere(!workingHere)}
+              id='working-checkbox'
             />
+            <Typography
+              component={'label'}
+              htmlFor='working-checkbox'
+              sx={{
+                cursor: 'pointer'
+              }}
+            >
+              Currently working here?
+            </Typography>
           </Grid>
           <Grid
             sx={{
-              flexBasis: '40%',
-              flexGrow: 1
+              display: 'flex',
+              gap: { xs: '15px', md: '20px' },
+              // flexDirection: { xs: 'column', md: 'row' },
+              overflow: 'auto'
             }}
           >
-            <FormLabel>End Date</FormLabel>
-            <FormInput
-              type='date'
-              {...register('end_date', { required: true })}
-              helperText={errors?.end_date?.message as any}
-              error={!!errors?.end_date?.message}
+            <Grid
               sx={{
-                maxWidth: (containerRef?.current?.offsetWidth || 400) / 2 - 11
+                flexBasis: '40%',
+                flexGrow: 1
               }}
-            />
+            >
+              <FormLabel>Start Date</FormLabel>
+              <FormInput
+                type='date'
+                {...register('start_date', { required: 'Required' })}
+                helperText={errors?.start_date?.message as any}
+                error={!!errors?.start_date?.message}
+                sx={{
+                  maxWidth: workingHere
+                    ? '100%'
+                    : (containerRef?.current?.offsetWidth || 400) / 2 - 11
+                }}
+              />
+            </Grid>
+            {!workingHere && (
+              <Grid
+                sx={{
+                  flexBasis: '40%',
+                  flexGrow: 1
+                }}
+              >
+                <FormLabel>End Date</FormLabel>
+                <FormInput
+                  type='date'
+                  {...register('end_date', { required: 'Required' })}
+                  helperText={errors?.end_date?.message as any}
+                  error={!!errors?.end_date?.message}
+                  sx={{
+                    maxWidth:
+                      (containerRef?.current?.offsetWidth || 400) / 2 - 11
+                  }}
+                />
+              </Grid>
+            )}
           </Grid>
         </Grid>
         {mode === 'onsite' && (

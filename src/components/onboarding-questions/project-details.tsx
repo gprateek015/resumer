@@ -4,16 +4,11 @@ import { Heading } from './styles';
 import { PageNavPropsType } from '.';
 import PageContainer from './page-container';
 import { RootState, useDispatch, useSelector } from '@/redux/store';
-import {
-  deleteProject,
-  fetchProjects,
-  postProject,
-  updateProject
-} from '@/actions/project';
 import ProjectDetailDesign from '../projects/detail';
 import { ProjectData } from '../projects/edit';
 import {
   addProject,
+  deleteProject,
   updateOnboardingData,
   updateProjectOnb
 } from '@/redux/slice/onboarding';
@@ -21,21 +16,22 @@ import validateProject from '@/schema/project';
 import { useSnackbar } from 'notistack';
 import { Project } from '@/types';
 import { Grid } from '@mui/material';
+import ShortUniqueId from 'short-unique-id';
 
 const ProjectDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
   const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
-  const { errors: apiErrors } = useSelector(
-    (state: RootState) => state.onboarding
-  );
-  const [apiError, setApiError] = useState<string | object | null>(null);
+  const uid = new ShortUniqueId({ length: 5 });
+
   const {
     data: { projects }
   } = useSelector(state => state.onboarding);
   const [editId, setEditId] = useState<string | null>(null);
+  const [trySaving, setTrySaving] = useState(false); // For navigating without with editId !== null
+  const [navigateTo, setNavigateTo] = useState<null | Function>(null);
 
   const onSubmit = (data: ProjectData) => {
-    setApiError(null);
+    setTrySaving(false);
 
     if (editId && editId !== 'new')
       dispatch(
@@ -44,11 +40,13 @@ const ProjectDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
           id: editId
         })
       );
-    else dispatch(addProject(data));
+    else dispatch(addProject({ ...data, _id: uid.rnd() }));
+
+    navigateTo?.();
   };
 
-  const handleDelete = async (id?: string) => {
-    if (id) await dispatch(deleteProject(id));
+  const handleDelete = async (id: string) => {
+    dispatch(deleteProject({ id }));
   };
 
   const errors = useMemo(() => {
@@ -76,11 +74,8 @@ const ProjectDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
         preventDuplicate: true
       });
     } else if (editId !== null) {
-      enqueueSnackbar({
-        message: 'Either cancel or save the changes',
-        variant: 'warning',
-        preventDuplicate: true
-      });
+      setTrySaving(true);
+      setNavigateTo(() => navigate);
     } else {
       navigate();
     }
@@ -91,21 +86,16 @@ const ProjectDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
   };
 
   useEffect(() => {
-    setApiError(apiErrors);
-  }, [apiErrors]);
-
-  // useEffect(() => {
-  //   dispatch(fetchProjects());
-  // }, []);
-
-  useEffect(() => {
     if (projects?.length) {
       setEditId(null);
     }
-    // else {
-    //   setEditId('new');
-    // }
   }, [projects]);
+
+  useEffect(() => {
+    if (!editId) {
+      setTrySaving(false);
+    }
+  }, [editId]);
 
   return (
     <PageContainer
@@ -141,6 +131,7 @@ const ProjectDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
             updateProjects={updateProjects}
             errors={errors}
             onSubmit={onSubmit}
+            trySaving={trySaving}
           />
         </Grid>
       </Grid>

@@ -20,7 +20,8 @@ const ProjectDetailDesign = ({
   onSubmit,
   updateProjects,
   apiError,
-  errors = {}
+  errors = {},
+  trySaving
 }: {
   projects: Project[];
   editId: string | null;
@@ -30,6 +31,7 @@ const ProjectDetailDesign = ({
   updateProjects?: Function;
   apiError?: string | object | null;
   errors?: any;
+  trySaving?: boolean;
 }) => {
   const handleCancel = () => {
     setEditId(null);
@@ -75,6 +77,7 @@ const ProjectDetailDesign = ({
                   ? errors[project._id as string]
                   : apiError
               }
+              trySaving={trySaving}
             />
           ) : updateProjects ? (
             <DndProvider backend={HTML5Backend}>
@@ -109,6 +112,7 @@ const ProjectDetailDesign = ({
           onSubmit={onSubmit}
           buttonText='Add project'
           apiError={apiError}
+          trySaving={trySaving}
         />
       )}
       {editId !== 'new' && (

@@ -32,16 +32,17 @@ const EducationalDetailsEdit = ({
   education,
   onSubmit,
   buttonText,
-  apiError: apiErrors
+  apiError: apiErrors,
+  trySaving
 }: {
   handleCancel: Function;
   education?: EducationData;
   onSubmit: SubmitHandler<EducationData>;
   buttonText?: string;
   apiError?: string | object | null;
+  trySaving?: boolean;
 }) => {
   const dispatch = useDispatch();
-  // const { errors: apiErrors } = useSelector(state => state.onboarding);
   const [apiError, setApiError] = useState<string | null>(null);
 
   const levelOption = educationalLevels.map(lvl => ({
@@ -88,6 +89,12 @@ const EducationalDetailsEdit = ({
       dispatch(clearOnboardingErrors());
     }
   }, [apiErrors]);
+
+  useEffect(() => {
+    if (trySaving) {
+      handleSubmit(onSubmit)();
+    }
+  }, [trySaving]);
 
   return (
     <Grid

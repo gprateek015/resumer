@@ -1,14 +1,8 @@
 'use client';
 
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 import { Heading } from './styles';
-import {
-  deleteExperience,
-  fetchExperiences,
-  postExperience,
-  updateExperience
-} from '@/actions/experience';
 import { RootState, useDispatch } from '@/redux/store';
 import { useSelector } from 'react-redux';
 import { PageNavPropsType } from '.';
@@ -17,21 +11,22 @@ import WorkExpDetailDesign from '../work-experiences/detail';
 import { Experience } from '@/types';
 import {
   addExperience,
+  deleteExperience,
   updateExperienceOnb,
   updateOnboardingData
 } from '@/redux/slice/onboarding';
 import validateExperience from '@/schema/experience';
 import { useSnackbar } from 'notistack';
 import { Grid } from '@mui/material';
+import ShortUniqueId from 'short-unique-id';
 
 const WorkExperienceDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
   const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
-  // const { errors: apiErrors } = useSelector(
-  //   (state: RootState) => state.onboarding
-  // );
-  // const [apiError, setApiError] = useState<string | object | null>(null);
+  const uid = new ShortUniqueId({ length: 5 });
   const [editId, setEditId] = useState<string | undefined | null>(null);
+  const [trySaving, setTrySaving] = useState(false); // For navigating without with editId !== null
+  const [navigateTo, setNavigateTo] = useState<null | Function>(null);
 
   const {
     data: { experiences }
@@ -53,12 +48,12 @@ const WorkExperienceDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
     return data;
   }, [experiences]);
 
-  const handleDelete = async (id?: string) => {
-    if (id) await dispatch(deleteExperience(id));
+  const handleDelete = async (id: string) => {
+    dispatch(deleteExperience({ id }));
   };
 
   const onSubmit = (data: Experience) => {
-    // setApiError(null);
+    setTrySaving(false);
 
     if (data.location === '') {
       delete data.location;
@@ -71,7 +66,9 @@ const WorkExperienceDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
           id: editId
         })
       );
-    else dispatch(addExperience(data));
+    else dispatch(addExperience({ ...data, _id: uid.rnd() }));
+
+    navigateTo?.();
   };
 
   const onNavigation = (navigate: Function) => {
@@ -83,11 +80,8 @@ const WorkExperienceDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
         preventDuplicate: true
       });
     } else if (editId !== null) {
-      enqueueSnackbar({
-        message: 'Either cancel or save the changes',
-        variant: 'warning',
-        preventDuplicate: true
-      });
+      setTrySaving(true);
+      setNavigateTo(() => navigate);
     } else {
       navigate();
     }
@@ -98,21 +92,16 @@ const WorkExperienceDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
   };
 
   useEffect(() => {
-    dispatch(fetchExperiences());
-  }, []);
-
-  // useEffect(() => {
-  //   setApiError(apiErrors);
-  // }, [apiErrors]);
-
-  useEffect(() => {
     if (experiences?.length) {
       setEditId(null);
     }
-    //  else {
-    //   setEditId('new');
-    // }
   }, [experiences]);
+
+  useEffect(() => {
+    if (!editId) {
+      setTrySaving(false);
+    }
+  }, [editId]);
 
   return (
     <PageContainer
@@ -150,6 +139,7 @@ const WorkExperienceDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
             onSubmit={onSubmit}
             updateExperiences={updateExperiences}
             errors={errors}
+            trySaving={trySaving}
           />
         </Grid>
       </Grid>

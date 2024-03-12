@@ -15,36 +15,33 @@ import {
 import { PageNavPropsType } from '.';
 import PageContainer from './page-container';
 import { useDispatch, useSelector } from '@/redux/store';
-import {
-  deleteEducation,
-  fetchEductions,
-  postEducation,
-  updateEducation
-} from '@/actions/education';
 import EduDetailDesign from '../educations/detail';
 import { SubmitHandler } from 'react-hook-form';
 import { EducationData } from '../educations/edit';
 import {
   addEducation,
+  deleteEducation,
   updateEducationOnb,
   updateOnboardingData
 } from '@/redux/slice/onboarding';
 import validateEducation from '@/schema/education';
 import { useSnackbar } from 'notistack';
 import { Education } from '@/types';
+import ShortUniqueId from 'short-unique-id';
 
 const EducationalDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
   const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
+  const uid = new ShortUniqueId({ length: 5 });
   const {
     data: { educations }
   } = useSelector(state => state.onboarding);
   const [editId, setEditId] = useState<string | null>(null);
-  const { errors: apiErrors } = useSelector(state => state.onboarding);
-  const [apiError, setApiError] = useState<string | object | null>(null);
+  const [trySaving, setTrySaving] = useState(false); // For navigating without with editId !== null
+  const [navigateTo, setNavigateTo] = useState<null | Function>(null);
 
   const onSubmit: SubmitHandler<EducationData> = data => {
-    setApiError(null);
+    setTrySaving(false);
 
     const newData = {
       ...data,
@@ -65,11 +62,13 @@ const EducationalDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
           id: editId
         })
       );
-    else dispatch(addEducation(newData));
+    else dispatch(addEducation({ ...newData, _id: uid.rnd() }));
+
+    navigateTo?.();
   };
 
-  const handleDelete = async (id?: string) => {
-    if (id) await dispatch(deleteEducation(id));
+  const handleDelete = async (id: string) => {
+    dispatch(deleteEducation({ id }));
   };
 
   const errors = useMemo(() => {
@@ -91,23 +90,20 @@ const EducationalDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
   const onNavigation = (navigate: Function) => {
     const errorIds = Object.keys(errors);
     if (errorIds.length !== 0) {
-      //   enqueueSnackbar({
-      //     message: 'Error in an education',
-      //     variant: 'error',
-      //     preventDuplicate: true
-      //   });
-      // } else if (editId !== null) {
-      //   enqueueSnackbar({
-      //     message: 'Either cancel or save the changes',
-      //     variant: 'warning',
-      //     preventDuplicate: true
-      //   });
-      // } else if (!educations?.length) {
-      //   enqueueSnackbar({
-      //     message: 'Minimum one education is required',
-      //     variant: 'warning',
-      //     preventDuplicate: true
-      //   });
+      enqueueSnackbar({
+        message: 'Error in an education',
+        variant: 'error',
+        preventDuplicate: true
+      });
+    } else if (editId !== null) {
+      setTrySaving(true);
+      setNavigateTo(() => navigate);
+    } else if (!educations?.length) {
+      enqueueSnackbar({
+        message: 'Minimum one education is required',
+        variant: 'warning',
+        preventDuplicate: true
+      });
     } else {
       navigate();
     }
@@ -118,20 +114,18 @@ const EducationalDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
   };
 
   useEffect(() => {
-    setApiError(apiErrors);
-  }, [apiErrors]);
-
-  // useEffect(() => {
-  //   dispatch(fetchEductions());
-  // }, []);
-
-  useEffect(() => {
     if (educations?.length) {
       setEditId(null);
     } else {
       setEditId('new');
     }
   }, [educations]);
+
+  useEffect(() => {
+    if (!editId) {
+      setTrySaving(false);
+    }
+  }, [editId]);
 
   return (
     <PageContainer
@@ -169,6 +163,7 @@ const EducationalDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
             onSubmit={onSubmit}
             updateEducations={updateEducations}
             errors={errors}
+            trySaving={trySaving}
           />
         </Grid>
       </Grid>

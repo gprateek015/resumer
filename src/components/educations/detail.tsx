@@ -20,7 +20,8 @@ const EduDetailDesign = ({
   onSubmit,
   updateEducations,
   apiError,
-  errors = {}
+  errors = {},
+  trySaving
 }: {
   educations: Education[];
   editId: string | null;
@@ -30,6 +31,7 @@ const EduDetailDesign = ({
   updateEducations?: Function;
   apiError?: string | object | null;
   errors?: any;
+  trySaving?: boolean;
 }) => {
   const handleCancel = () => setEditId(null);
   const handelEdit = (id: string) => setEditId(id);
@@ -71,6 +73,7 @@ const EduDetailDesign = ({
                   ? errors[education._id as string]
                   : apiError
               }
+              trySaving={trySaving}
             />
           ) : updateEducations ? (
             <DndProvider backend={HTML5Backend}>
@@ -105,6 +108,7 @@ const EduDetailDesign = ({
           onSubmit={onSubmit}
           buttonText='Add Education'
           apiError={apiError}
+          trySaving={trySaving}
         />
       )}
       {editId !== 'new' && (

@@ -1,5 +1,5 @@
 type Experience = {
-  _id?: string;
+  _id: string;
   id?: string;
   company_name?: string;
   position?: string;
