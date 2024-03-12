@@ -4,7 +4,8 @@ import Image from 'next/image';
 import { Box, Button, Grid, Hidden, Typography } from '@mui/material';
 import newIcon from '@/assets/icons/new.svg';
 import { useRouter } from 'next/navigation';
-import ResumeTemplate from '@/assets/resume-template.png';
+import ResumeTemplate1 from '@/assets/resume-templates/first.png';
+import ResumeTemplate2 from '@/assets/resume-templates/second.png';
 
 const SideBar = ({
   selectedTemplate,
@@ -14,6 +15,9 @@ const SideBar = ({
   setSelectedTemplate: Function;
 }) => {
   const routes = useRouter();
+
+  const templates = [ResumeTemplate1, ResumeTemplate2];
+
   return (
     <Hidden lgDown>
       <Grid
@@ -70,10 +74,10 @@ const SideBar = ({
           }}
         >
           <Typography>Templates</Typography>
-          {[1, 1, 1].map((_, i) => (
+          {templates.map((icon, i) => (
             <Image
-              src={ResumeTemplate}
-              alt=''
+              src={icon}
+              alt='template'
               width={170}
               key={i}
               style={

@@ -34,7 +34,7 @@ const ProfileLinksContainer = () => {
         flexDirection: 'column'
       }}
     >
-      <Typography>Profile Links for the Header Section</Typography>
+      <FormLabel>Profile Links for the Header Section</FormLabel>
       <Box>
         <FormLabel>Github</FormLabel>
         <FormInput

@@ -3,6 +3,7 @@ import { Grid, Icon, Typography } from '@mui/material';
 import React from 'react';
 import { Button } from '../onboarding-questions/styles';
 import ErrorIcon from '@mui/icons-material/Error';
+import { righteous } from '@/font-family';
 
 type Props = {
   education: Education;
@@ -103,13 +104,13 @@ const EducationBox = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
       </Grid>
       <Grid display={'flex'} gap='20px' mt='10px'>
         <Button
-          sx={{ flexBasis: '50%' }}
+          sx={{ flexBasis: '50%', fontFamily: righteous.style.fontFamily }}
           onClick={() => handleEdit(education._id as string)}
         >
           Edit
         </Button>
         <Button
-          sx={{ flexBasis: '50%' }}
+          sx={{ flexBasis: '50%', fontFamily: righteous.style.fontFamily }}
           onClick={() => handleDelete(education._id)}
         >
           Delete

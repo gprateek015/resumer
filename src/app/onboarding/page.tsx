@@ -8,14 +8,13 @@ import OnboardingIcon from '@/assets/onboarding2.png';
 
 import OnboardingQuestions from '@/components/onboarding-questions';
 import { righteous } from '@/font-family';
-import { useDispatch, useSelector } from '@/redux/store';
+import { useSelector } from '@/redux/store';
 import { useRouter } from 'next/navigation';
 import { ONBOARDING_STARTED } from '@/constants';
 
 const Onboarding = () => {
   const [showQuestions, setShowQuestions] = useState<boolean>(false);
   const router = useRouter();
-  const dispatch = useDispatch();
   const { data: user } = useSelector(state => state.user);
 
   useEffect(() => {

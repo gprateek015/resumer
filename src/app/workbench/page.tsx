@@ -2,19 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import './style.scss';
-import SideBar from '@/components/sidebar';
-import { Grid, IconButton, Button, Box, Typography } from '@mui/material';
-import user from '@/assets/icons/user.svg';
-import Image from 'next/image';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import profile from '@/assets/onboarding1.png';
-import WorkHistoryIcon from '@mui/icons-material/WorkHistory';
-import SchoolIcon from '@mui/icons-material/School';
-import AcUnitIcon from '@mui/icons-material/AcUnit';
-import GridViewIcon from '@mui/icons-material/GridView';
-import DescriptionIcon from '@mui/icons-material/Description';
-import AirplayIcon from '@mui/icons-material/Airplay';
-import HelpIcon from '@mui/icons-material/Help';
+import { Grid, IconButton, Typography } from '@mui/material';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import PdfViewer from '@/components/pdf-viewer';
 import { useDispatch, useSelector } from '@/redux/store';
@@ -36,6 +24,8 @@ import InfoIcon from '@mui/icons-material/Info';
 import { righteous } from '@/font-family';
 import Certifications from './components/certifications';
 import { AuthButton } from '@/components/navbar/styles';
+import { enqueueSnackbar } from 'notistack';
+import SideBar from './components/sidebar';
 
 const Workbench = () => {
   const dispatch = useDispatch();
@@ -82,6 +72,8 @@ const Workbench = () => {
         setPdf(resp.payload);
         const pdfBlob = new Blob([resp.payload], { type: 'application/pdf' });
         setDownloadResumeData(pdfBlob);
+      } else {
+        enqueueSnackbar('Error generating the PDF', { variant: 'error' });
       }
     }
   };

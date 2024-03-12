@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
-import { Box, Grid } from '@mui/material';
+import { Box, Grid, IconButton } from '@mui/material';
 
 import {
+  Button,
   FormInput,
   FormLabel,
   Heading,
@@ -12,51 +13,100 @@ import {
 import { PageNavPropsType } from '.';
 import PageContainer from './page-container';
 import { useDispatch, useSelector } from '@/redux/store';
-import { useForm } from 'react-hook-form';
+import { useFieldArray, useForm } from 'react-hook-form';
 import { updateUser } from '@/actions/user';
 import { updateOnboardingData } from '@/redux/slice/onboarding';
 import { space_grotest } from '@/font-family';
+import AddIcon from '@mui/icons-material/Add';
+import DeleteIcon from '@mui/icons-material/DeleteForever';
 
 type LinkNameType = 'leetcode' | 'codeforces' | 'geeksforgeeks' | 'codechef';
+
+type FormType = {
+  leetcode: string;
+  codeforces: string;
+  geeksforgeeks: string;
+  codechef: string;
+  other: {
+    name: string;
+    link?: string;
+  }[];
+};
 
 const CodingProfiles = ({ prevPage, nextPage }: PageNavPropsType) => {
   const dispatch = useDispatch();
   const {
-    data: { codingProfiles },
+    data: { profile_links },
     errors: apiErrors
   } = useSelector(state => state.onboarding);
 
   const {
+    control,
     register,
     formState: { errors },
     handleSubmit,
     setValue
-  } = useForm({
+  } = useForm<FormType>({
     defaultValues: {
       leetcode: '',
       codeforces: '',
       geeksforgeeks: '',
-      codechef: ''
+      codechef: '',
+      other: []
     }
   });
 
-  const onSubmit = async (data: any = {}) => {
-    const finalData = Object.keys(data)
-      .filter(name => data[name])
-      .map((name: string) => ({
-        name: name as LinkNameType,
-        link: data[name] as string
-      }));
+  const {
+    fields: otherLinks,
+    append,
+    remove
+  } = useFieldArray({
+    name: 'other',
+    control
+  });
 
-    dispatch(updateOnboardingData({ codingProfiles: finalData }));
+  const onSubmit = async (data: FormType) => {
+    let finalData = [
+      ...data.other,
+      {
+        name: 'leetcode',
+        link: data.leetcode
+      },
+      {
+        name: 'codechef',
+        link: data.codechef
+      },
+      {
+        name: 'codeforces',
+        link: data.codeforces
+      },
+      {
+        name: 'geeksforgeeks',
+        link: data.geeksforgeeks
+      }
+    ];
+    finalData = finalData.filter(data => data.link);
+
+    dispatch(updateOnboardingData({ profile_links: finalData }));
     nextPage();
   };
 
   useEffect(() => {
-    for (let profile of codingProfiles) {
-      setValue(profile.name, profile.link as string);
+    for (let profile of profile_links) {
+      if (
+        profile.name === 'leetcode' ||
+        profile.name === 'codeforces' ||
+        profile.name === 'geeksforgeeks' ||
+        profile.name === 'codechef'
+      )
+        setValue(profile.name, profile.link as string);
+      else
+        append({
+          name: profile.name,
+          link: profile.link
+        });
     }
-  }, [codingProfiles]);
+  }, [profile_links]);
 
   return (
     <PageContainer nextPage={handleSubmit(onSubmit)} prevPage={prevPage}>
@@ -109,6 +159,51 @@ const CodingProfiles = ({ prevPage, nextPage }: PageNavPropsType) => {
               helperText={errors?.codechef?.message}
               error={!!errors?.codechef}
             />
+          </Box>
+          <Box>
+            <FormLabel>Other Coding Profiles</FormLabel>
+            {otherLinks?.map((profileLink: any, ind: number) => (
+              <Box display={'flex'} gap='10px' key={profileLink.id} mb='10px'>
+                <FormInput
+                  {...register(`other.${ind}.name`)}
+                  placeholder='Codeforces'
+                  sx={{
+                    flexBasis: '30%'
+                  }}
+                />
+                <FormInput
+                  {...register(`other.${ind}.link`)}
+                  placeholder='https://codeforces.com/username'
+                  sx={{
+                    flexGrow: '1'
+                  }}
+                />
+                <IconButton
+                  sx={{
+                    color: 'white',
+                    border: '1px solid #ffffff87',
+                    borderRadius: '3px'
+                  }}
+                  onClick={() => remove(ind)}
+                >
+                  <DeleteIcon />
+                </IconButton>
+              </Box>
+            ))}
+          </Box>
+          <Box>
+            <Button
+              startIcon={<AddIcon />}
+              fullWidth
+              onClick={() =>
+                append({
+                  name: '',
+                  link: ''
+                })
+              }
+            >
+              Add another coding profile
+            </Button>
           </Box>
         </Grid>
       </Grid>

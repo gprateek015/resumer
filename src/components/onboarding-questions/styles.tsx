@@ -103,7 +103,7 @@ export const selectStyles: StylesConfig<any> = {
     ...styles,
     flexGrow: 1,
     width: '100%',
-    height: '100%'
+    height: '46.13px'
   }),
   control: styles => ({
     ...styles,

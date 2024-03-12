@@ -26,7 +26,7 @@ export type InitialState = {
       dev_tools?: Skill[];
       languages?: Skill[];
     };
-    codingProfiles: ProfileLink[];
+    profile_links: ProfileLink[];
     phone: string;
     linkedin: string;
     github: string;
@@ -47,7 +47,7 @@ const initialState: InitialState = {
     projects: [],
     achievements: [],
     skills: {},
-    codingProfiles: [],
+    profile_links: [],
     phone: '',
     linkedin: '',
     github: '',

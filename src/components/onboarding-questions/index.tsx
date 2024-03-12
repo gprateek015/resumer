@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Button, Grid, Typography } from '@mui/material';
 import Image from 'next/image';
 
@@ -14,11 +14,12 @@ import EducationalDetails from './educational-details';
 import ProjectDetails from './project-details';
 import CodingProfiles from './coding-profile';
 import { useRouter } from 'next/navigation';
-import AchievementsSkills from './achievements-skills';
+import Skills from './skills';
 import { useDispatch, useSelector } from '@/redux/store';
 import { updateUser } from '@/actions/user';
 import { Skill } from '@/types';
 import { righteous } from '@/font-family';
+import AchievementsAndCertificates from './achievements-certs';
 
 export type PageNavPropsType = {
   nextPage: Function;
@@ -27,46 +28,15 @@ export type PageNavPropsType = {
 
 const OnboardingQuestions = () => {
   const route = useRouter();
-  const [page, setPage] = useState<number>(0);
   const { data } = useSelector(state => state.onboarding);
+  const [page, setPage] = useState<number>(7);
+  const [onboardingCompleted, setOnboardingCompleted] = useState(false);
 
   const dispatch = useDispatch();
 
   const nextPage = () => {
-    if (page === 7) {
-      let skills: { name: string; type: Skill['type'] }[] = [];
-      data.skills?.technical_skills?.forEach(skill => {
-        skills.push({
-          name: skill.name,
-          type: 'technical_skills'
-        });
-      });
-      data.skills?.core_subjects?.forEach(skill => {
-        skills.push({
-          name: skill.name,
-          type: 'core_subjects'
-        });
-      });
-      data.skills?.dev_tools?.forEach(skill => {
-        skills.push({
-          name: skill.name,
-          type: 'dev_tools'
-        });
-      });
-      data.skills?.languages?.forEach(skill => {
-        skills.push({
-          name: skill.name,
-          type: 'languages'
-        });
-      });
-
-      const finalData = { ...data, skills, onboarding_completed: true };
-      dispatch(updateUser(finalData));
-
-      route.push('/job-description');
-      return;
-    }
-    setPage(page => page + 1);
+    if (page === 8) setOnboardingCompleted(true);
+    setPage(page => Math.min(page + 1, 8));
   };
   const prevPage = () => {
     setPage(page => Math.max(0, page - 1));
@@ -92,13 +62,59 @@ const OnboardingQuestions = () => {
       case 5:
         return <ProjectDetails nextPage={nextPage} prevPage={prevPage} />;
       case 6:
-        return <AchievementsSkills nextPage={nextPage} prevPage={prevPage} />;
+        return <Skills nextPage={nextPage} prevPage={prevPage} />;
       case 7:
+        return (
+          <AchievementsAndCertificates
+            nextPage={nextPage}
+            prevPage={prevPage}
+          />
+        );
+      case 8:
         return <CodingProfiles nextPage={nextPage} prevPage={prevPage} />;
       default:
         return <CodingProfiles nextPage={nextPage} prevPage={prevPage} />;
     }
   };
+
+  useEffect(() => {
+    if (onboardingCompleted) {
+      (async () => {
+        let skills: { name: string; type: Skill['type'] }[] = [];
+        data.skills?.technical_skills?.forEach(skill => {
+          skills.push({
+            name: skill.name,
+            type: 'technical_skills'
+          });
+        });
+        data.skills?.core_subjects?.forEach(skill => {
+          skills.push({
+            name: skill.name,
+            type: 'core_subjects'
+          });
+        });
+        data.skills?.dev_tools?.forEach(skill => {
+          skills.push({
+            name: skill.name,
+            type: 'dev_tools'
+          });
+        });
+        data.skills?.languages?.forEach(skill => {
+          skills.push({
+            name: skill.name,
+            type: 'languages'
+          });
+        });
+
+        const finalData = { ...data, skills, onboarding_completed: true };
+
+        await dispatch(updateUser(finalData));
+
+        route.push('/job-description');
+        return;
+      })();
+    }
+  }, [data]);
 
   return (
     <Grid
