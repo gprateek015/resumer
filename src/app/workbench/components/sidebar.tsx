@@ -52,7 +52,7 @@ const SideBar = ({
               }
             }}
           >
-            New Resume
+            New Resumee
           </Button>
         </Grid>
         <Box
