@@ -67,7 +67,7 @@ const ResumeUpload = ({ onCompleteUpload }: { onCompleteUpload: Function }) => {
   }, [files, route]);
 
   useEffect(() => {
-    if (progress === 100 && resumeParseCompleted) {
+    if (progress >= 100 && resumeParseCompleted) {
       onCompleteUpload();
     } else if (resumeParseCompleted) {
       setProgress(100);
