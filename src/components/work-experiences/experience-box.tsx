@@ -107,7 +107,7 @@ const ExperienceBox = React.forwardRef<HTMLDivElement, Props>(
           </Button>
           <Button
             sx={{ flexBasis: '50%', fontFamily: righteous.style.fontFamily }}
-            onClick={() => handleDelete(experience._id)}
+            onClick={() => handleDelete(experience._id as string)}
           >
             Delete
           </Button>
