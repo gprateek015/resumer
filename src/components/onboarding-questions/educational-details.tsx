@@ -90,8 +90,9 @@ const EducationalDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
   const onNavigation = (navigate: Function) => {
     const errorIds = Object.keys(errors);
     if (errorIds.length !== 0) {
+      const education = educations.find(edu => edu._id === errorIds[0]);
       enqueueSnackbar({
-        message: 'Error in an education',
+        message: `Please edit ${education?.institute_name}`,
         variant: 'error',
         preventDuplicate: true
       });

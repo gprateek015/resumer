@@ -74,8 +74,9 @@ const WorkExperienceDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
   const onNavigation = (navigate: Function) => {
     const errorIds = Object.keys(errors);
     if (errorIds.length !== 0) {
+      const exp = experiences.find(exp => exp._id === errorIds[0]);
       enqueueSnackbar({
-        message: 'Error in work experiences',
+        message: `Please edit ${exp?.company_name}`,
         variant: 'error',
         preventDuplicate: true
       });

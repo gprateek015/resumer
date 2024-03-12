@@ -68,8 +68,9 @@ const ProjectDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
   const onNavigation = (navigate: Function) => {
     const errorIds = Object.keys(errors);
     if (errorIds.length !== 0) {
+      const project = projects.find(proj => proj._id === errorIds[0]);
       enqueueSnackbar({
-        message: 'Error in work experiences',
+        message: `Please edit ${project?.name}`,
         variant: 'error',
         preventDuplicate: true
       });
