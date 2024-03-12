@@ -1,7 +1,7 @@
-import React from 'react';
-import { Box, Grid } from '@mui/material';
+import React, { useMemo } from 'react';
+import { Box, Grid, TextField } from '@mui/material';
 import Select from 'react-select';
-import { contries } from '@/constants';
+import { contries, states } from '@/constants';
 import {
   Heading,
   selectStyles,
@@ -33,26 +33,24 @@ type ContactDetailsType = {
 const ContactDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
   const dispatch = useDispatch();
   const {
-    data: { phone, linkedin, github, twitter, portfolio, country, state, city }
+    data: {
+      phone,
+      linkedin,
+      github,
+      twitter,
+      portfolio,
+      country: defaultCountry,
+      state: defaultState,
+      city: defaultCity
+    }
   } = useSelector(state => state.onboarding);
-
-  const contriesOption = contries.map(country => ({
-    label: country,
-    value: country
-  }));
-  const statesOption = contries.map(country => ({
-    label: country,
-    value: country
-  }));
-  const citiesOption = contries.map(country => ({
-    label: country,
-    value: country
-  }));
 
   const {
     register,
     handleSubmit,
-    formState: { errors }
+    formState: { errors },
+    setValue,
+    watch
   } = useForm({
     defaultValues: {
       phone: phone || undefined,
@@ -60,11 +58,33 @@ const ContactDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
       github: github || undefined,
       twitter: twitter || undefined,
       portfolio: portfolio || undefined,
-      country: country || undefined,
-      state: state || undefined,
-      city: city || undefined
+      country: defaultCountry || 'India',
+      state: defaultState || undefined,
+      city: defaultCity || undefined
     }
   });
+
+  const country = watch('country');
+  const state = watch('state');
+  const city = watch('city');
+
+  const contriesOption = contries.map(country => ({
+    label: country,
+    value: country
+  }));
+  const statesOption = Object.keys(states).map(state => ({
+    label: state,
+    value: state
+  }));
+  const citiesOption = useMemo(() => {
+    if (state) {
+      return states[state as keyof typeof states]?.map(city => ({
+        label: city,
+        value: city
+      }));
+    }
+    return [];
+  }, [state]);
 
   const onSubmit = (data: ContactDetailsType) => {
     dispatch(updateOnboardingData(data));
@@ -155,19 +175,34 @@ const ContactDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
                 styles={selectStyles}
                 placeholder='Country'
                 menuPlacement='top'
+                value={contriesOption.find(cntry => cntry.value === country)}
+                onChange={val => setValue('country', val.value)}
               />
-              <Select
-                options={statesOption}
-                styles={selectStyles}
-                placeholder='State'
-                menuPlacement='top'
-              />
-              <Select
-                options={citiesOption}
-                styles={selectStyles}
-                placeholder='City'
-                menuPlacement='top'
-              />
+              {country === 'India' ? (
+                <>
+                  <Select
+                    options={statesOption}
+                    styles={selectStyles}
+                    placeholder='State'
+                    menuPlacement='top'
+                    value={statesOption.find(opts => opts.value === state)}
+                    onChange={val => setValue('state', val.value)}
+                  />
+                  <Select
+                    options={citiesOption}
+                    styles={selectStyles}
+                    placeholder='City'
+                    menuPlacement='top'
+                    value={citiesOption.find(opts => opts.value === city)}
+                    onChange={val => setValue('city', val.value)}
+                  />
+                </>
+              ) : (
+                <>
+                  <FormInput placeholder='State' {...register('state')} />
+                  <FormInput placeholder='City' {...register('city')} />
+                </>
+              )}
             </Grid>
           </Box>
         </Grid>

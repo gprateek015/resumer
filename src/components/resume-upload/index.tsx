@@ -113,7 +113,7 @@ const ResumeUpload = ({ onCompleteUpload }: { onCompleteUpload: Function }) => {
             flexDirection={'column'}
             justifyContent={'center'}
             alignItems={'center'}
-            height={'100%'}
+            height={'280px'}
             gap='20px'
           >
             <Typography
