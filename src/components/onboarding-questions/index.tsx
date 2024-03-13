@@ -44,33 +44,33 @@ const OnboardingQuestions = () => {
 
   const OnboardingPage = () => {
     switch (page) {
+      // case 0:
+      // return <WorkExperience nextPage={nextPage} prevPage={prevPage} />;
+      // return <HighestEducation nextPage={nextPage} prevPage={prevPage} />;
       case 0:
-        // return <WorkExperience nextPage={nextPage} prevPage={prevPage} />;
-        return <HighestEducation nextPage={nextPage} prevPage={prevPage} />;
-      case 1:
         return (
           <WorkExperienceDetails nextPage={nextPage} prevPage={prevPage} />
         );
-      case 2:
+      case 1:
         return <ContactDetails nextPage={nextPage} prevPage={prevPage} />;
       // case 3:
       //   return <HighestEducation nextPage={nextPage} prevPage={prevPage} />;
-      case 3:
+      case 2:
         return <Degrees nextPage={nextPage} prevPage={prevPage} />;
-      case 4:
+      case 3:
         return <EducationalDetails nextPage={nextPage} prevPage={prevPage} />;
-      case 5:
+      case 4:
         return <ProjectDetails nextPage={nextPage} prevPage={prevPage} />;
-      case 6:
+      case 5:
         return <Skills nextPage={nextPage} prevPage={prevPage} />;
-      case 7:
+      case 6:
         return (
           <AchievementsAndCertificates
             nextPage={nextPage}
             prevPage={prevPage}
           />
         );
-      case 8:
+      case 7:
         return <CodingProfiles nextPage={nextPage} prevPage={prevPage} />;
       default:
         return <CodingProfiles nextPage={nextPage} prevPage={prevPage} />;

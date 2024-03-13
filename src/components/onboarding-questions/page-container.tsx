@@ -17,7 +17,7 @@ const PageContainer = ({
         sx={{
           height: 'calc(100% - 60px)',
           overflowY: 'auto',
-          padding: '10px'
+          padding: { xs: '0px', md: '10px' }
         }}
       >
         {children}

@@ -5,10 +5,16 @@ import { Heading, Option, Options, PageNavButton, Subheading } from './styles';
 import { PageNavPropsType } from '.';
 import PageContainer from './page-container';
 import { space_grotest } from '@/font-family';
+import { enqueueSnackbar } from 'notistack';
 
 const Degrees = ({ nextPage, prevPage }: PageNavPropsType) => {
+  const onNext = () => {
+    enqueueSnackbar('Please select your highest qualification', {
+      variant: 'warning'
+    });
+  };
   return (
-    <PageContainer nextPage={nextPage} prevPage={prevPage}>
+    <PageContainer nextPage={onNext} prevPage={prevPage}>
       <Grid
         sx={{
           display: 'flex',

@@ -20,9 +20,11 @@ const AchievementsAndCertificates = ({
   const methods = useForm();
   const dispatch = useDispatch();
   const { register, control, handleSubmit, setValue } = methods;
-  const { skills, achievements: prevAchievements } = useSelector(
-    state => state.onboarding.data
-  );
+  const {
+    skills,
+    achievements: prevAchievements,
+    certificates
+  } = useSelector(state => state.onboarding.data);
 
   const {
     fields: achievements,
@@ -36,7 +38,8 @@ const AchievementsAndCertificates = ({
   const onSubmit = async (data: any) => {
     dispatch(
       updateOnboardingData({
-        achievements: data.achievements
+        achievements: data.achievements,
+        certificates: data.certificates
       })
     );
 
@@ -46,6 +49,10 @@ const AchievementsAndCertificates = ({
   useEffect(() => {
     setValue('achievements', prevAchievements);
   }, [prevAchievements]);
+
+  useEffect(() => {
+    setValue('certificates', certificates);
+  }, [certificates]);
 
   return (
     <PageContainer nextPage={handleSubmit(onSubmit)} prevPage={prevPage}>

@@ -174,7 +174,7 @@ const EducationalDetailsEdit = ({
         </Box>
         {scoringType === 'cgpa' && (
           <Box flexBasis={'50%'} flexGrow={1}>
-            <FormLabel>Maximum Score</FormLabel>
+            <FormLabel>Max Score</FormLabel>
             <FormInput
               type='number'
               {...register('maximum_score', {

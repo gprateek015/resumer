@@ -137,7 +137,7 @@ const ContactDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
             />
           </Box>
           <Box>
-            <FormLabel>Lets show your twitter to everyone</FormLabel>
+            <FormLabel>Let's show your twitter to everyone</FormLabel>
             <FormInput
               placeholder='https://twitter.com/username'
               {...register('twitter', { required: false })}
@@ -165,9 +165,10 @@ const ContactDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
             <Grid
               sx={{
                 display: 'flex',
-                gap: '30px',
+                gap: { xs: '8px', md: '28px' },
                 justifyContent: 'space-between',
-                alignItems: 'center'
+                alignItems: 'center',
+                flexDirection: { xs: 'column', md: 'row' }
               }}
             >
               <Select

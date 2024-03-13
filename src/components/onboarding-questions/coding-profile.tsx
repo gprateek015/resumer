@@ -45,7 +45,8 @@ const CodingProfiles = ({ prevPage, nextPage }: PageNavPropsType) => {
     register,
     formState: { errors },
     handleSubmit,
-    setValue
+    setValue,
+    watch
   } = useForm<FormType>({
     defaultValues: {
       leetcode: '',
@@ -64,6 +65,21 @@ const CodingProfiles = ({ prevPage, nextPage }: PageNavPropsType) => {
     name: 'other',
     control
   });
+
+  const other_links = watch('other');
+
+  const onAddOtherLink = () => {
+    if (
+      !other_links.length ||
+      other_links[other_links.length - 1].name ||
+      other_links[other_links.length - 1].link
+    ) {
+      append({
+        name: '',
+        link: ''
+      });
+    }
+  };
 
   const onSubmit = async (data: FormType) => {
     let finalData = [
@@ -92,6 +108,7 @@ const CodingProfiles = ({ prevPage, nextPage }: PageNavPropsType) => {
   };
 
   useEffect(() => {
+    setValue('other', []);
     for (let profile of profile_links) {
       if (
         profile.name === 'leetcode' ||
@@ -195,12 +212,7 @@ const CodingProfiles = ({ prevPage, nextPage }: PageNavPropsType) => {
             <Button
               startIcon={<AddIcon />}
               fullWidth
-              onClick={() =>
-                append({
-                  name: '',
-                  link: ''
-                })
-              }
+              onClick={() => onAddOtherLink()}
             >
               Add another coding profile
             </Button>

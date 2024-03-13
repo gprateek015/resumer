@@ -17,6 +17,7 @@ import { fetchProjects, postProject } from '@/actions/project';
 export type InitialState = {
   data: {
     experiences: Experience[];
+    certificates: ProfileLink[];
     projects: Project[];
     educations: Education[];
     achievements: string[];
@@ -44,6 +45,7 @@ const initialState: InitialState = {
   data: {
     experiences: [],
     educations: [],
+    certificates: [],
     projects: [],
     achievements: [],
     skills: {},

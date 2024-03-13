@@ -1,5 +1,6 @@
 'use client';
 
+import { righteous } from '@/font-family';
 import {
   Box,
   Button as MuiButton,
@@ -20,7 +21,8 @@ export const Heading = styled(Typography)({
   fontWeight: '400',
   fontSize: '2rem',
   lineHeight: '2.3rem',
-  letterSpacing: '1.1px'
+  letterSpacing: '1.1px',
+  fontFamily: righteous.style.fontFamily
 });
 
 export const Subheading = styled(Typography)({

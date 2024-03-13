@@ -74,6 +74,7 @@ export const updateUser = createAsyncThunk(
       experiences,
       projects,
       educations,
+      certificates,
       callback
     }: {
       phone?: string;
@@ -92,6 +93,7 @@ export const updateUser = createAsyncThunk(
       experiences?: Experience[];
       projects?: Project[];
       educations?: Education[];
+      certificates?: ProfileLink[];
       callback?: Function;
     },
     { dispatch }
@@ -120,7 +122,8 @@ export const updateUser = createAsyncThunk(
         experiences,
         projects,
         educations,
-        skills
+        skills,
+        certificates
       },
       {
         signal: updateUserAbortController.signal
