@@ -177,6 +177,9 @@ export const onboardingSlice = createSlice({
       .addCase(uploadResume.fulfilled, (state, action) => {
         state.resumeParseCompleted = action.payload.success;
         state.data = { ...state.data, ...action.payload.data };
+      })
+      .addCase(uploadResume.rejected, (state, action) => {
+        state.errors = action?.error?.message || 'Internal server error';
       });
   }
 });

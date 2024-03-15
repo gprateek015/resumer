@@ -43,7 +43,7 @@ export const Options = styled(Grid)({
 export const Option = styled(Box)<{ active?: string; onClick: Function }>(
   ({ theme, active = 'false' }) => ({
     display: 'flex',
-    padding: '40px 0px',
+    padding: '40px 14px',
     justifyContent: 'center',
     alignItems: 'center',
     alignSelf: 'stretch',
@@ -55,8 +55,9 @@ export const Option = styled(Box)<{ active?: string; onClick: Function }>(
     height: '20px',
     flexGrow: 1,
     flexBasis: '50px',
-    maxWidth: '160px',
-    minWidth: '140px'
+    minWidth: '115px',
+    maxWidth: '115px',
+    width: '115px'
   })
 );
 

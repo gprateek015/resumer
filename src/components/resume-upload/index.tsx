@@ -12,6 +12,8 @@ import { useRouter } from 'next/navigation';
 import { Heading, UploadContainer, Uploader } from './styles';
 import { useDispatch, useSelector } from '@/redux/store';
 import { uploadResume } from '@/actions/resume';
+import { enqueueSnackbar } from 'notistack';
+import { clearOnboardingErrors } from '@/redux/slice/onboarding';
 
 const ResumeUpload = ({ onCompleteUpload }: { onCompleteUpload: Function }) => {
   const dispatch = useDispatch();
@@ -19,7 +21,9 @@ const ResumeUpload = ({ onCompleteUpload }: { onCompleteUpload: Function }) => {
   const [files, setFiles] = useState<FileList | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const [progress, setProgress] = useState(0);
-  const { resumeParseCompleted } = useSelector(state => state.onboarding);
+  const { resumeParseCompleted, errors } = useSelector(
+    state => state.onboarding
+  );
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFiles(e?.target?.files);
@@ -70,12 +74,19 @@ const ResumeUpload = ({ onCompleteUpload }: { onCompleteUpload: Function }) => {
     if (progress >= 100 && resumeParseCompleted) {
       onCompleteUpload();
     } else if (resumeParseCompleted) {
-      setProgress(100);
       setTimeout(() => {
-        onCompleteUpload();
+        setProgress(100);
       }, 200);
     }
   }, [progress, resumeParseCompleted]);
+
+  useEffect(() => {
+    if (errors) {
+      enqueueSnackbar('Error, Please try again...', { variant: 'error' });
+      handleCancel();
+      dispatch(clearOnboardingErrors());
+    }
+  }, [errors]);
 
   return (
     <Grid>
