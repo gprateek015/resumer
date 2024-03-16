@@ -84,7 +84,7 @@ export default function Home() {
               display: { xs: 'none', sm: 'flex' },
               alignItems: 'center',
               gap: { xs: '30px', sm: '60px' },
-              marginTop: { sm: '20%' }
+              marginTop: { sm: '25%' }
             }}
             className={righteous.className}
           >
