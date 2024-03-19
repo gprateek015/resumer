@@ -11,7 +11,7 @@ import {
 } from '@mui/material';
 import icon from '@/assets/onboarding7.png';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useDispatch } from '@/redux/store';
 import { generateResumeData } from '@/actions/resume';
 
@@ -20,12 +20,18 @@ const DescriptionForm = () => {
   const router = useRouter();
   const [jobDescription, setJobDescription] = useState('');
   const [loading, setLoading] = useState(false);
+  const searchParams = useSearchParams();
+  const jd = searchParams.get('jd');
 
   const getResumeData = async () => {
     setLoading(true);
     await dispatch(generateResumeData({ jobDescription }));
     router.push('/workbench');
   };
+
+  useEffect(() => {
+    if (!!jd) setJobDescription(jd);
+  }, [jd]);
 
   return (
     <>
@@ -94,6 +100,7 @@ const DescriptionForm = () => {
               }
             }}
             onChange={e => setJobDescription(e.target.value)}
+            value={jobDescription}
           />
           <Button
             sx={{
