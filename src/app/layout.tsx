@@ -9,8 +9,7 @@ import ProtectedRoutes from '@/components/protected-routes';
 
 export const metadata = {
   title: 'Resumer',
-  description:
-    'Get your resume customized for specific job descriptions'
+  description: 'Get your resume customized for specific job descriptions'
 };
 
 export default function RootLayout({
@@ -28,14 +27,19 @@ export default function RootLayout({
             display={'flex'}
             flexDirection={'column'}
             overflow={{ md: 'hidden' }}
+            sx={{
+              backgroundImage: `url('/assets/test.png')`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center'
+            }}
           >
             <Navbar />
-            <Image
+            {/* <Image
               src={BackgroundImg1}
               alt=''
               className='home-background'
               priority={true}
-            />
+            /> */}
             <ProtectedRoutes>
               <Grid
                 flexGrow={1}

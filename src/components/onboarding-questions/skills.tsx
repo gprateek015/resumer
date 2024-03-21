@@ -64,23 +64,32 @@ const AchievementsSkills = ({
   return (
     <PageContainer nextPage={handleSubmit(onSubmit)} prevPage={prevPage}>
       <FormProvider {...methods}>
-        <Heading mb='20px'>Share your Skills</Heading>
-
         <Grid
           sx={{
-            backdropFilter: 'blur(20px)',
-            p: '20px',
-            borderRadius: '20px',
-            border: '1px solid #ffffff87',
             display: 'flex',
-            flexDirection: 'column'
+            flexDirection: 'column',
+            height: '100%'
           }}
-          className={space_grotest.className}
         >
-          <DndProvider backend={HTML5Backend}>
-            <FormLabel mb='5px'>Select Your Skills</FormLabel>
-            <SkillsContainer />
-          </DndProvider>
+          <Heading mb='20px'>Share your Skills</Heading>
+
+          <Grid
+            sx={{
+              backdropFilter: 'blur(20px)',
+              p: '20px',
+              borderRadius: '20px',
+              border: '1px solid #ffffff87',
+              display: 'flex',
+              flexDirection: 'column',
+              flexGrow: 1
+            }}
+            className={space_grotest.className}
+          >
+            <DndProvider backend={HTML5Backend}>
+              <FormLabel mb='5px'>Select Your Skills</FormLabel>
+              <SkillsContainer />
+            </DndProvider>
+          </Grid>
         </Grid>
       </FormProvider>
     </PageContainer>

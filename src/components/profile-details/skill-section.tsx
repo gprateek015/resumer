@@ -5,6 +5,7 @@ import { useDrop } from 'react-dnd';
 import { Skill } from '@/types';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 import { firstLetterCapital } from '@/utils';
+import { righteous } from '@/font-family';
 
 const SkillSection = ({
   onDropSkill,
@@ -56,7 +57,7 @@ const SkillSection = ({
         padding: '5px'
       }}
     >
-      <Typography mb='5px'>
+      <Typography mb='5px' fontFamily={righteous.style.fontFamily}>
         {firstLetterCapital(skillType.split('_').join(' '))}
       </Typography>
       <Grid

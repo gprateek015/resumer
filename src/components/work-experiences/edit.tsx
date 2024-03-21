@@ -76,8 +76,12 @@ const WorkExpEdit = ({
       description: [''],
       ...(experience && {
         ...experience,
-        start_date: moment(experience.start_date ?? '').format('YYYY-MM-DD'),
-        end_date: moment(experience.end_date ?? '').format('YYYY-MM-DD')
+        start_date: experience.start_date
+          ? moment(experience.start_date).format('YYYY-MM-DD')
+          : null,
+        end_date: experience.end_date
+          ? moment(experience.end_date).format('YYYY-MM-DD')
+          : null
       })
     });
     setWorkingHere(!experience?.end_date && !!experience?.start_date);
@@ -220,7 +224,9 @@ const WorkExpEdit = ({
                 <FormLabel>End Date</FormLabel>
                 <FormInput
                   type='date'
-                  {...register('end_date', { required: 'Required' })}
+                  {...register('end_date', {
+                    required: 'Required'
+                  })}
                   helperText={errors?.end_date?.message as any}
                   error={!!errors?.end_date?.message}
                   sx={{

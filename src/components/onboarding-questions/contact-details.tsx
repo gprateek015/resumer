@@ -176,7 +176,7 @@ const ContactDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
                 styles={selectStyles}
                 placeholder='Country'
                 menuPlacement='top'
-                value={contriesOption.find(cntry => cntry.value === country)}
+                value={contriesOption?.find(cntry => cntry.value === country)}
                 onChange={val => setValue('country', val.value)}
               />
               {country === 'India' ? (
@@ -186,7 +186,7 @@ const ContactDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
                     styles={selectStyles}
                     placeholder='State'
                     menuPlacement='top'
-                    value={statesOption.find(opts => opts.value === state)}
+                    value={statesOption?.find(opts => opts.value === state)}
                     onChange={val => setValue('state', val.value)}
                   />
                   <Select
@@ -194,7 +194,7 @@ const ContactDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
                     styles={selectStyles}
                     placeholder='City'
                     menuPlacement='top'
-                    value={citiesOption.find(opts => opts.value === city)}
+                    value={citiesOption?.find(opts => opts.value === city)}
                     onChange={val => setValue('city', val.value)}
                   />
                 </>

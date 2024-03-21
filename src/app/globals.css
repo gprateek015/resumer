@@ -60,3 +60,13 @@ input::-webkit-inner-spin-button {
 input[type='number'] {
   -moz-appearance: textfield;
 }
+
+input::placeholder {
+  color: rgb(160, 160, 160) !important;
+  opacity: 1; /* Firefox */
+}
+
+input::-ms-input-placeholder {
+  /* Edge 12 -18 */
+  color: rgb(160, 160, 160) !important;
+}

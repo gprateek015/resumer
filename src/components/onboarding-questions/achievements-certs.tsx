@@ -57,60 +57,69 @@ const AchievementsAndCertificates = ({
   return (
     <PageContainer nextPage={handleSubmit(onSubmit)} prevPage={prevPage}>
       <FormProvider {...methods}>
-        <Heading mb='20px'>Share your Achievements & Certificates</Heading>
         <Grid
           sx={{
-            backdropFilter: 'blur(20px)',
-            p: '20px',
-            borderRadius: '20px',
-            border: '1px solid #ffffff87',
             display: 'flex',
-            flexDirection: 'column'
+            flexDirection: 'column',
+            height: '100%'
           }}
-          className={space_grotest.className}
         >
-          <Grid>
-            <FormLabel mb='5px'>Add Your Achievements</FormLabel>
-            {achievements?.map((ach, ind: number) => (
-              <Box key={ach.id} display={'flex'} gap='10px' mb='10px'>
-                <FormInput
-                  {...register(`achievements.${ind}`)}
-                  placeholder='Tasks you did in your internship/job'
-                />
-                <IconButton
-                  sx={{
-                    color: 'white',
-                    border: '1px solid white',
-                    borderRadius: '3px'
-                  }}
-                  onClick={() => remove(ind)}
-                >
-                  <DeleteIcon />
-                </IconButton>
-              </Box>
-            ))}
-            <Button
-              onClick={() => append('')}
-              sx={{
-                background: 'transparent'
-              }}
-              startIcon={<AddIcon />}
-              fullWidth
-            >
-              Add another point
-            </Button>
-          </Grid>
-
-          <Divider
+          <Heading mb='20px'>Share your Achievements & Certificates</Heading>
+          <Grid
             sx={{
-              borderColor: '#ffffff87',
-              my: '20px'
+              backdropFilter: 'blur(20px)',
+              p: '20px',
+              borderRadius: '20px',
+              border: '1px solid #ffffff87',
+              display: 'flex',
+              flexDirection: 'column',
+              flexGrow: 1
             }}
-          />
+            className={space_grotest.className}
+          >
+            <Grid>
+              <FormLabel mb='5px'>Add Your Achievements</FormLabel>
+              {achievements?.map((ach, ind: number) => (
+                <Box key={ach.id} display={'flex'} gap='10px' mb='10px'>
+                  <FormInput
+                    {...register(`achievements.${ind}`)}
+                    placeholder='Tasks you did in your internship/job'
+                  />
+                  <IconButton
+                    sx={{
+                      color: 'white',
+                      border: '1px solid white',
+                      borderRadius: '3px'
+                    }}
+                    onClick={() => remove(ind)}
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                </Box>
+              ))}
+              <Button
+                onClick={() => append('')}
+                sx={{
+                  background: 'transparent'
+                }}
+                startIcon={<AddIcon />}
+                fullWidth
+              >
+                Add another point
+              </Button>
+            </Grid>
 
-          <Grid>
-            <FormLabel mb='5px'>Add Your Certificates</FormLabel>
-            <CertificationsContainer />
+            <Divider
+              sx={{
+                borderColor: '#ffffff87',
+                my: '20px'
+              }}
+            />
+
+            <Grid>
+              <FormLabel mb='5px'>Add Your Certificates</FormLabel>
+              <CertificationsContainer />
+            </Grid>
           </Grid>
         </Grid>
       </FormProvider>

@@ -4,7 +4,7 @@ import { Grid, Typography } from '@mui/material';
 import { Heading, Option, Options, PageNavButton, Subheading } from './styles';
 import { PageNavPropsType } from '.';
 import PageContainer from './page-container';
-import { space_grotest } from '@/font-family';
+import { righteous, space_grotest } from '@/font-family';
 import { enqueueSnackbar } from 'notistack';
 
 const Degrees = ({ nextPage, prevPage }: PageNavPropsType) => {
@@ -38,7 +38,7 @@ const Degrees = ({ nextPage, prevPage }: PageNavPropsType) => {
           className={space_grotest.className}
         >
           <Subheading>Select even if you are enrolled.</Subheading>
-          <Options>
+          <Options className={righteous.className}>
             <Option onClick={() => nextPage()}>
               <Typography textAlign={'center'}>
                 Bachelor of Technology

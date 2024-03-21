@@ -12,7 +12,7 @@ const experienceSchema = Joi.object({
     .max(new Date()),
   description: Joi.array().items(Joi.string()),
   mode: Joi.string().valid('onsite', 'remote').required(),
-  location: Joi.string(),
+  location: Joi.string().allow(null).allow(''),
   id: Joi.string().optional(),
   _id: Joi.string().optional(),
   user_id: Joi.string().optional()

@@ -102,32 +102,62 @@ const DescriptionForm = () => {
             onChange={e => setJobDescription(e.target.value)}
             value={jobDescription}
           />
-          <Button
-            sx={{
-              borderRadius: '10px',
-              border: '1px solid #FFF',
-              background: '#FFF',
-              padding: '10px',
-              width: '95%'
-            }}
-            fullWidth
-            onClick={() => getResumeData()}
-          >
-            <Typography
+          <Grid container flexWrap={'nowrap'} gap='20px' px='14px'>
+            <Button
               sx={{
-                background:
-                  'linear-gradient(90deg, #4ADFD5 0.42%, #7479FA 41.67%, #E92EC3 106.58%)',
-                backgroundClip: 'text',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                fontSize: '14px',
-                fontWeight: '600',
-                letterSpacing: '1px'
+                borderRadius: '10px',
+                border: '1px solid #FFF',
+                background: '#FFF',
+                padding: '10px',
+                width: '95%'
               }}
+              fullWidth
+              onClick={() => getResumeData()}
+              disabled={!!jobDescription}
             >
-              Generate Resume
-            </Typography>
-          </Button>
+              <Typography
+                sx={{
+                  background:
+                    'linear-gradient(90deg, #4ADFD5 0.42%, #7479FA 41.67%, #E92EC3 106.58%)',
+                  backgroundClip: 'text',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  fontSize: '12px',
+                  fontWeight: '600',
+                  letterSpacing: '1px'
+                }}
+              >
+                Generate Without Description
+              </Typography>
+            </Button>
+            <Button
+              sx={{
+                borderRadius: '10px',
+                border: '1px solid #FFF',
+                background: '#FFF',
+                padding: '10px',
+                width: '95%'
+              }}
+              fullWidth
+              onClick={() => getResumeData()}
+              disabled={!jobDescription}
+            >
+              <Typography
+                sx={{
+                  background:
+                    'linear-gradient(90deg, #4ADFD5 0.42%, #7479FA 41.67%, #E92EC3 106.58%)',
+                  backgroundClip: 'text',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  fontSize: '12px',
+                  fontWeight: '600',
+                  letterSpacing: '1px'
+                }}
+              >
+                Generate With Description
+              </Typography>
+            </Button>
+          </Grid>
         </Grid>
       </Grid>
     </>

@@ -26,6 +26,7 @@ const Projects = ({
   const onSubmit: SubmitHandler<ProjectData> = data => {
     const newData = {
       ...data,
+      description: data.description?.filter(desc => !!desc),
       _id: uid.rnd()
     };
 

@@ -24,6 +24,7 @@ const Experiences = ({
   const onSubmit: SubmitHandler<Experience> = data => {
     const newData = {
       ...data,
+      description: data.description?.filter(desc => !!desc),
       _id: uid.rnd()
     };
 

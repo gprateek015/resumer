@@ -55,9 +55,13 @@ const WorkExperienceDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
   const onSubmit = (data: Experience) => {
     setTrySaving(false);
 
+    console.log(data);
+
     if (data.location === '') {
       delete data.location;
     }
+
+    data.description = data.description?.filter(desc => !!desc);
 
     if (editId && editId !== 'new')
       dispatch(

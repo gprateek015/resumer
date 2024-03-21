@@ -28,6 +28,8 @@ const ProfileExperiences = () => {
   }, [error]);
 
   const onSubmit: SubmitHandler<Experience> = async data => {
+    data.description = data.description?.filter(desc => !!desc);
+
     if (editId && editId !== 'new')
       await dispatch(
         updateExperience({

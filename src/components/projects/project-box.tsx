@@ -55,6 +55,7 @@ const ProjectBox = React.forwardRef<HTMLDivElement, Props>(
             justifyContent: 'space-between',
             alignItems: 'center'
           }}
+          className={righteous.className}
         >
           <Typography
             mr='20px'
@@ -100,15 +101,20 @@ const ProjectBox = React.forwardRef<HTMLDivElement, Props>(
             />
           ))}
         </Grid>
-        <Grid display={'flex'} gap='20px' mt='10px'>
+        <Grid
+          display={'flex'}
+          gap='20px'
+          mt='10px'
+          className={righteous.className}
+        >
           <Button
-            sx={{ flexBasis: '50%', fontFamily: righteous.style.fontFamily }}
+            sx={{ flexBasis: '50%' }}
             onClick={() => handleEdit(project._id as string)}
           >
             Edit
           </Button>
           <Button
-            sx={{ flexBasis: '50%', fontFamily: righteous.style.fontFamily }}
+            sx={{ flexBasis: '50%' }}
             onClick={() => handleDelete(project._id)}
           >
             Delete

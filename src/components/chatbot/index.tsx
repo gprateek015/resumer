@@ -1,7 +1,15 @@
 'use client';
 
 import React, { useEffect, useMemo, useState } from 'react';
-import { Box, Grid, IconButton, TextField, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Grid,
+  IconButton,
+  TextField,
+  Typography
+} from '@mui/material';
 import Image from 'next/image';
 import Typewriter from 'typewriter-effect';
 
@@ -197,20 +205,60 @@ const Chatbot = ({ showMoreQuestions }: { showMoreQuestions: Function }) => {
                 }}
               >
                 {AiChats[aiChatsInd]?.options?.map((option, ind: number) => (
-                  <AuthButton
-                    // label={option.label}
-                    onClick={() => handleOptionChoose(option)}
+                  // <AuthButton
+                  //   // label={option.label}
+                  //   onClick={() => handleOptionChoose(option)}
+                  //   key={ind}
+                  //   sx={{
+                  //     borderRadius: '20px',
+                  //     boxShadow:
+                  //       '0px 0px 8px 0px rgba(244, 244, 244, 0.48) inset',
+                  //     backdropFilter: 'blur(20px)'
+                  //   }}
+                  // >
+                  //   <Typography
+                  //     textTransform='none'
+                  //     fontSize={'0.8rem'}
+                  //     fontWeight='600'
+                  //   >
+                  //     {option.label}
+                  //   </Typography>
+                  // </AuthButton>
+                  <Button
                     key={ind}
                     sx={{
                       borderRadius: '20px',
-                      boxShadow:
-                        '0px 0px 8px 0px rgba(244, 244, 244, 0.48) inset'
+                      border: '1px solid #FFF',
+                      background: '#FFF',
+                      padding: '10px',
+                      '&:hover': {
+                        background: 'rgba(255,255,255,0.75)'
+                      }
                     }}
+                    onClick={() => handleOptionChoose(option)}
+                    type='submit'
                   >
-                    <Typography textTransform='none' fontSize={'0.8rem'}>
+                    <Typography
+                      sx={{
+                        background:
+                          'linear-gradient(90deg, #4ADFD5 0.42%, #7479FA 41.67%, #E92EC3 106.58%)',
+                        backgroundClip: 'text',
+                        WebkitBackgroundClip: 'text',
+                        WebkitTextFillColor: 'transparent',
+                        fontSize: '12px',
+                        fontWeight: '600',
+                        // width: '135px',
+                        letterSpacing: '1px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '10px',
+                        justifyContent: 'center',
+                        textTransform: 'none'
+                      }}
+                    >
                       {option.label}
                     </Typography>
-                  </AuthButton>
+                  </Button>
                 ))}
               </Grid>
             )}

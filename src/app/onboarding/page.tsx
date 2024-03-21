@@ -89,7 +89,7 @@ const Onboarding = () => {
                   xs: 'translate(-50%, -50%)',
                   md: 'translateY(53px)'
                 },
-                opacity: { xs: '0.3', md: 1 }
+                opacity: { xs: '0.8', md: 1 }
               }}
             >
               <Image

@@ -64,7 +64,7 @@ const ProfileLinksContainer = () => {
         />
       </Box>
 
-      <Typography>
+      <FormLabel>
         Other Profile Links{' '}
         <Typography
           component={'span'}
@@ -74,7 +74,7 @@ const ProfileLinksContainer = () => {
         >
           (For Profile Links Section)
         </Typography>
-      </Typography>
+      </FormLabel>
 
       {profileLinks?.map((profileLink: any, ind: number) => (
         <Box display={'flex'} gap='10px' key={profileLink.id} mb='10px'>

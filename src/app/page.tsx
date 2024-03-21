@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useLayoutEffect, useRef, useState } from 'react';
 import { Grid, Typography, Box } from '@mui/material';
 
 import AuthBox from '@/components/auth';
@@ -9,9 +9,11 @@ import { poppins, righteous, space_grotest } from '@/font-family';
 export default function Home() {
   const subtitleRef = useRef<HTMLDivElement>(null);
   const [leftDistance, setLeftDistance] = useState(0);
-  useEffect(() => {
+
+  useLayoutEffect(() => {
     setLeftDistance(subtitleRef?.current?.getBoundingClientRect().left || 0);
   }, [subtitleRef]);
+
   return (
     <Grid
       display={'flex'}
@@ -22,12 +24,12 @@ export default function Home() {
       <Grid
         sx={{
           display: 'flex',
-          justifyContent: 'space-evenly',
+          justifyContent: 'space-between',
           width: '100%',
           flexDirection: { xs: 'column', md: 'row' },
           alignItems: { xs: 'center', md: 'normal' },
           overflowY: 'hidden',
-          padding: { xs: '0px 10px', md: '0px 50px' },
+          padding: { xs: '0px 10px', md: '0px 80px' },
           gap: '50px'
         }}
       >
@@ -47,7 +49,7 @@ export default function Home() {
             <Typography
               fontSize={{ xs: '2rem', sm: '3rem' }}
               lineHeight={'1.2em'}
-              marginBottom={{ xs: '15px', sm: '30px' }}
+              marginBottom={{ xs: '1vh', sm: '5vh' }}
               fontWeight='700'
             >
               Improve Your Resume ATS Score Using AI
@@ -84,7 +86,7 @@ export default function Home() {
               display: { xs: 'none', sm: 'flex' },
               alignItems: 'center',
               gap: { xs: '30px', sm: '60px' },
-              marginTop: { sm: '25%' }
+              marginTop: { sm: '28vh' }
             }}
             className={righteous.className}
           >

@@ -33,6 +33,8 @@ const ProjectDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
   const onSubmit = (data: ProjectData) => {
     setTrySaving(false);
 
+    data.description = data.description?.filter(desc => !!desc);
+
     if (editId && editId !== 'new')
       dispatch(
         updateProjectOnb({

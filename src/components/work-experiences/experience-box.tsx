@@ -56,6 +56,7 @@ const ExperienceBox = React.forwardRef<HTMLDivElement, Props>(
             justifyContent: 'space-between',
             alignItems: 'center'
           }}
+          className={righteous.className}
         >
           <Typography
             mr='20px'
@@ -98,15 +99,20 @@ const ExperienceBox = React.forwardRef<HTMLDivElement, Props>(
             {experience.mode === 'onsite' && `- ${experience.location}`}
           </Typography>
         </Grid>
-        <Grid display={'flex'} gap='20px' mt='10px'>
+        <Grid
+          display={'flex'}
+          gap='20px'
+          mt='10px'
+          className={righteous.className}
+        >
           <Button
-            sx={{ flexBasis: '50%', fontFamily: righteous.style.fontFamily }}
+            sx={{ flexBasis: '50%' }}
             onClick={() => handleEdit(experience._id as string)}
           >
             Edit
           </Button>
           <Button
-            sx={{ flexBasis: '50%', fontFamily: righteous.style.fontFamily }}
+            sx={{ flexBasis: '50%' }}
             onClick={() => handleDelete(experience._id as string)}
           >
             Delete

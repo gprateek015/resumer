@@ -24,6 +24,7 @@ const ProfileProjects = () => {
   }, [error]);
 
   const onSubmit: SubmitHandler<ProjectData> = async data => {
+    data.description = data.description?.filter(desc => !!desc);
     if (editId && editId !== 'new')
       await dispatch(
         updateProject({

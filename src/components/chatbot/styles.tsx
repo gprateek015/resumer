@@ -3,15 +3,18 @@
 import { Box, Chip, Typography, styled } from '@mui/material';
 
 export const ChatTypography = styled(Box)(({ ind }: { ind: number }) => ({
+  fontWeight: '600',
+  backdropFilter: 'blur(20px)',
+  background: 'rgba(255,255,255,0.1) !important',
   padding: ind % 2 !== 0 ? '6px 16px' : '12px 16px',
   maxWidth: 'calc(100% - 80px)',
   float: ind % 2 !== 0 ? 'right' : 'left',
   minHeight: '26px',
   width: 'fit-content',
-  color: ind % 2 !== 0 ? 'transparent' : 'white',
+  color: ind % 2 !== 0 ? 'white' : 'white',
   fontSize: '0.9rem',
-  background:
-    'linear-gradient(90deg, #4ADFD5 0.42%, #7479FA 41.67%, #E92EC3 106.58%)',
+  // background:
+  //   'linear-gradient(90deg, #4ADFD5 0.42%, #7479FA 41.67%, #E92EC3 106.58%)',
   backgroundClip: 'text',
   WebkitBackgroundClip: 'text',
   lineHeight: '1.5rem',

@@ -48,17 +48,18 @@ const OnboardingQuestions = () => {
       // return <WorkExperience nextPage={nextPage} prevPage={prevPage} />;
       // return <HighestEducation nextPage={nextPage} prevPage={prevPage} />;
       case 0:
-        return (
-          <WorkExperienceDetails nextPage={nextPage} prevPage={prevPage} />
-        );
+        return <Degrees nextPage={nextPage} prevPage={prevPage} />;
+
       case 1:
-        return <ContactDetails nextPage={nextPage} prevPage={prevPage} />;
+        return <EducationalDetails nextPage={nextPage} prevPage={prevPage} />;
       // case 3:
       //   return <HighestEducation nextPage={nextPage} prevPage={prevPage} />;
       case 2:
-        return <Degrees nextPage={nextPage} prevPage={prevPage} />;
+        return <ContactDetails nextPage={nextPage} prevPage={prevPage} />;
       case 3:
-        return <EducationalDetails nextPage={nextPage} prevPage={prevPage} />;
+        return (
+          <WorkExperienceDetails nextPage={nextPage} prevPage={prevPage} />
+        );
       case 4:
         return <ProjectDetails nextPage={nextPage} prevPage={prevPage} />;
       case 5:

@@ -55,6 +55,7 @@ const EducationBox = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
           justifyContent: 'space-between',
           alignItems: 'center'
         }}
+        className={righteous.className}
       >
         <Typography
           mr='20px'
@@ -102,7 +103,12 @@ const EducationBox = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
           {education.maximum_score}
         </Typography>
       </Grid>
-      <Grid display={'flex'} gap='20px' mt='10px'>
+      <Grid
+        display={'flex'}
+        gap='20px'
+        mt='10px'
+        className={righteous.className}
+      >
         <Button
           sx={{ flexBasis: '50%', fontFamily: righteous.style.fontFamily }}
           onClick={() => handleEdit(education._id as string)}

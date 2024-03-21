@@ -202,7 +202,7 @@ const Profile = () => {
                       my: '20px'
                     }}
                   />
-                  <Typography mb='5px'>Skills</Typography>
+                  <FormLabel mb='5px'>Skills</FormLabel>
                   <SkillsContainer />
                   <Divider
                     sx={{
@@ -210,7 +210,7 @@ const Profile = () => {
                       my: '20px'
                     }}
                   />
-                  <Typography mb='5px'>Certificates</Typography>
+                  <FormLabel mb='5px'>Certificates</FormLabel>
                   <CertificationsContainer />
                   <Divider
                     sx={{

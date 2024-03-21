@@ -37,7 +37,9 @@ export const Options = styled(Grid)({
   flexDirection: 'row',
   flexWrap: 'wrap',
   gap: '15px',
-  width: '100%'
+  width: '100%',
+  margin: 'auto',
+  justifyContent: 'center'
 });
 
 export const Option = styled(Box)<{ active?: string; onClick: Function }>(
