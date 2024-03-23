@@ -265,7 +265,8 @@ const Register = () => {
                 borderRadius: '10px',
                 border: '1px solid #FFF',
                 background: '#FFF',
-                padding: '10px'
+                padding: '10px',
+                fontFamily: 'inherit'
               }}
               onClick={handleSubmit(onSubmit)}
               type='submit'

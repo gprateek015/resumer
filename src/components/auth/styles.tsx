@@ -6,6 +6,7 @@ export const ThirdPartyBtns = styled(Button)({
   background: '#ffffff',
   color: 'black',
   width: '100%',
+  fontFamily: 'inherit',
   '&:hover': {
     background: '#ffffffd1'
   }

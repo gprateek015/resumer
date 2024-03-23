@@ -6,6 +6,7 @@ import BackgroundImg from '@/assets/home-background.png';
 import BackgroundImg1 from '@/assets/test.png';
 import Providers from '@/components/providers';
 import ProtectedRoutes from '@/components/protected-routes';
+import ReviewBox from '@/components/review-box';
 
 export const metadata = {
   title: 'Resumer',
@@ -53,6 +54,7 @@ export default function RootLayout({
                 {children}
               </Grid>
             </ProtectedRoutes>
+            <ReviewBox />
           </Grid>
         </Providers>
       </body>
