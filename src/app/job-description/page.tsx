@@ -14,7 +14,7 @@ const JobDescription = () => {
         justifyContent: { md: 'center' },
         alignItems: 'center',
         borderRadius: '20px',
-        padding: { xs: '20px', md: '20px 40px' },
+        padding: { xs: '0px 20px 20px', md: '20px 40px' },
         width: '100%',
         maxHeight: { md: '600px' }
       }}

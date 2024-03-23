@@ -18,7 +18,7 @@ const ReviewBox = () => {
       sx={{
         position: 'fixed',
         right: '0px',
-        bottom: '10px'
+        bottom: { xs: '5px', md: '10px' }
       }}
     >
       <Box
@@ -31,9 +31,9 @@ const ReviewBox = () => {
           background: 'rgba(255, 255, 255, 0.10)',
           backdropFilter: 'blur(20px)',
           borderRadius: '20px 0px 0px 20px',
-          pr: '40px',
+          pr: { xs: '20px', md: '40px' },
           pl: '20px',
-          py: '10px'
+          py: { xs: '5px', md: '10px' }
         }}
         onClick={() => setOpen(curr => !curr)}
       >
