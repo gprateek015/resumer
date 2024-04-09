@@ -7,6 +7,7 @@ import BackgroundImg1 from '@/assets/test.png';
 import Providers from '@/components/providers';
 import ProtectedRoutes from '@/components/protected-routes';
 import ReviewBox from '@/components/review-box';
+import RootContainer from '@/components/root-container';
 
 export const metadata = {
   title: 'Resumer',
@@ -22,18 +23,7 @@ export default function RootLayout({
     <html lang='en'>
       <body>
         <Providers>
-          <Grid
-            minHeight='100vh'
-            maxHeight={{ md: '100vh' }}
-            display={'flex'}
-            flexDirection={'column'}
-            overflow={{ md: 'hidden' }}
-            sx={{
-              backgroundImage: `url('/assets/test.png')`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center'
-            }}
-          >
+          <RootContainer>
             <Navbar />
             {/* <Image
               src={BackgroundImg1}
@@ -55,7 +45,7 @@ export default function RootLayout({
               </Grid>
             </ProtectedRoutes>
             <ReviewBox />
-          </Grid>
+          </RootContainer>
         </Providers>
       </body>
     </html>

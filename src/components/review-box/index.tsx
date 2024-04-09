@@ -1,16 +1,20 @@
 'use client';
 
-import { Avatar, Box, Grid, Typography } from '@mui/material';
-import React, { useState } from 'react';
+import React, { MouseEvent } from 'react';
+import { Box, Grid, Typography } from '@mui/material';
 import ReviewBoxDialog from './review-dialog';
 import { righteous, space_grotest } from '@/font-family';
 import { Heading } from '../onboarding-questions/styles';
+import { useDispatch, useSelector } from '@/redux/store';
+import { closeBugDialog, openBugDialog } from '@/redux/slice/user';
 
 const ReviewBox = () => {
-  const [open, setOpen] = useState(false);
-
-  const onClose = () => {
-    setOpen(false);
+  const dispatch = useDispatch();
+  const { isBugDialogOpen } = useSelector(state => state.user);
+  const toggleBugDialog = (e: MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+    if (isBugDialogOpen) dispatch(closeBugDialog());
+    else dispatch(openBugDialog());
   };
 
   return (
@@ -35,7 +39,7 @@ const ReviewBox = () => {
           pl: '20px',
           py: { xs: '5px', md: '10px' }
         }}
-        onClick={() => setOpen(curr => !curr)}
+        onClick={toggleBugDialog}
       >
         <Typography
           fontFamily={space_grotest.style.fontFamily}
@@ -55,7 +59,7 @@ const ReviewBox = () => {
           }}
         /> */}
       </Box>
-      <ReviewBoxDialog open={open} onClose={onClose} />
+      <ReviewBoxDialog />
     </Grid>
   );
 };

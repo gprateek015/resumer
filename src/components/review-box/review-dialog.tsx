@@ -3,21 +3,18 @@
 import { Box, CircularProgress, Grid, Typography } from '@mui/material';
 import React, { useState } from 'react';
 import { Button, FormInput, FormLabel } from '../onboarding-questions/styles';
-import { useDispatch } from '@/redux/store';
+import { useDispatch, useSelector } from '@/redux/store';
 import { postReview } from '@/actions/review';
 import { enqueueSnackbar } from 'notistack';
 import { righteous, space_grotest } from '@/font-family';
-
-type Props = {
-  open: boolean;
-  onClose: () => void;
-};
+import { closeBugDialog } from '@/redux/slice/user';
 
 const width = '300px';
 const height = '263px';
 
-const ReviewBoxDialog = ({ open, onClose }: Props) => {
+const ReviewBoxDialog = () => {
   const dispatch = useDispatch();
+  const { isBugDialogOpen: open } = useSelector(state => state.user);
   const [description, setDescription] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -30,7 +27,7 @@ const ReviewBoxDialog = ({ open, onClose }: Props) => {
         enqueueSnackbar('Successfully submitted your feedback', {
           variant: 'success'
         });
-        onClose();
+        dispatch(closeBugDialog());
       }
     } else {
       enqueueSnackbar('Please type in your feedback', { variant: 'warning' });

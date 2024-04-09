@@ -26,6 +26,7 @@ export type UserState = {
   experiences: Experience[];
   projects: Project[];
   error: string;
+  isBugDialogOpen: boolean;
 };
 
 const initialState: UserState = {
@@ -34,7 +35,8 @@ const initialState: UserState = {
   educations: [],
   experiences: [],
   projects: [],
-  error: ''
+  error: '',
+  isBugDialogOpen: false
 };
 
 const userDataToState = (state: UserState, action: PayloadAction<any>) => {
@@ -58,6 +60,12 @@ export const userSlice = createSlice({
     },
     clearError: state => {
       state.error = '';
+    },
+    openBugDialog: state => {
+      state.isBugDialogOpen = true;
+    },
+    closeBugDialog: state => {
+      state.isBugDialogOpen = false;
     }
   },
   extraReducers: builder => {
@@ -104,6 +112,12 @@ export const userSlice = createSlice({
   }
 });
 
-export const { clearUserData, addAuthToken, clearError } = userSlice.actions;
+export const {
+  clearUserData,
+  addAuthToken,
+  clearError,
+  openBugDialog,
+  closeBugDialog
+} = userSlice.actions;
 
 export default userSlice.reducer;
