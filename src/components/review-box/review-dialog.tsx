@@ -53,6 +53,7 @@ const ReviewBoxDialog = () => {
         gap: '20px'
       }}
       className={space_grotest.className}
+      onClick={e => e.stopPropagation()}
     >
       <Box>
         <FormLabel fontSize={'20px'} fontFamily={righteous.style.fontFamily}>
