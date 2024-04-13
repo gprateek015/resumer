@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { Grid, Typography, Box, Button } from '@mui/material';
 
 import CloudIcon from '@/assets/upload-icon.svg';
@@ -14,10 +14,22 @@ import { useDispatch, useSelector } from '@/redux/store';
 import { uploadResume } from '@/actions/resume';
 import { enqueueSnackbar } from 'notistack';
 import { clearOnboardingErrors } from '@/redux/slice/onboarding';
+import ResumeParsing1 from '@/assets/resume-parsing-1.png';
+import ResumeParsing2 from '@/assets/resume-parsing-2.png';
+import ResumeParsing3 from '@/assets/resume-parsing-3.png';
+
+const quotes = [
+  `Until we extract your details, Google this out - "Daisuki Desu"`,
+
+  `Baby thana tha lega, tu abhi resume banane mei focus kr`,
+
+  `If this website doesn't work out for you, consider opening onlyfans`
+];
 
 const ResumeUpload = ({ onCompleteUpload }: { onCompleteUpload: Function }) => {
   const dispatch = useDispatch();
   const route = useRouter();
+  const [quoteNumber, setQuoteNumber] = useState(0);
   const [files, setFiles] = useState<FileList | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const [progress, setProgress] = useState(0);
@@ -48,6 +60,31 @@ const ResumeUpload = ({ onCompleteUpload }: { onCompleteUpload: Function }) => {
 
   const timeToTake = 80; // in seconds
   const moveIn = 1000; // in ms
+
+  const getQuote = () => {
+    return (
+      <>
+        {[...Array(quotes.length)].map(
+          (_, ind) =>
+            quoteNumber === ind && (
+              <Typewriter
+                onInit={typewriter => {
+                  typewriter
+                    .typeString(quotes[quoteNumber] + '.')
+                    .deleteChars(1)
+                    .start();
+                }}
+                options={{
+                  cursor: '|',
+                  delay: 30,
+                  devMode: false
+                }}
+              />
+            )
+        )}
+      </>
+    );
+  };
 
   useEffect(() => {
     let intervalId: any;
@@ -88,6 +125,14 @@ const ResumeUpload = ({ onCompleteUpload }: { onCompleteUpload: Function }) => {
     }
   }, [errors]);
 
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setQuoteNumber(curr => Math.min(quotes.length - 1, curr + 1));
+    }, 15000);
+
+    return () => clearInterval(intervalId);
+  }, []);
+
   return (
     <Grid>
       <UploadContainer width={'100%'}>
@@ -98,7 +143,7 @@ const ResumeUpload = ({ onCompleteUpload }: { onCompleteUpload: Function }) => {
           accept='application/pdf'
           onChange={handleInputChange}
         />
-        {!files ? (
+        {files ? (
           <Uploader
             onClick={() => inputRef?.current?.click()}
             onDragEnter={handleDrag}
@@ -125,30 +170,15 @@ const ResumeUpload = ({ onCompleteUpload }: { onCompleteUpload: Function }) => {
             justifyContent={'center'}
             alignItems={'center'}
             height={'280px'}
-            gap='20px'
+            gap='10px'
           >
             <Typography
               fontWeight={'500'}
               fontSize={'18px'}
               textAlign={'center'}
+              height={'53px'}
             >
-              <Typewriter
-                onInit={typewriter => {
-                  typewriter
-                    .typeString('Collecting data from your resume' + '.')
-                    .deleteChars(1)
-                    .start()
-                    .callFunction(() => {
-                      // setAllowUserToType(true);
-                      // setShowOptions(true);
-                    });
-                }}
-                options={{
-                  cursor: '|',
-                  delay: 50,
-                  devMode: false
-                }}
-              />
+              {getQuote()}
             </Typography>
             <Box sx={{ display: 'flex', alignItems: 'center', width: '100%' }}>
               <Box sx={{ width: '100%', mr: 1 }}>
@@ -173,6 +203,12 @@ const ResumeUpload = ({ onCompleteUpload }: { onCompleteUpload: Function }) => {
                 )}%`}</Typography>
               </Box>
             </Box>
+
+            <Image
+              src={ResumeParsing1}
+              alt=''
+              style={{ width: '180px', height: '180px' }}
+            />
           </Grid>
         )}
       </UploadContainer>

@@ -25,9 +25,11 @@ const Heading = ({
         backdropFilter: 'blur(20px)',
         width: '100%',
         padding: '15px 25px',
-        position: 'relative'
+        position: 'relative',
+        cursor: 'pointer'
         // zIndex: -1
       }}
+      onClick={() => toggleCollapse()}
     >
       {icon}
       <Typography>{title}</Typography>
@@ -36,7 +38,6 @@ const Heading = ({
           position: 'absolute',
           right: '25px'
         }}
-        onClick={() => toggleCollapse()}
       >
         {collapsed ? (
           <DownIcon
