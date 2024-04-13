@@ -68,6 +68,7 @@ const ResumeUpload = ({ onCompleteUpload }: { onCompleteUpload: Function }) => {
           (_, ind) =>
             quoteNumber === ind && (
               <Typewriter
+                key={ind}
                 onInit={typewriter => {
                   typewriter
                     .typeString(quotes[quoteNumber] + '.')
