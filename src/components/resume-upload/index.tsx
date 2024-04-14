@@ -127,12 +127,13 @@ const ResumeUpload = ({ onCompleteUpload }: { onCompleteUpload: Function }) => {
   }, [errors]);
 
   useEffect(() => {
-    const intervalId = setInterval(() => {
-      setQuoteNumber(curr => Math.min(quotes.length - 1, curr + 1));
-    }, 15000);
-
-    return () => clearInterval(intervalId);
-  }, []);
+    if (files) {
+      const intervalId = setInterval(() => {
+        setQuoteNumber(curr => Math.min(quotes.length - 1, curr + 1));
+      }, 15000);
+      return () => clearInterval(intervalId);
+    }
+  }, [files]);
 
   return (
     <Grid>
