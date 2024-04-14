@@ -144,7 +144,7 @@ const ResumeUpload = ({ onCompleteUpload }: { onCompleteUpload: Function }) => {
           accept='application/pdf'
           onChange={handleInputChange}
         />
-        {files ? (
+        {!files ? (
           <Uploader
             onClick={() => inputRef?.current?.click()}
             onDragEnter={handleDrag}

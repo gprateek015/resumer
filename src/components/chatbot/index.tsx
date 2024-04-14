@@ -184,7 +184,7 @@ const Chatbot = ({ showMoreQuestions }: { showMoreQuestions: Function }) => {
                       }}
                       options={{
                         cursor: '|',
-                        delay: 20,
+                        delay: 0,
                         devMode: false
                       }}
                     />
