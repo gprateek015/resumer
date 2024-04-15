@@ -8,6 +8,7 @@ import Providers from '@/components/providers';
 import ProtectedRoutes from '@/components/protected-routes';
 import ReviewBox from '@/components/review-box';
 import RootContainer from '@/components/root-container';
+import Socials from '@/components/socials';
 
 export const metadata = {
   title: 'Resumer',
@@ -45,6 +46,7 @@ export default function RootLayout({
               </Grid>
             </ProtectedRoutes>
             <ReviewBox />
+            <Socials />
           </RootContainer>
         </Providers>
       </body>
