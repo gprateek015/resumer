@@ -17,6 +17,8 @@ import { clearOnboardingErrors } from '@/redux/slice/onboarding';
 import ResumeParsing1 from '@/assets/resume-parsing-1.png';
 import ResumeParsing2 from '@/assets/resume-parsing-2.png';
 import ResumeParsing3 from '@/assets/resume-parsing-3.png';
+import ResumeParsing4 from '@/assets/resume-parsing-4.png';
+import ResumeParsing5 from '@/assets/resume-parsing-5.png';
 
 const quotes = [
   `Until we extract your details, Google this out - "Daisuki Desu"`,
@@ -207,7 +209,7 @@ const ResumeUpload = ({ onCompleteUpload }: { onCompleteUpload: Function }) => {
             </Box>
 
             <Image
-              src={ResumeParsing1}
+              src={ResumeParsing5}
               alt=''
               style={{ width: '180px', height: '180px' }}
             />
