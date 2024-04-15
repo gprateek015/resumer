@@ -17,8 +17,9 @@ let persistor = persistStore(store);
 
 const Providers = ({ children }: { children: ReactNode }) => {
   const isMobile =
+    typeof navigator !== 'undefined' &&
     /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-      navigator.userAgent
+      navigator?.userAgent
     );
   const Backend = isMobile ? TouchBackend : HTML5Backend;
 
