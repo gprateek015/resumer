@@ -1,6 +1,6 @@
 import { Education } from '@/types';
 import { Box, Grid, Icon, Typography } from '@mui/material';
-import React, { useCallback, useEffect, useMemo } from 'react';
+import React, { useCallback, useContext, useEffect, useMemo } from 'react';
 import { Button } from '../onboarding-questions/styles';
 import EducationalDetailsEdit, { EducationData } from './edit';
 import { SubmitHandler } from 'react-hook-form';
@@ -8,9 +8,9 @@ import validateEducation from '@/schema/education';
 import ErrorIcon from '@mui/icons-material/Error';
 import EducationBox from './education-box';
 import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
 import DragableElement from '../dragable-element';
 import { space_grotest } from '@/font-family';
+import { DnDBackendContext } from '@/redux/store';
 
 const EduDetailDesign = ({
   educations = [],
@@ -35,6 +35,7 @@ const EduDetailDesign = ({
 }) => {
   const handleCancel = () => setEditId(null);
   const handelEdit = (id: string) => setEditId(id);
+  const Backend = useContext(DnDBackendContext);
 
   const errorIds = Object.keys(errors);
 
@@ -76,7 +77,7 @@ const EduDetailDesign = ({
               trySaving={trySaving}
             />
           ) : updateEducations ? (
-            <DndProvider backend={HTML5Backend}>
+            <DndProvider backend={Backend}>
               <DragableElement
                 index={ind}
                 moveObject={moveEducation}

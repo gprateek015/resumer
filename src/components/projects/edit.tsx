@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import {
   Box,
   Chip,
@@ -16,7 +16,7 @@ import {
   selectStyles
 } from '../onboarding-questions/styles';
 import { Project, Skill } from '@/types';
-import { useDispatch, useSelector } from '@/redux/store';
+import { DnDBackendContext, useDispatch, useSelector } from '@/redux/store';
 import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form';
 import { postProject, updateProject } from '@/actions/project';
 import { clearOnboardingErrors } from '@/redux/slice/onboarding';
@@ -26,7 +26,6 @@ import Select from 'react-select';
 import SkillsInput, { CreatableSkill } from '../skills-input';
 import DraggableChip from '../profile-details/dragable-chip';
 import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
 
 export type ProjectData = Project & {
   url?: string;
@@ -77,6 +76,7 @@ const ProjectEdit = ({
   const [projectUrlType, setProjectUrl] = useState(
     getDefaultProjectUrl(project)
   );
+  const Backend = useContext(DnDBackendContext);
 
   const {
     control,
@@ -237,7 +237,7 @@ const ProjectEdit = ({
             flexWrap: 'wrap'
           }}
         >
-          <DndProvider backend={HTML5Backend}>
+          <DndProvider backend={Backend}>
             {skillsRequired.map((skill: string, ind: number) => (
               <DraggableChip
                 label={skill}

@@ -1,5 +1,5 @@
 import { Project } from '@/types';
-import React, { useCallback, useEffect, useMemo } from 'react';
+import React, { useCallback, useContext, useEffect, useMemo } from 'react';
 import { Box, Chip, Grid, Icon, Typography } from '@mui/material';
 import { Button } from '../onboarding-questions/styles';
 import ProjectEdit, { ProjectData } from './edit';
@@ -8,9 +8,9 @@ import validateProject from '@/schema/project';
 import ErrorIcon from '@mui/icons-material/Error';
 import ProjectBox from './project-box';
 import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
 import DragableElement from '../dragable-element';
 import { space_grotest } from '@/font-family';
+import { DnDBackendContext } from '@/redux/store';
 
 const ProjectDetailDesign = ({
   projects = [],
@@ -39,6 +39,7 @@ const ProjectDetailDesign = ({
   const handleEdit = (id: string) => {
     setEditId(id);
   };
+  const Backend = useContext(DnDBackendContext);
 
   const errorIds = Object.keys(errors);
 
@@ -80,7 +81,7 @@ const ProjectDetailDesign = ({
               trySaving={trySaving}
             />
           ) : updateProjects ? (
-            <DndProvider backend={HTML5Backend}>
+            <DndProvider backend={Backend}>
               <DragableElement
                 index={ind}
                 moveObject={moveProject}

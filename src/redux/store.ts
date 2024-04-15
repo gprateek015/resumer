@@ -1,3 +1,4 @@
+import React from 'react';
 import { configureStore } from '@reduxjs/toolkit';
 import {
   TypedUseSelectorHook,
@@ -39,5 +40,6 @@ export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 export const useDispatch: () => AppDispatch = useAppDispatch;
 export const useSelector: TypedUseSelectorHook<RootState> = useAppSelector;
+export const DnDBackendContext = React.createContext<any>(null);
 
 export default store;

@@ -1,11 +1,11 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import './style.scss';
 import { Grid, IconButton, Typography } from '@mui/material';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import PdfViewer from '@/components/pdf-viewer';
-import { useDispatch, useSelector } from '@/redux/store';
+import { DnDBackendContext, useDispatch, useSelector } from '@/redux/store';
 import { generateResumeData, loadResume } from '@/actions/resume';
 import PersonalOverview from './components/personal-overview';
 import { Resume } from '@/types';
@@ -14,7 +14,6 @@ import Educations from './components/educations';
 import Projects from './components/projects';
 import ProfileLinks from './components/profile-links';
 import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
 import Skills from './components/skills';
 import { DividerWithText } from '@/components/auth/styles';
 import AutorenewIcon from '@mui/icons-material/Autorenew';
@@ -31,6 +30,7 @@ const Workbench = () => {
   const dispatch = useDispatch();
   const routes = useRouter();
 
+  const Backend = useContext(DnDBackendContext);
   const { data: resumeData = {} } = useSelector(state => state.workbench);
   const [pdf, setPdf] = useState<ArrayBuffer | null>(null);
   const [expandedId, setExpandedId] = useState(0);
@@ -175,7 +175,7 @@ const Workbench = () => {
             }}
           >
             <FormProvider {...methods}>
-              <DndProvider backend={HTML5Backend}>
+              <DndProvider backend={Backend}>
                 <Grid
                   sx={{
                     width: '100%',

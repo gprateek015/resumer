@@ -1,13 +1,12 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Divider, Grid, Typography } from '@mui/material';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from '@/redux/store';
+import { DnDBackendContext, useDispatch, useSelector } from '@/redux/store';
 
 import PersonalOverviewDetails from '@/components/profile-details/personal-overview';
 import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
 import SkillsContainer from '@/components/profile-details/skills';
 
 import ProfileEducations from './components/educations';
@@ -35,6 +34,7 @@ const Profile = () => {
   const methods = useForm();
   const dispatch = useDispatch();
   const { reset, setValue, handleSubmit } = methods;
+  const Backend = useContext(DnDBackendContext);
 
   const {
     data: userData,
@@ -112,7 +112,7 @@ const Profile = () => {
         alignItems: 'center'
       }}
     >
-      <DndProvider backend={HTML5Backend}>
+      <DndProvider backend={Backend}>
         <FormProvider {...methods}>
           <Grid
             sx={{

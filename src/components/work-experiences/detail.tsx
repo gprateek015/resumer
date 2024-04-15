@@ -1,9 +1,8 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useContext } from 'react';
 import { Experience } from '@/types';
 import { Box, Grid, Icon, Typography } from '@mui/material';
 import { SubmitHandler } from 'react-hook-form';
 import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
 import { Button } from '../onboarding-questions/styles';
 import WorkExpEdit from './edit';
 import validateExperience from '@/schema/experience';
@@ -11,6 +10,7 @@ import validateExperience from '@/schema/experience';
 import ExperienceBox from './experience-box';
 import DragableElement from '../dragable-element';
 import { space_grotest } from '@/font-family';
+import { DnDBackendContext } from '@/redux/store';
 
 const WorkExpDetailDesign = ({
   experiences = [],
@@ -34,6 +34,7 @@ const WorkExpDetailDesign = ({
   trySaving?: boolean;
 }) => {
   const errorIds = Object.keys(errors);
+  const Backend = useContext(DnDBackendContext);
 
   const handleCancel = () => {
     setEditId(null);
@@ -80,7 +81,7 @@ const WorkExpDetailDesign = ({
               trySaving={trySaving}
             />
           ) : updateExperiences ? (
-            <DndProvider backend={HTML5Backend}>
+            <DndProvider backend={Backend}>
               <DragableElement
                 index={ind}
                 moveObject={moveExperience}

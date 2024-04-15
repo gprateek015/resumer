@@ -1,11 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import PageContainer from './page-container';
 import SkillsContainer from '../profile-details/skills';
 import { FormProvider, useFieldArray, useForm } from 'react-hook-form';
 import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
 import { Box, Divider, Grid, IconButton } from '@mui/material';
-import { useDispatch, useSelector } from '@/redux/store';
+import { DnDBackendContext, useDispatch, useSelector } from '@/redux/store';
 import { Button, FormInput, FormLabel, Heading } from './styles';
 import DeleteIcon from '@mui/icons-material/DeleteForever';
 import AddIcon from '@mui/icons-material/Add';
@@ -27,6 +26,7 @@ const AchievementsSkills = ({
   const { skills, achievements: prevAchievements } = useSelector(
     state => state.onboarding.data
   );
+  const Backend = useContext(DnDBackendContext);
 
   const {
     fields: achievements,
@@ -85,7 +85,7 @@ const AchievementsSkills = ({
             }}
             className={space_grotest.className}
           >
-            <DndProvider backend={HTML5Backend}>
+            <DndProvider backend={Backend}>
               <FormLabel mb='5px'>Select Your Skills</FormLabel>
               <SkillsContainer />
             </DndProvider>
