@@ -29,7 +29,7 @@ export type PageNavPropsType = {
 const OnboardingQuestions = () => {
   const route = useRouter();
   const { data } = useSelector(state => state.onboarding);
-  const [page, setPage] = useState<number>(5);
+  const [page, setPage] = useState<number>(0);
   const [onboardingCompleted, setOnboardingCompleted] = useState(false);
 
   const dispatch = useDispatch();
