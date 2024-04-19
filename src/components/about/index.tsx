@@ -4,6 +4,7 @@ import React from "react";
 import { Grid } from "@mui/material";
 import Product from "./product";
 import Founders from "./founders";
+import { space_grotest } from "@/font-family";
 
 const About = () => {
   return (
@@ -24,6 +25,7 @@ const About = () => {
         MsOverflowStyle: "none",
         scrollbarWidth: "none",
       }}
+      className={space_grotest.className}
     >
       <Grid>
         <Product />
