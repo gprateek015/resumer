@@ -1,11 +1,9 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import {
   Box,
-  Chip,
   FormHelperText,
   Grid,
   IconButton,
-  Button as MuiButton,
   Typography
 } from '@mui/material';
 
@@ -18,7 +16,6 @@ import {
 import { Project, Skill } from '@/types';
 import { DnDBackendContext, useDispatch, useSelector } from '@/redux/store';
 import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form';
-import { postProject, updateProject } from '@/actions/project';
 import { clearOnboardingErrors } from '@/redux/slice/onboarding';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/DeleteForever';
@@ -29,31 +26,6 @@ import { DndProvider } from 'react-dnd';
 
 export type ProjectData = Project & {
   url?: string;
-};
-
-const projectUrlTypeOptions = [
-  {
-    label: 'Code Url',
-    value: 'code_url'
-  },
-  {
-    label: 'Live Url',
-    value: 'live_url'
-  },
-  {
-    label: 'Video Url',
-    value: 'video_url'
-  }
-];
-
-const getDefaultProjectUrl = (value?: ProjectData) => {
-  if (value?.code_url)
-    return projectUrlTypeOptions.find(opt => opt.value === 'code_url');
-  if (value?.live_url)
-    return projectUrlTypeOptions.find(opt => opt.value === 'live_url');
-  if (value?.video_url)
-    return projectUrlTypeOptions.find(opt => opt.value === 'video_url');
-  return null;
 };
 
 const ProjectEdit = ({
@@ -73,9 +45,7 @@ const ProjectEdit = ({
 }) => {
   const dispatch = useDispatch();
   const [apiError, setApiError] = useState<string | null>(null);
-  const [projectUrlType, setProjectUrl] = useState(
-    getDefaultProjectUrl(project)
-  );
+
   const Backend = useContext(DnDBackendContext);
 
   const {
@@ -102,13 +72,6 @@ const ProjectEdit = ({
 
   const skillsRequired: string[] = watch('skills_required') || [];
 
-  const onProjectTypeChange = (val: any) => {
-    setProjectUrl(val);
-    setValue('code_url', undefined);
-    setValue('live_url', undefined);
-    setValue('video_url', undefined);
-  };
-
   const handleSkillDelete = (skill: string) => {
     setValue(
       'skills_required',
@@ -131,29 +94,9 @@ const ProjectEdit = ({
   }, []);
 
   useEffect(() => {
-    if (project) {
-      (Object.keys(project || {}) as Array<keyof Project>).forEach(key => {
-        setValue(key, project[key]);
-      });
-    } else {
-      const newValues = {
-        name: undefined,
-        skills_required: [],
-        code_url: undefined,
-        live_url: undefined,
-        video_url: undefined,
-        description: ['']
-      };
-
-      (Object.keys(newValues) as Array<keyof typeof newValues>).map(key => {
-        setValue(key, newValues[key]);
-      });
-    }
-  }, [project]);
-
-  useEffect(() => {
     reset({
       description: [''],
+      skills_required: [],
       ...(project && project)
     });
   }, [project]);
@@ -199,29 +142,31 @@ const ProjectEdit = ({
         />
       </Box>
       <Box>
-        <FormLabel>Project Link</FormLabel>
-        <Grid
-          sx={{
-            display: 'flex',
-            gap: '15px'
-          }}
-        >
-          <Box sx={{ minWidth: '150px' }}>
-            <Select
-              options={projectUrlTypeOptions}
-              styles={selectStyles}
-              value={projectUrlType}
-              onChange={(val: any) => onProjectTypeChange(val)}
-              isClearable
-            />
-          </Box>
-          <FormInput
-            {...register(projectUrlType?.value || 'code_url', {
-              required: false
-            })}
-            placeholder='https://project-url.com'
-          />
-        </Grid>
+        <FormLabel>Code Url</FormLabel>
+        <FormInput
+          {...register('code_url', {
+            required: false
+          })}
+          placeholder='https://project-url.com'
+        />
+      </Box>
+      <Box>
+        <FormLabel>Live Url</FormLabel>
+        <FormInput
+          {...register('live_url', {
+            required: false
+          })}
+          placeholder='https://project-url.com'
+        />
+      </Box>
+      <Box>
+        <FormLabel>Video Url</FormLabel>
+        <FormInput
+          {...register('video_url', {
+            required: false
+          })}
+          placeholder='https://project-url.com'
+        />
       </Box>
       <Box>
         <FormLabel>Skills Required</FormLabel>

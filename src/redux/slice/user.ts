@@ -3,7 +3,8 @@ import {
   fetchSelf,
   loginUser,
   registerUser,
-  socialLogin
+  socialLogin,
+  updateUser
 } from '@/actions/user';
 import { AUTH_TOKEN } from '@/constants';
 import { Education, Experience, Project, User } from '@/types';
@@ -27,6 +28,9 @@ export type UserState = {
   projects: Project[];
   error: string;
   isBugDialogOpen: boolean;
+  apiPending: boolean;
+  apiSuccessfull: boolean;
+  apiFailed: boolean;
 };
 
 const initialState: UserState = {
@@ -36,7 +40,10 @@ const initialState: UserState = {
   experiences: [],
   projects: [],
   error: '',
-  isBugDialogOpen: false
+  isBugDialogOpen: false,
+  apiPending: false,
+  apiSuccessfull: false,
+  apiFailed: false
 };
 
 const userDataToState = (state: UserState, action: PayloadAction<any>) => {
@@ -75,6 +82,21 @@ export const userSlice = createSlice({
       })
       .addCase(registerUser.fulfilled, (state, action) => {
         userDataToState(state, action);
+      })
+      .addCase(updateUser.pending, state => {
+        state.apiPending = true;
+        state.apiFailed = false;
+        state.apiSuccessfull = false;
+      })
+      .addCase(updateUser.fulfilled, state => {
+        state.apiPending = false;
+        state.apiFailed = false;
+        state.apiSuccessfull = true;
+      })
+      .addCase(updateUser.rejected, state => {
+        state.apiPending = false;
+        state.apiFailed = true;
+        state.apiSuccessfull = false;
       })
       .addCase(fetchSelf.fulfilled, (state, action) => {
         userDataToState(state, action);

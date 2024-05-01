@@ -131,6 +131,7 @@ export const updateUser = createAsyncThunk(
     );
     await dispatch(fetchSelf());
     callback?.();
+
     return response.data;
   }
 );

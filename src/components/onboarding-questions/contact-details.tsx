@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { Box, Grid, TextField } from '@mui/material';
+import { Box, FormHelperText, Grid, TextField } from '@mui/material';
 import Select from 'react-select';
 import { contries, states } from '@/constants';
 import {
@@ -110,7 +110,12 @@ const ContactDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
           }}
         >
           <Box>
-            <FormLabel>Please provide us with your phone number</FormLabel>
+            <Grid container justifyContent={'space-between'}>
+              <FormLabel>Please provide us with your phone number</FormLabel>
+              <FormHelperText error sx={{ float: 'right' }}>
+                *required
+              </FormHelperText>
+            </Grid>
             <FormInput
               {...register('phone', { required: 'Phone Number is required' })}
               placeholder='Enter your phone number'

@@ -12,6 +12,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { persistStore } from 'redux-persist';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { TouchBackend } from 'react-dnd-touch-backend';
+import AllSnackbars from '../all-snackbars';
 
 let persistor = persistStore(store);
 
@@ -40,7 +41,7 @@ const Providers = ({ children }: { children: ReactNode }) => {
                     />
                   )}
                 >
-                  {children}
+                  <AllSnackbars>{children}</AllSnackbars>
                 </SnackbarProvider>
               </DnDBackendContext.Provider>
             </SessionProvider>

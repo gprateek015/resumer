@@ -8,7 +8,7 @@ import PdfViewer from '@/components/pdf-viewer';
 import { DnDBackendContext, useDispatch, useSelector } from '@/redux/store';
 import { generateResumeData, loadResume } from '@/actions/resume';
 import PersonalOverview from './components/personal-overview';
-import { Resume } from '@/types';
+import { Resume, Skill } from '@/types';
 import Experiences from './components/experiences';
 import Educations from './components/educations';
 import Projects from './components/projects';
@@ -25,6 +25,7 @@ import Certifications from './components/certifications';
 import { AuthButton } from '@/components/navbar/styles';
 import { enqueueSnackbar } from 'notistack';
 import SideBar from './components/sidebar';
+import { updateUser } from '@/actions/user';
 
 const Workbench = () => {
   const dispatch = useDispatch();
@@ -76,6 +77,37 @@ const Workbench = () => {
         enqueueSnackbar('Error generating the PDF', { variant: 'error' });
       }
     }
+  };
+
+  const onSave: SubmitHandler<Resume> = async data => {
+    const { technical_skills, core_subjects, dev_tools, languages } = data;
+    let skills: { name: string; type: Skill['type'] }[] = [];
+    technical_skills?.forEach(skill => {
+      skills.push({
+        name: skill.name,
+        type: 'technical_skills'
+      });
+    });
+    core_subjects?.forEach(skill => {
+      skills.push({
+        name: skill.name,
+        type: 'core_subjects'
+      });
+    });
+    dev_tools?.forEach(skill => {
+      skills.push({
+        name: skill.name,
+        type: 'dev_tools'
+      });
+    });
+    languages?.forEach(skill => {
+      skills.push({
+        name: skill.name,
+        type: 'languages'
+      });
+    });
+
+    dispatch(updateUser({ ...data, skills }));
   };
 
   const reloadResume: SubmitHandler<Resume> = async data => {
@@ -269,18 +301,32 @@ const Workbench = () => {
                 width={resumeContainer?.current?.offsetWidth}
               />
             </Grid>
-            <AuthButton
-              sx={{
-                mt: '10px',
-                borderRadius: '20px',
-                width: 'fit-content',
-                alignSelf: 'center'
-              }}
-              variant='outlined'
-              onClick={() => downloadResume()}
-            >
-              Download
-            </AuthButton>
+            <Grid container justifyContent={'center'} gap={'30px'}>
+              <AuthButton
+                sx={{
+                  mt: '10px',
+                  borderRadius: '20px',
+                  alignSelf: 'center',
+                  width: '120px'
+                }}
+                variant='outlined'
+                onClick={handleSubmit(onSave)}
+              >
+                Save
+              </AuthButton>
+              <AuthButton
+                sx={{
+                  mt: '10px',
+                  borderRadius: '20px',
+                  alignSelf: 'center',
+                  width: '120px'
+                }}
+                variant='outlined'
+                onClick={() => downloadResume()}
+              >
+                Download
+              </AuthButton>
+            </Grid>
           </Grid>
         </Grid>
         <Typography
