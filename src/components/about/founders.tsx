@@ -7,7 +7,7 @@ const Founders = () => {
     <Grid
       sx={{
         display: "flex",
-        flexDirection: {xs: "column", md: "row"},
+        flexDirection: { xs: "column", md: "row" },
         justifyContent: "center",
         alignItems: "center",
       }}
@@ -19,12 +19,19 @@ const Founders = () => {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          padding: "20px"
+          padding: "20px",
         }}
       >
         <Typography>
-          Resumer originated from the vision of Prateek Goyal and Neeraj Gupta,
-          dynamic final-year computer science undergraduates. Recognizing the
+          Resumer originated from the vision of{" "}
+          <a href="https://www.linkedin.com/in/prateek-goyal1/" style={{color: "#00ffff"}}>
+            Prateek Goyal
+          </a>{" "}
+          and{" "}
+          <a href="https://www.twitter.com/mightcode/" style={{color: "#00ffff"}}>
+            Neeraj Gupta
+          </a>
+          , dynamic final-year computer science undergraduates. Recognizing the
           landscape of job-seeking, we made a decision of not blending into the
           crowd but getting into real product development by focusing on the
           complete Software Development Life Cycle (SDLC) process. We

@@ -5,12 +5,13 @@ import { Grid } from "@mui/material";
 import ChromeExtension from "./chrome-extension";
 import WhatsApp from "./whatsapp";
 import Website from "./website";
+import { space_grotest } from "@/font-family";
 
 const Product = () => {
   return (
     <Grid
       sx={{
-        width: { xs: "360px", md: "900px" },
+        width: { xs: "360px", md: "930px" },
         borderRadius: "20px",
         display: "flex",
         alignItems: "center",
@@ -22,15 +23,16 @@ const Product = () => {
         MsOverflowStyle: "none",
         scrollbarWidth: "none",
       }}
+      className={space_grotest.className}
     >
-      <Grid>
-        <Website />
-      </Grid>
       <Grid>
         <ChromeExtension />
       </Grid>
       <Grid>
         <WhatsApp />
+      </Grid>
+      <Grid>
+        <Website />
       </Grid>
     </Grid>
   );
