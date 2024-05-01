@@ -2,14 +2,20 @@
 
 import React, { ReactNode } from 'react';
 import { Box } from '@mui/material';
-import { useDispatch } from '@/redux/store';
+import { useDispatch, useSelector } from '@/redux/store';
 import { closeBugDialog } from '@/redux/slice/user';
 
 const RootContainer = ({ children }: { children: ReactNode }) => {
   const dispatch = useDispatch();
+  const { isBugDialogOpen } = useSelector(state => state.user);
+
+  const closeBuyDialogHandler = () => {
+    if (isBugDialogOpen) dispatch(closeBugDialog());
+  };
+
   return (
     <Box
-      onClick={() => dispatch(closeBugDialog())}
+      onClick={closeBuyDialogHandler}
       minHeight='100vh'
       maxHeight={{ md: '100vh' }}
       display={'flex'}
