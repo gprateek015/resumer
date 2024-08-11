@@ -1,61 +1,61 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
-import Axios from '.';
-import { Education, Experience, ProfileLink, Project, Skill } from '@/types';
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import Axios from ".";
+import { Education, Experience, ProfileLink, Project, Skill } from "@/types";
 
 export const loginUser = createAsyncThunk(
-  'user/login',
+  "user/login",
   async ({ email, password }: { email: string; password: string }) => {
-    const response = await Axios.post('/user/login', { email, password });
+    const response = await Axios.post("/user/login", { email, password });
     return response.data;
   }
 );
 
 export const registerUser = createAsyncThunk(
-  'user/register',
+  "user/register",
   async ({
     email,
     password,
     first_name,
-    last_name
+    last_name,
   }: {
     email: string;
     password: string;
     first_name: string;
     last_name: string;
   }) => {
-    const response = await Axios.post('/user', {
-      name: first_name + ' ' + last_name,
+    const response = await Axios.post("/user", {
+      name: first_name + " " + last_name,
       email,
-      password
+      password,
     });
     return response.data;
   }
 );
 
 export const sendOtp = createAsyncThunk(
-  'opt/generate',
+  "opt/generate",
   async ({ email }: { email: string }) => {
-    const response = await Axios.post('/otp/generate', { email });
+    const response = await Axios.post("/otp/generate", { email });
     return response.data;
   }
 );
 
 export const verifyOtp = createAsyncThunk(
-  'opt/verify',
+  "opt/verify",
   async ({ email, otp }: { email: string; otp: string }) => {
-    const response = await Axios.post('/otp/verify', { email, otp });
+    const response = await Axios.post("/otp/verify", { email, otp });
     return response.data;
   }
 );
 
-export const fetchSelf = createAsyncThunk('user/self', async () => {
-  const response = await Axios.get('/user');
+export const fetchSelf = createAsyncThunk("user/self", async () => {
+  const response = await Axios.get("/user");
   return response.data;
 });
 
 let updateUserAbortController: AbortController | null = null;
 export const updateUser = createAsyncThunk(
-  'user/update',
+  "user/update",
   async (
     {
       phone,
@@ -75,7 +75,7 @@ export const updateUser = createAsyncThunk(
       projects,
       educations,
       certificates,
-      callback
+      callback,
     }: {
       phone?: string;
       name?: string;
@@ -89,7 +89,7 @@ export const updateUser = createAsyncThunk(
       achievements?: string[];
       profile_links?: ProfileLink[];
       onboarding_completed?: boolean;
-      skills?: { name: string; type: Skill['type'] }[];
+      skills?: { name: string; type: Skill["type"] }[];
       experiences?: Experience[];
       projects?: Project[];
       educations?: Education[];
@@ -105,7 +105,7 @@ export const updateUser = createAsyncThunk(
     updateUserAbortController = new AbortController();
 
     const response = await Axios.put(
-      '/user',
+      "/user",
       {
         phone,
         name,
@@ -123,10 +123,10 @@ export const updateUser = createAsyncThunk(
         projects,
         educations,
         skills,
-        certificates
+        certificates,
       },
       {
-        signal: updateUserAbortController.signal
+        signal: updateUserAbortController.signal,
       }
     );
     await dispatch(fetchSelf());
@@ -137,9 +137,21 @@ export const updateUser = createAsyncThunk(
 );
 
 export const socialLogin = createAsyncThunk(
-  'user/social-login',
-  async ({ name, email }: { name?: string | null; email?: string | null }) => {
-    const response = await Axios.post('/user/social-login', { name, email });
+  "user/social-login",
+  async ({
+    name,
+    email,
+    accessToken,
+  }: {
+    name?: string | null;
+    email?: string | null;
+    accessToken: string;
+  }) => {
+    const response = await Axios.post("/user/social-login", {
+      name,
+      email,
+      // access_token: accessToken,
+    });
     return response.data;
   }
 );

@@ -7,8 +7,9 @@ import {
   socialLogin,
   verifyOtp
 } from '@/actions/user';
-import { AUTH_TOKEN, ONBOARDING_STARTED } from '@/constants';
+import { ONBOARDING_STARTED } from '@/constants';
 import { enqueueSnackbar } from 'notistack';
+import { signOut } from 'next-auth/react';
 
 const initialState = {
   isLoggedIn: false,
@@ -29,7 +30,6 @@ export const authSlice = createSlice({
     },
     logoutUser: state => {
       state.isLoggedIn = false;
-      localStorage.removeItem(AUTH_TOKEN);
       localStorage.removeItem(ONBOARDING_STARTED);
     },
     changeAuthPage: (state, action) => {

@@ -15,7 +15,7 @@ const experienceSchema = Joi.object({
   location: Joi.string().allow(null).allow(''),
   id: Joi.string().optional(),
   _id: Joi.string().optional(),
-  user_id: Joi.string().optional()
+  user: Joi.string().optional()
 });
 
 const validateExperience = (data: Experience) => {

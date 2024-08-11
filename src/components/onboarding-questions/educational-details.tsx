@@ -43,6 +43,8 @@ const EducationalDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
   const onSubmit: SubmitHandler<EducationData> = data => {
     setTrySaving(false);
 
+    console.log({data})
+
     const newData = {
       ...data,
       start_year: data?.start_year,
@@ -74,6 +76,7 @@ const EducationalDetails = ({ prevPage, nextPage }: PageNavPropsType) => {
   const errors = useMemo(() => {
     const data: any = {};
     educations.forEach(education => {
+      console.log({education})
       const resp = validateEducation(education);
       if (resp.error?.details) {
         const errors: any = {};

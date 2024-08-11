@@ -96,6 +96,10 @@ const EducationalDetailsEdit = ({
     }
   }, [trySaving]);
 
+  useEffect(() => {
+    console.log({errors})
+  })
+
   return (
     <Grid
       sx={{

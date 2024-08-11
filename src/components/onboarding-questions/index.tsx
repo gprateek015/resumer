@@ -35,8 +35,8 @@ const OnboardingQuestions = () => {
   const dispatch = useDispatch();
 
   const nextPage = () => {
-    if (page === 8) setOnboardingCompleted(true);
-    setPage(page => Math.min(page + 1, 8));
+    if (page === 7) setOnboardingCompleted(true);
+    setPage(page => Math.min(page + 1, 7));
   };
   const prevPage = () => {
     setPage(page => Math.max(0, page - 1));
@@ -44,16 +44,10 @@ const OnboardingQuestions = () => {
 
   const OnboardingPage = () => {
     switch (page) {
-      // case 0:
-      // return <WorkExperience nextPage={nextPage} prevPage={prevPage} />;
-      // return <HighestEducation nextPage={nextPage} prevPage={prevPage} />;
       case 0:
         return <Degrees nextPage={nextPage} prevPage={prevPage} />;
-
       case 1:
         return <EducationalDetails nextPage={nextPage} prevPage={prevPage} />;
-      // case 3:
-      //   return <HighestEducation nextPage={nextPage} prevPage={prevPage} />;
       case 2:
         return <ContactDetails nextPage={nextPage} prevPage={prevPage} />;
       case 3:
@@ -115,7 +109,7 @@ const OnboardingQuestions = () => {
         return;
       })();
     }
-  }, [data]);
+  }, [data, onboardingCompleted]);
 
   return (
     <Grid

@@ -6,7 +6,6 @@ import {
   socialLogin,
   updateUser
 } from '@/actions/user';
-import { AUTH_TOKEN } from '@/constants';
 import { Education, Experience, Project, User } from '@/types';
 import {
   fetchEductions,
@@ -21,7 +20,6 @@ import {
 import { fetchProjects, postProject, updateProject } from '@/actions/project';
 
 export type UserState = {
-  authToken: string;
   data: User;
   educations: Education[];
   experiences: Experience[];
@@ -34,7 +32,6 @@ export type UserState = {
 };
 
 const initialState: UserState = {
-  authToken: '',
   data: {},
   educations: [],
   experiences: [],
@@ -48,10 +45,6 @@ const initialState: UserState = {
 
 const userDataToState = (state: UserState, action: PayloadAction<any>) => {
   state.data = action.payload?.user;
-  if (action?.payload?.token) {
-    state.authToken = action.payload?.token;
-    localStorage.setItem(AUTH_TOKEN, action.payload?.token);
-  }
 };
 
 export const userSlice = createSlice({
@@ -59,11 +52,7 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     clearUserData: state => {
-      state.authToken = '';
       state.data = {};
-    },
-    addAuthToken: (state, action) => {
-      state.authToken = action.payload || '';
     },
     clearError: state => {
       state.error = '';
@@ -136,7 +125,6 @@ export const userSlice = createSlice({
 
 export const {
   clearUserData,
-  addAuthToken,
   clearError,
   openBugDialog,
   closeBugDialog

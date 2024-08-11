@@ -22,12 +22,12 @@ const Navbar = () => {
   const pathname = usePathname();
 
   const handleClick = async () => {
+    await signOut({redirect: false});
     if (isLoggedIn) {
-      await signOut();
       dispatch(clearUserData());
       dispatch(logoutUser());
     } else {
-      routes.replace('/');
+      // routes.replace('/');
       dispatch(changeAuthPage(page === 0 ? 1 : 0));
 
       window.scrollTo({
