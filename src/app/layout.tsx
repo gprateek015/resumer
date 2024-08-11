@@ -5,7 +5,6 @@ import Image from 'next/image';
 import BackgroundImg from '@/assets/home-background.png';
 import BackgroundImg1 from '@/assets/test.png';
 import Providers from '@/components/providers';
-import ProtectedRoutes from '@/components/protected-routes';
 import ReviewBox from '@/components/review-box';
 import RootContainer from '@/components/root-container';
 import Socials from '@/components/socials';
@@ -26,13 +25,6 @@ export default function RootLayout({
         <Providers>
           <RootContainer>
             <Navbar />
-            {/* <Image
-              src={BackgroundImg1}
-              alt=''
-              className='home-background'
-              priority={true}
-            /> */}
-            <ProtectedRoutes>
               <Grid
                 flexGrow={1}
                 display={'flex'}
@@ -44,7 +36,6 @@ export default function RootLayout({
               >
                 {children}
               </Grid>
-            </ProtectedRoutes>
             <ReviewBox />
             <Socials />
           </RootContainer>

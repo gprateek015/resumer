@@ -28,7 +28,8 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/components/pdfViewer/PdfViewer.js"
+    "src/components/pdfViewer/PdfViewer.js",
+    "src/types/**/*.ts"
   ],
   "exclude": ["node_modules"]
 }

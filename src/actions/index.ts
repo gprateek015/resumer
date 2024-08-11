@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { AUTH_TOKEN } from '@/constants';
 
 const Axios = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL
@@ -7,10 +6,6 @@ const Axios = axios.create({
 
 Axios.interceptors.request.use(
   config => {
-    const userToken = localStorage.getItem(AUTH_TOKEN);
-    if (userToken) {
-      config.headers['authorization'] = `${userToken}`;
-    }
     config.withCredentials = true;
     return config;
   },

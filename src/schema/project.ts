@@ -10,7 +10,7 @@ const projectSchema = Joi.object({
   video_url: Joi.string().allow(''),
   id: Joi.string().optional(),
   _id: Joi.string().optional(),
-  user_id: Joi.string().optional()
+  user: Joi.string().optional()
 });
 
 const validateProject = (data: Project) => {

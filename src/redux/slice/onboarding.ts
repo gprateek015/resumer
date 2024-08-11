@@ -1,6 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { fetchSelf, loginUser, registerUser } from '@/actions/user';
-import { AUTH_TOKEN } from '@/constants';
 import { generateResumeData, loadResume, uploadResume } from '@/actions/resume';
 import {
   User,

@@ -26,6 +26,7 @@ import { loginUser } from '@/actions/user';
 import { changeAuthPage, resetError } from '@/redux/slice/auth';
 import PasswordField from './password-field';
 import { FormInput } from '../onboarding-questions/styles';
+import { signIn } from 'next-auth/react';
 
 type FormValues = {
   email: string;
@@ -44,9 +45,13 @@ const Login = () => {
   const { error: apiError = '', loading } = useSelector(state => state.auth);
   const [apiErrorStr, setApiErrorStr] = useState('');
 
-  const onSubmit: SubmitHandler<FormValues> = data => {
+  const onSubmit: SubmitHandler<FormValues> = async data => {
     dispatch(resetError());
-    dispatch(loginUser(data));
+    // dispatch(loginUser(data));
+    const resp = await signIn("credentials", {redirect: false, ...data})
+    if(resp?.error) {
+      setApiErrorStr(resp?.error)
+    }
   };
 
   useEffect(() => {
@@ -114,7 +119,7 @@ const Login = () => {
               error
               sx={{
                 mb: '5px',
-                textAlign: 'center'
+                textAlign: 'left'
               }}
             >
               {apiErrorStr}

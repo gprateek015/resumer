@@ -25,7 +25,7 @@ export const educationSchema = Joi.object({
   degree: Joi.string().optional().allow(''),
   id: Joi.string().optional(),
   _id: Joi.string().optional(),
-  user_id: Joi.string().optional()
+  user: Joi.string().optional()
 });
 
 const validateEducation = (data: Education) => {
