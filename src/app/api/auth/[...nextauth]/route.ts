@@ -4,16 +4,16 @@ import GithubProvider from "next-auth/providers/github";
 import CredentialsProvider from "next-auth/providers/credentials";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { JWT, JWTDecodeParams, JWTEncodeParams } from "next-auth/jwt";
-import { MongoDBAdapter } from "@auth/mongodb-adapter";
-import type { Adapter } from "next-auth/adapters";
-import client from "../lib/db";
+import { MongoDBAdapter } from "@auth/mongodb-adapter"
+import type {Adapter} from 'next-auth/adapters'
+import client from "../lib/db"
 
 import Axios from "@/actions";
 
 const handler = NextAuth({
   adapter: MongoDBAdapter(client) as Adapter,
   session: {
-    strategy: "jwt",
+    strategy: "jwt"
   },
   providers: [
     GoogleProvider({
@@ -33,12 +33,12 @@ const handler = NextAuth({
         if (!credentials) throw new Error("Email and Password are required");
         const { email, password } = credentials;
         const response = await Axios.post("/user/login", { email, password });
-        console.log(response.data);
+        console.log(response.data)
         return response.data;
       },
     }),
   ],
-
+  
   callbacks: {
     async signIn({ user, account, profile, email, credentials }) {
       return true;
@@ -66,17 +66,6 @@ const handler = NextAuth({
     async decode(params: JWTDecodeParams): Promise<JWT | null> {
       // return a `JWT` object, or `null` if decoding failed
       return jwt.verify(params.token!, params.secret) as JwtPayload;
-    },
-  },
-  cookies: {
-    sessionToken: {
-      name: "next-auth.session-token",
-      options: {
-        httpOnly: true,
-        sameSite: "lax",
-        path: "/",
-        secure: process.env.NODE_ENV === "production" ? true : false,
-      },
     },
   },
 });
