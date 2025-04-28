@@ -19,10 +19,12 @@ const handler = NextAuth({
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID as string,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+      allowDangerousEmailAccountLinking: true,
     }),
     GithubProvider({
       clientId: process.env.GITHUB_CLIENT_ID as string,
       clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
+      allowDangerousEmailAccountLinking: true,
     }),
     CredentialsProvider({
       credentials: {
@@ -75,7 +77,7 @@ const handler = NextAuth({
         path: "/",
         secure: process.env.NODE_ENV === "production" ? true : false,
         domain:
-          process.env.NODE_ENV === "production" ? ".resumer.cloud" : undefined,
+          process.env.NODE_ENV === "production" ? ".vercel.app" : undefined,
       },
     },
   },
