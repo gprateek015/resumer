@@ -77,7 +77,7 @@ const handler = NextAuth({
         path: "/",
         secure: process.env.NODE_ENV === "production" ? true : false,
         domain:
-          process.env.NODE_ENV === "production" ? ".vercel.app" : undefined,
+          process.env.NODE_ENV === "production" ? ".prateeklab.com" : undefined,
       },
     },
   },
